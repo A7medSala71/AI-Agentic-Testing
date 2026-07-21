@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Agentic Testing Execution Log Schema",
+  "type": "object",
+  "properties": {
+    "function_id": {
+      "type": "string",
+      "description": "Identifier of the target function (e.g., function_01)"
+    },
+    "system_variant": {
+      "type": "string",
+      "enum": ["Baseline_A", "Baseline_B", "Variant_1_ErrorTrace", "Variant_2_StatePrediction"],
+      "description": "Which experimental system generated this run"
+    },
+    "iteration_count": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5,
+      "description": "Total feedback iterations used (capped at 5)"
+    },
+    "total_tokens_used": {
+      "type": "integer",
+      "description": "Total prompt + completion tokens used across iterations"
+    },
+    "estimated_cost_usd": {
+      "type": "number",
+      "description": "Estimated API cost in USD"
+    },
+    "line_coverage_pct": {
+      "type": "number",
+      "description": "Final line coverage percentage achieved"
+    },
+    "mutation_score_pct": {
+      "type": "number",
+      "description": "Final percentage of mutants killed"
+    },
+    "iterations_detail": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "iteration": { "type": "integer" },
+          "mutant_id": { "type": "string" },
+          "mutant_operator": { "type": "string" },
+          "predicted_state": { "type": ["string", "null"] },
+          "generated_test_code": { "type": "string" },
+          "mutant_killed": { "type": "boolean" }
+        },
+        "required": ["iteration", "generated_test_code", "mutant_killed"]
+      }
+    }
+  },
+  "required": [
+    "function_id",
+    "system_variant",
+    "iteration_count",
+    "total_tokens_used",
+    "mutation_score_pct"
+  ]
+}
