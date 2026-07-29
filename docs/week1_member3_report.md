@@ -115,7 +115,7 @@ the code is there to unblock, not to take over.
 
 ## 4. Decisions the team needs to make
 
-### 4.1 Doctest policy — needed before Week 2 prompts are frozen
+### 4.1 Doctest policy — DECIDED (Prof. Doaa, Week 3): strip them
 
 Every dataset function carries doctests, i.e. literal input→output oracles, in
 its docstring:
@@ -133,8 +133,11 @@ Handing those to the model measures transcription, not oracle reasoning.
 - **(a) Strip doctests** — prompt on signature + prose only. Measures what RQ2 actually asks about. **Currently implemented (`INCLUDE_DOCTESTS=false`).**
 - **(b) Keep them** — more realistic, but inflates all systems and blurs the comparison.
 
-Either is defensible; the policy must be **identical across Baseline A,
-Baseline B and both proposed variants**, or RQ1 is not like-for-like.
+**Resolved:** strip them. The decisive argument was comparability — CANDOR's
+HumanEvalJava benchmark carries no worked examples (the Java translation drops
+HumanEval's Python docstrings), so stripping ours matches the system we compare
+against. See `docs/week2_baseline_design.md` §3a for the full rationale and the
+ablation that was considered and set aside.
 
 ### 4.2 Unit of testing — 17 of 30 files hold more than one public function
 

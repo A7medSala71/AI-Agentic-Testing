@@ -95,13 +95,16 @@ Baseline A needs only **1 call per function**, so all 30 functions are
 deliverable in about two days even on the free tier. Baseline B needs 5 per
 function.
 
-**Decisions outstanding** — carried over from Week 1, all still needed before
-results are generated:
+**Doctest policy — decided.** Prof. Doaa approved stripping doctests from every
+prompt (Week 3). The decisive argument was comparability: CANDOR's benchmark
+carries no worked examples, so stripping ours matches the system we compare
+against. See `01_baseline_design.md` §3a.
 
-1. Doctest policy (currently stripped) — changing it later invalidates every prior run
-2. Three schema fields missing for brief §3.5 metrics (`num_llm_calls`, `pass_rate_pct`, `branch_coverage_pct`)
-3. Equivalent-mutant handling — needs an owner
-4. Baseline B must be described in the paper as a consensus-only *ablation* of CANDOR, not a reimplementation
+**Still outstanding:**
+
+1. Three schema fields missing for brief §3.5 metrics (`num_llm_calls`, `pass_rate_pct`, `branch_coverage_pct`)
+2. Equivalent-mutant handling — needs an owner
+3. Baseline B must be described in the paper as a consensus-only *ablation* of CANDOR, not a reimplementation
 
 ---
 

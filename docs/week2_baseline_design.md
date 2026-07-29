@@ -103,6 +103,59 @@ weak-oracle failure mode RQ2 measures, stated directly in the prompt.
 
 ---
 
+## 3a. Doctest policy — decided
+
+**Doctests are stripped from every prompt.** Approved by Prof. Doaa in Week 3;
+`config.INCLUDE_DOCTESTS = false`.
+
+Every dataset function carries worked input→output examples in its docstring:
+
+```python
+def arc_length(angle: int, radius: int) -> float:
+    """
+    >>> arc_length(45, 5)
+    3.9269908169872414
+    """
+    return 2 * pi * radius * (angle / 360)
+```
+
+Left in, a model can transcribe `assert arc_length(45, 5) == 3.9269908169872414`
+without reasoning about the function at all. Two consequences:
+
+1. **It measures the wrong thing.** Oracle correctness is what RQ2 asks about; transcription is not oracle reasoning.
+2. **It starves the refinement loop.** Steps 3–5 of the pipeline operate on *surviving* mutants. Near-perfect initial suites leave none, so Variant 1 and Variant 2 have nothing to differentiate them — the added RQ becomes unanswerable.
+
+### The comparability argument
+
+The decisive point is that **CANDOR's benchmark has no worked examples**, so
+stripping ours matches the system we compare against rather than diverging from
+it:
+
+| | worked examples in the prompt? |
+|---|---|
+| HumanEval (original Python) | yes — `>>>` blocks in the docstring |
+| **HumanEvalJava — what CANDOR uses** | **no** — the Java translation drops the Javadoc entirely |
+| CANDOR's stated input | source code + a prose natural-language description |
+| **Our dataset (30 Python functions)** | **yes** — inherited from its source repository |
+
+Our dataset differs from CANDOR's in exactly this respect, by accident of where
+it came from. This belongs in the paper's methodology section rather than being
+left implicit.
+
+### Ablation considered and set aside
+
+Treating the condition as an experimental parameter — running every system both
+with and without doctests — was proposed and declined on cost grounds: it
+doubles the experiment (~1,260 → ~2,520 calls), and
+`schema/execution_log_schema.json` has no field recording which condition
+produced a record, so the two would be indistinguishable in `logs/`.
+
+`config.INCLUDE_DOCTESTS` remains configurable and `prompt_context.build_context()`
+takes the flag per call, so the ablation is available if it is ever revisited —
+but a schema field must be added first.
+
+---
+
 ## 4. Unit of testing — decided
 
 **All public functions per file.** 17 of 30 files hold more than one
@@ -205,7 +258,6 @@ past ~20 calls/day is blocked, against a ~1,260-call requirement.
 
 Also outstanding:
 
-- **Doctest policy** (`config.INCLUDE_DOCTESTS`, currently `false`) — needs sign-off before results are generated, since changing it invalidates every prior run.
 - **`evaluation/` does not run** — Member 2. `score.py` unblocks Baseline validation locally, but the paper's numbers must come from the shared pipeline.
 
 ## 8. Next, in order

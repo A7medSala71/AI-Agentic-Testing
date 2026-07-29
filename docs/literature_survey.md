@@ -81,6 +81,28 @@ signed-rank + Vargha-Delaney A₁₂, 3 repetitions; Python + LangChain.
 Our project mirrors this closely — same statistical test, same 3 repeats,
 mutation score as headline metric.
 
+### What CANDOR actually shows the model — checked, because it decided our prompt policy
+
+CANDOR states it supplies two things per subject: *"the source code and its
+natural language description"*. The description is prose — input types and
+expected behaviour, which the Requirement Engineer turns into predicate logic.
+**No worked input→output examples.**
+
+This is worth verifying rather than assuming, because HumanEval's *original
+Python* docstrings do carry `>>>` examples. The Java translation drops them: the
+methods in [ASSERT-KTH/human-eval-java](https://github.com/ASSERT-KTH/human-eval-java)
+carry no Javadoc at all.
+
+| | worked examples in the prompt? |
+|---|---|
+| HumanEval (original Python) | yes |
+| **HumanEvalJava — what CANDOR uses** | **no** |
+| **Our dataset (30 Python functions)** | **yes**, inherited from its source repo |
+
+Our dataset therefore differs from CANDOR's in exactly this respect, by accident
+of where it came from. That is why doctests are stripped from every prompt in
+this project — see `week2_baseline_design.md` §3a.
+
 ### Results
 
 | Metric | Dataset | CANDOR | EvoSuite | LLM-Empirical |

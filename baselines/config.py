@@ -55,17 +55,25 @@ PRICE_PER_1M_INPUT_USD = float(os.getenv("PRICE_IN", "0.50"))
 PRICE_PER_1M_OUTPUT_USD = float(os.getenv("PRICE_OUT", "3.00"))
 
 # --- Experimental policy ---------------------------------------------------
-# OPEN TEAM DECISION (raised Week 1, needs Prof. Doaa + Member 4 sign-off).
+# DECIDED -- Prof. Doaa, Week 3: doctests are stripped from every prompt.
 #
 # Every dataset function ships with doctests in its docstring, i.e. worked
-# input -> output examples. Those are literal oracles sitting in the prompt.
-#   False -> strip doctests, prompt on signature + prose only.
-#            Measures the model's own oracle reasoning. Recommended.
-#   True  -> keep the full docstring. More realistic, but inflates all
-#            systems and blurs what RQ2 is trying to isolate.
+# input -> output examples. Handing those to the model measures transcription
+# rather than oracle reasoning, and it removes the surviving mutants the
+# refinement-loop RQs need in order to have anything to work on.
 #
-# Whatever is chosen MUST be identical for Baseline A, Baseline B and both
-# proposed variants, or the RQ1 comparison is not like-for-like.
+# The decisive argument was comparability with CANDOR. HumanEval's Python
+# docstrings do carry worked examples, but the Java translation CANDOR uses
+# drops the Javadoc entirely, and the paper describes its input as source code
+# plus a prose description. Stripping ours matches the system we compare
+# against; keeping them would not.
+#
+# The flag stays configurable because an ablation over this condition was
+# considered and set aside on cost grounds: it doubles the run (~1,260 ->
+# ~2,520 calls) and the shared log schema has no field recording which
+# condition produced a record. Do not flip it for a production run without
+# adding that field first -- the two conditions would be indistinguishable in
+# logs/.
 INCLUDE_DOCTESTS = os.getenv("INCLUDE_DOCTESTS", "false").lower() == "true"
 
 # OPEN TEAM DECISION: several dataset files hold more than one public function
