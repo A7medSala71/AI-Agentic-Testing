@@ -1,4 +1,26 @@
+# Python
 __pycache__/
 *.pyc
 .pytest_cache/
+.venv/
+
+# Secrets — order matters: the negation must come after the pattern it exempts.
+.env
+.env.*
+*.save
+!.env.example
+
+# Tool output
+.coverage
+cov.json
 .mutmut-cache
+mutants/
+
+# Generated test suites ARE committed: Member 2's pipeline consumes them, and
+# the paper's numbers must be reproducible from the exact suites that produced
+# them. Only mock output is excluded — it is a fixed canned suite, identical
+# for every function, and would be mistaken for real data.
+generated_tests/*__MOCK__*
+
+# macOS
+.DS_Store

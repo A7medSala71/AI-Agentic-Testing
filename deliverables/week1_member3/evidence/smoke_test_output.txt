@@ -1,0 +1,41 @@
+==============================================================
+Member 3 -- Week 1 environment acceptance check
+==============================================================
+  model            : gemini-3.6-flash
+  api key present  : True
+  mode             : MOCK (forced -- live coverage is in live_check)
+  include_doctests : False
+  temperature      : 1.0
+  panel size       : 3
+
+1. Dataset and prompt context
+-----------------------------
+  [PASS] all 30 dataset files parse -- 30 found
+  [PASS] multi-function files identified -- 17 files hold >1 public function
+  [PASS] scaffolding stripped from prompt -- no __main__ block
+  [PASS] doctest policy applied (INCLUDE_DOCTESTS=False) -- doctests absent
+
+2. Structured output
+--------------------
+  [PASS] response parsed into GeneratedTestSuite -- 2 tests
+  [PASS] wildcard imports rejected at render time -- protects function_25 pass rate
+  [PASS] response parsed into PanelReview -- 2 judgements
+
+3. Usage accounting
+-------------------
+  [PASS] calls counted -- 2 calls
+  [PASS] tokens counted -- 444 tokens
+  [PASS] cost estimated -- $0.000832
+
+4. Rendered suite runs under pytest
+-----------------------------------
+  [PASS] generated suite passes against real source -- 2 passed in 0.00s
+
+5. Team schema conformance
+--------------------------
+  [PASS] ExecutionLog validates against team schema
+  [PASS] log written to disk -- function_03__Baseline_A__run1.json
+
+==============================================================
+ALL CHECKS PASSED -- Week 1 environment is ready.
+==============================================================

@@ -1,0 +1,16 @@
+==============================================================
+Toolchain check -- mutmut + coverage on function_03 (arc_length)
+==============================================================
+
+variant           coverage  mutation    killed
+----------------------------------------------
+strong oracle        80.0%    100.0%     6/6
+weak oracle          80.0%      0.0%     0/6
+
+  coverage gap : 0.0 points
+  mutation gap : 100.0 points
+
+  Coverage barely separates the two suites; mutation score separates
+  them completely. This is the weak-oracle effect behind RQ2.
+
+TOOLCHAIN OK

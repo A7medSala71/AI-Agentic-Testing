@@ -1,0 +1,34 @@
+logs/: empty
+  function_01 run1: 2 tests, 5 call(s), 1098 tokens
+  function_02 run1: 2 tests, 5 call(s), 1098 tokens
+  function_03 run1: 2 tests, 5 call(s), 1098 tokens
+  function_04 run1: 2 tests, 5 call(s), 1098 tokens
+  function_05 run1: 2 tests, 5 call(s), 1098 tokens
+  function_06 run1: 2 tests, 5 call(s), 1098 tokens
+  function_07 run1: 2 tests, 5 call(s), 1098 tokens
+  function_08 run1: 2 tests, 5 call(s), 1098 tokens
+  function_09 run1: 2 tests, 5 call(s), 1098 tokens
+  function_10 run1: 2 tests, 5 call(s), 1098 tokens
+  function_11 run1: 2 tests, 5 call(s), 1098 tokens
+  function_12 run1: 2 tests, 5 call(s), 1098 tokens
+  function_13 run1: 2 tests, 5 call(s), 1098 tokens
+  function_14 run1: 2 tests, 5 call(s), 1098 tokens
+  function_15 run1: 2 tests, 5 call(s), 1098 tokens
+  function_16 run1: 2 tests, 5 call(s), 1098 tokens
+  function_17 run1: 2 tests, 5 call(s), 1098 tokens
+  function_18 run1: 2 tests, 5 call(s), 1098 tokens
+  function_19 run1: 2 tests, 5 call(s), 1098 tokens
+  function_20 run1: 2 tests, 5 call(s), 1098 tokens
+  function_21 run1: 2 tests, 5 call(s), 1098 tokens
+  function_22 run1: 2 tests, 5 call(s), 1098 tokens
+  function_23 run1: 2 tests, 5 call(s), 1098 tokens
+  function_24 run1: 2 tests, 5 call(s), 1098 tokens
+  function_25 run1: 2 tests, 5 call(s), 1098 tokens
+  function_26 run1: 2 tests, 5 call(s), 1098 tokens
+  function_27 run1: 2 tests, 5 call(s), 1098 tokens
+  function_28 run1: 2 tests, 5 call(s), 1098 tokens
+  function_29 run1: 2 tests, 5 call(s), 1098 tokens
+  function_30 run1: 2 tests, 5 call(s), 1098 tokens
+
+30 completed, 0 skipped, 0 failed
+Total: {'num_llm_calls': 150, 'input_tokens': 15000, 'output_tokens': 17940, 'thought_tokens': 0, 'total_tokens_used': 32940, 'estimated_cost_usd': 0.06132}

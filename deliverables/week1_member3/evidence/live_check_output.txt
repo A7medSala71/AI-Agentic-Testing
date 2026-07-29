@@ -1,0 +1,140 @@
+Live API check — captured transcript
+====================================
+
+Recorded 28 Jul 2026 against gemini-3.6-flash. Two runs are shown: the first
+exposed a prompt defect, the second is after the fix.
+
+This transcript is a capture rather than a live re-run, because the free-tier
+daily quota was exhausted during the session (see report §6.5). Reproduce with:
+
+    .venv/bin/python -m baselines.live_check
+
+after the quota resets at midnight Pacific time.
+
+
+RUN 1 — before the module-name fix
+----------------------------------
+
+==============================================================
+Live API check
+==============================================================
+  model       : gemini-3.6-flash
+  target      : function_03 (arc_length)
+  calls       : 5
+  temperature : 1.0
+  doctests    : stripped
+
+Schema conformance
+--------------------------------------------------------------
+  call 1: OK -- 6 tests
+  call 2: OK -- 8 tests
+  call 3: OK -- 8 tests
+  call 4: OK -- 8 tests
+  call 5: OK -- 6 tests
+
+  conformance rate: 5/5 (100%)
+
+Token accounting (real)
+--------------------------------------------------------------
+  num_llm_calls        5
+  input_tokens         545
+  output_tokens        3454
+  thought_tokens       6472
+  total_tokens_used    10471
+  estimated_cost_usd   0.030051
+  avg tokens/call      2094
+  cost per call        $0.006010
+  projected A+B total  $3.25  (30 fn x 3 repeats)
+
+Generated tests run against real source
+--------------------------------------------------------------
+  suite 1: FAIL -- 1 error in 0.07s
+  suite 2: FAIL -- 1 error in 0.06s
+  suite 3: FAIL -- 1 error in 0.06s
+  suite 4: FAIL -- 1 error in 0.06s
+  suite 5: FAIL -- 1 error in 0.06s
+
+  pass rate: 0/5 (0%)
+
+Diagnosis
+--------------------------------------------------------------
+  module_under_test returned by model: 'arc_length_module'
+  imports: ['from math import pi', 'import pytest',
+            'from arc_length_module import arc_length']
+
+  E   ModuleNotFoundError: No module named 'arc_length_module'
+
+  The model never sees the filename, only the source, so it invented a
+  module name. Observed inventions across calls: 'solution',
+  'arc_length_module'. Fix: state the module name in the prompt.
+
+
+RUN 2 — after the module-name fix
+---------------------------------
+
+==============================================================
+Live API check
+==============================================================
+  model       : gemini-3.6-flash
+  target      : function_03 (arc_length)
+  calls       : 5
+  temperature : 1.0
+  doctests    : stripped
+
+Schema conformance
+--------------------------------------------------------------
+  call 1: OK -- 6 tests
+  call 2: OK -- 5 tests
+  call 3: OK -- 6 tests
+  call 4: OK -- 6 tests
+  call 5: OK -- 7 tests
+
+  conformance rate: 5/5 (100%)
+
+Token accounting (real)
+--------------------------------------------------------------
+  num_llm_calls        5
+  input_tokens         855
+  output_tokens        3149
+  thought_tokens       5319
+  total_tokens_used    9323
+  estimated_cost_usd   0.025832
+  avg tokens/call      1864
+  cost per call        $0.005166
+  projected A+B total  $2.79  (30 fn x 3 repeats)
+
+Generated tests run against real source
+--------------------------------------------------------------
+  suite 1: FAIL -- 1 failed, 5 passed in 0.02s
+           test_function_03.py:29: AssertionError
+  suite 2: PASS -- 5 passed in 0.01s
+  suite 3: PASS -- 6 passed in 0.01s
+  suite 4: PASS -- 6 passed in 0.01s
+  suite 5: PASS -- 7 passed in 0.01s
+
+  pass rate: 4/5 (80%)
+
+Sample generated suite (first call)
+--------------------------------------------------------------
+  import pytest
+  from math import pi
+  from function_03 import arc_length
+
+
+  def test_arc_length_nominal():
+      ...
+
+
+QUOTA EXHAUSTION
+----------------
+
+After ~20 successful calls the API returned:
+
+  ClientError: 429 RESOURCE_EXHAUSTED
+  'You exceeded your current quota, please check your plan and billing details.'
+
+Three probes spread over ~70 seconds were all rejected, establishing that the
+cap is daily rather than per-minute. Per Google's documentation, requests-per-day
+quotas reset at midnight Pacific time.
+
+See report §6.5 for the resulting call-budget analysis.
