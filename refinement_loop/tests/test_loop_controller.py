@@ -29,6 +29,25 @@ def _mutant(mid: str) -> SurvivingMutant:
     return SurvivingMutant(mid, "Op", 1, "a", "b")
 
 
+def test_invalid_regeneration_is_discarded_not_merged():
+    """A round that returns prose/empty output (no `def test_`) must not
+    overwrite the existing suite -- see RefinementConfig.discard_invalid_regeneration."""
+
+    class ProseLLMClient:
+        def generate(self, user_prompt: str, system_prompt: str = "") -> tuple[str, int]:
+            return "I'm sorry, I can't help with that request.", 40
+
+    results = [MutationResult(10, 8, [_mutant("m1")], 90.0)]
+    loop = RefinementLoop(RefinementConfig(), ScriptedMutationRunner(results), ProseLLMClient())
+    log = loop.run("fn", "def f(): ...", "f", "def test_f(): ...")
+
+    assert log.iteration_count == 1
+    assert log.iterations_detail[0].mutant_killed is False
+    # score stays whatever the last real mutation run reported (80%), not
+    # invented from the discarded round
+    assert log.mutation_score_pct == 80.0
+
+
 def test_loop_stops_when_no_survivors_remain():
     results = [
         MutationResult(10, 8, [_mutant("m1"), _mutant("m2")], 90.0),
