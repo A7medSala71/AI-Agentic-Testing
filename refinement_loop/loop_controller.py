@@ -16,6 +16,12 @@ from .models import IterationRecord, MutationResult, RunLog
 from .prompt_strategies import get_strategy
 
 
+def _looks_like_pytest(code: str) -> bool:
+    """Minimal sanity check that a regeneration round returned test code,
+    not prose, a refusal, or an empty/truncated response."""
+    return "def test_" in code
+
+
 class RefinementLoop:
     def __init__(
         self,
@@ -55,6 +61,26 @@ class RefinementLoop:
             )
             generated_code, tokens = self.llm_client.generate(user_prompt, system_prompt)
             total_tokens += tokens
+
+            if self.config.discard_invalid_regeneration and not _looks_like_pytest(
+                generated_code
+            ):
+                # Round produced no usable test code. Keep the existing suite
+                # rather than overwrite it with prose/an empty response, but
+                # still charge the round against iterations/tokens and record
+                # that none of this round's targets were killed.
+                for m in targets:
+                    iterations_detail.append(
+                        IterationRecord(
+                            iteration=iteration,
+                            mutant_id=m.mutant_id,
+                            mutant_operator=m.mutant_operator,
+                            predicted_state=m.predicted_state,
+                            generated_test_code=generated_code,
+                            mutant_killed=False,
+                        )
+                    )
+                break  # no point continuing rounds if generation is broken
 
             current_tests = self._merge_tests(current_tests, generated_code)
             new_result = self.mutation_runner.run(function_source, current_tests)

@@ -25,6 +25,16 @@ class RefinementConfig:
     max_mutants_per_prompt: int = 8            # cap feedback size / token budget
     max_assertions_per_mutant: int = 3         # trim noisy failing_assertions lists
 
+    # Edge case found while wiring the loop to a live model: a round can come
+    # back without a single `def test_` in it (prose leaking past the "no
+    # prose" instruction, an empty/truncated response, a refusal). Rendering
+    # that as the new suite would silently wipe out every previously-passing
+    # test. When True, such a round is discarded: current_tests is kept
+    # as-is, the round still counts against max_iterations and tokens spent,
+    # and it's marked mutant_killed=False for every targeted mutant in
+    # iterations_detail rather than pretending the round improved anything.
+    discard_invalid_regeneration: bool = True
+
     def __post_init__(self) -> None:
         if self.variant not in SUPPORTED_VARIANTS:
             raise ValueError(
