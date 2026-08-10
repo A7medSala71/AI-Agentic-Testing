@@ -25,7 +25,11 @@ from pathlib import Path
 
 from . import config
 
-VENV_BIN = Path(sys.executable).parent
+# Invoked as `-m mutmut` / `-m coverage` rather than a sibling console
+# script, since sys.executable's directory and pip's installed
+# console-script bin dir aren't guaranteed to be the same outside a venv
+# (e.g. Colab's system Python has no `python`/`mutmut` binaries next to
+# sys.executable at all).
 
 # mutmut 3.x renamed its keys: paths_to_mutate -> source_paths, and
 # tests_dir -> pytest_add_cli_args_test_selection. It refuses to run at all
@@ -103,14 +107,14 @@ def score_suite(function_id: str, test_source: str) -> Score | None:
 
         # --- pass rate + coverage against the unmutated source -------------
         result = subprocess.run(
-            [str(VENV_BIN / "python"), "-m", "coverage", "run",
+            [sys.executable, "-m", "coverage", "run",
              f"--source={function_id}", "-m", "pytest", "-q", "tests/"],
             cwd=workdir, capture_output=True, text=True, timeout=300,
         )
         collected, passed = _parse_pytest_counts(result.stdout)
 
         subprocess.run(
-            [str(VENV_BIN / "python"), "-m", "coverage", "json", "-o", "cov.json"],
+            [sys.executable, "-m", "coverage", "json", "-o", "cov.json"],
             cwd=workdir, capture_output=True, text=True, timeout=120,
         )
         coverage_pct = 0.0
@@ -122,7 +126,7 @@ def score_suite(function_id: str, test_source: str) -> Score | None:
 
         # --- mutation score ------------------------------------------------
         subprocess.run(
-            [str(VENV_BIN / "mutmut"), "run"],
+            [sys.executable, "-m", "mutmut", "run"],
             cwd=workdir, capture_output=True, text=True, timeout=1800,
         )
         killed = total = 0
