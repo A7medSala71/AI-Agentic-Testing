@@ -38,12 +38,19 @@ class SurvivingMutant:
 
 @dataclass
 class MutationResult:
-    """Output of one mutation-testing pass (Member 2's pipeline)."""
+    """Output of one mutation-testing/evaluation pass.
+
+    Member 2 owns the authoritative implementation. The optional coverage/pass-rate
+    fields let that implementation expose the complete project metrics without
+    forcing Member 4's loop to own scoring logic.
+    """
 
     total_mutants: int
     killed_mutants: int
     survivors: list[SurvivingMutant]
     line_coverage_pct: float
+    pass_rate_pct: float | None = None
+    branch_coverage_pct: float | None = None
 
     @property
     def mutation_score_pct(self) -> float:
@@ -79,8 +86,15 @@ class RunLog:
     line_coverage_pct: float
     estimated_cost_usd: float = 0.0
     iterations_detail: list[IterationRecord] = field(default_factory=list)
+    num_llm_calls: int | None = None
+    pass_rate_pct: float | None = None
+    branch_coverage_pct: float | None = None
+    initial_mutation_score_pct: float | None = None
+    stop_reason: str | None = None
 
     def to_dict(self) -> dict:
         d = asdict(self)
         d["iterations_detail"] = [r.to_dict() for r in self.iterations_detail]
-        return d
+        # Optional metrics are omitted rather than serialized as null so the
+        # JSON remains compatible with the shared schema and older consumers.
+        return {k: v for k, v in d.items() if v is not None}

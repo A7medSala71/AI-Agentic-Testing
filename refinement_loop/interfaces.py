@@ -24,9 +24,10 @@ class MutationRunner(Protocol):
         Run mutation testing (mutmut, fallback cosmic-ray) for `function_source`
         against `test_code`, plus coverage.py for line coverage.
 
-        Returns a MutationResult with the current surviving mutants. Must be
-        deterministic given the same inputs (mutant set is fixed per function;
-        only which mutants survive changes as test_code improves).
+        Returns a MutationResult with the current surviving mutants plus any
+        metrics Member 2's shared evaluator already computes (coverage/pass rate).
+        The runner remains the ground-truth source for mutation score; Member 4
+        never recomputes that score independently.
         """
         ...
 

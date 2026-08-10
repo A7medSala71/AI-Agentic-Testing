@@ -58,6 +58,7 @@ def test_loop_stops_when_no_survivors_remain():
 
     assert log.iteration_count == 1
     assert log.mutation_score_pct == 100.0
+    assert log.stop_reason == "no_survivors"
 
 
 def test_loop_stops_on_plateau_below_threshold():
@@ -82,3 +83,33 @@ def test_loop_respects_max_iterations_cap():
     log = loop.run("fn", "def f(): ...", "f", "def test_f(): ...")
 
     assert log.iteration_count == 5
+
+
+def test_initial_suite_success_reports_zero_refinement_rounds():
+    results = [MutationResult(10, 10, [], 80.0, pass_rate_pct=100.0)]
+    loop = RefinementLoop(RefinementConfig(), ScriptedMutationRunner(results), StubLLMClient())
+    log = loop.run("fn", "def f(): ...", "f", "def test_f(): ...")
+    assert log.iteration_count == 0
+    assert log.num_llm_calls == 0
+    assert log.stop_reason == "no_survivors"
+    assert log.pass_rate_pct == 100.0
+
+
+def test_invalid_python_regeneration_is_discarded():
+    class BadLLM:
+        def generate(self, user_prompt: str, system_prompt: str = "") -> tuple[str, int]:
+            return "def test_broken(:", 20
+
+    results = [MutationResult(10, 8, [_mutant("m1")], 90.0)]
+    loop = RefinementLoop(RefinementConfig(), ScriptedMutationRunner(results), BadLLM())
+    log = loop.run("fn", "def f(): ...", "f", "def test_f(): ...")
+    assert log.stop_reason == "invalid_regeneration"
+    assert log.mutation_score_pct == 80.0
+
+
+def test_merge_preserves_dropped_existing_test():
+    current = "from function_01 import f\n\ndef test_old():\n    assert f(1) == 1\n"
+    generated = "from function_01 import f\n\ndef test_new():\n    assert f(2) == 2\n"
+    merged = RefinementLoop._merge_tests(current, generated)
+    assert "def test_old" in merged
+    assert "def test_new" in merged

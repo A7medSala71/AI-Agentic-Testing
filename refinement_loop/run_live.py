@@ -103,6 +103,7 @@ def run_one(
     # fold in the seed call's usage so total_tokens_used/cost reflect the whole run
     seed_summary = seed.tracker.summary()
     run_log.total_tokens_used += seed_summary["total_tokens_used"]
+    run_log.num_llm_calls = (run_log.num_llm_calls or 0) + seed_summary["num_llm_calls"]
     if provider == "groq":
         # UsageTracker.summary() prices against baselines.config's Gemini
         # figures regardless of who made the call -- recompute with Groq's

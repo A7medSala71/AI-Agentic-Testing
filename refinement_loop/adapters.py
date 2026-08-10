@@ -41,11 +41,9 @@ rest of the repo):
     mutmut 3.x doesn't expose the operator name through `show` or the meta
     file. Good enough for RQ4's rough operator-class buckets; not a
     substitute for reading mutmut's internal mutation registry.
-  - `covering_test_names` / `failing_assertions` are approximated as "every
-    test in the current suite" / "every assert line in the current suite",
-    because mutmut's exit-code-per-mutant granularity doesn't tell us which
-    specific test or assertion ran against which mutant without per-mutant
-    coverage instrumentation (out of scope for a v0.1).
+  - The fallback runner leaves `covering_test_names` / `failing_assertions` empty
+    rather than inventing attribution. Exact per-mutant assertion attribution is
+    a requirement for the final shared Member-2 pipeline.
 """
 
 from __future__ import annotations
@@ -93,6 +91,30 @@ def _classify_operator(original_line: str, mutated_line: str) -> str:
     return "Unknown"
 
 
+def _parse_pytest_counts(stdout: str) -> tuple[int, int]:
+    """Return (collected, passed) from pytest's summary line."""
+    passed = failed = errors = skipped = 0
+    for line in reversed(stdout.strip().splitlines()):
+        if not any(token in line for token in (" passed", " failed", " error", " skipped")):
+            continue
+        for chunk in line.replace("=", " ").split(","):
+            parts = chunk.split()
+            for i, token in enumerate(parts[:-1]):
+                if not token.isdigit():
+                    continue
+                label = parts[i + 1].rstrip("s")
+                if label == "passed":
+                    passed = int(token)
+                elif label == "failed":
+                    failed = int(token)
+                elif label == "error":
+                    errors = int(token)
+                elif label == "skipped":
+                    skipped = int(token)
+        break
+    return passed + failed + errors + skipped, passed
+
+
 class MutmutMutationRunner:
     """Implements interfaces.MutationRunner for one fixed function_id."""
 
@@ -113,33 +135,44 @@ class MutmutMutationRunner:
                 SETUP_CFG.format(module=self.function_id), encoding="utf-8"
             )
 
-            # coverage, for RunLog.line_coverage_pct
-            subprocess.run(
+            # Pass rate + coverage against the ORIGINAL source.
+            pytest_result = subprocess.run(
                 [sys.executable, "-m", "coverage", "run",
                  f"--source={self.function_id}", "-m", "pytest", "-q", "tests/"],
                 cwd=workdir, capture_output=True, text=True, timeout=300,
             )
+            collected, passed = _parse_pytest_counts(pytest_result.stdout)
             subprocess.run(
                 [sys.executable, "-m", "coverage", "json", "-o", "cov.json"],
                 cwd=workdir, capture_output=True, text=True, timeout=120,
             )
             coverage_pct = 0.0
+            branch_coverage_pct: float | None = None
             cov_path = workdir / "cov.json"
             if cov_path.exists():
-                coverage_pct = json.loads(cov_path.read_text(encoding="utf-8"))[
-                    "totals"
-                ]["percent_covered"]
+                totals = json.loads(cov_path.read_text(encoding="utf-8"))["totals"]
+                coverage_pct = totals.get("percent_covered", 0.0)
+                if totals.get("num_branches"):
+                    branch_coverage_pct = round(
+                        100.0 * totals.get("covered_branches", 0) / totals["num_branches"], 1
+                    )
 
             # mutation run. Invoked as `-m mutmut` rather than a `mutmut`
             # console script, since sys.executable and pip's installed
             # console-script bin dir aren't guaranteed to be the same
             # directory outside a venv (e.g. Colab's system Python).
-            subprocess.run(
+            mutation_process = subprocess.run(
                 [sys.executable, "-m", "mutmut", "run"],
                 cwd=workdir, capture_output=True, text=True, timeout=1800,
             )
 
             meta_path = workdir / "mutants" / f"{self.function_id}.py.meta"
+            if not meta_path.exists():
+                detail = (mutation_process.stderr or mutation_process.stdout or "unknown mutmut failure").strip()
+                raise RuntimeError(
+                    f"mutmut did not produce its result metadata for {self.function_id}. "
+                    f"Exit code={mutation_process.returncode}. {detail[-1000:]}"
+                )
             total = killed = 0
             survivor_keys: list[str] = []
             if meta_path.exists():
@@ -152,8 +185,12 @@ class MutmutMutationRunner:
                 killed = sum(1 for code in exit_codes.values() if code != 0)
                 survivor_keys = [k for k, code in exit_codes.items() if code == 0]
 
-            covering_tests = _TEST_DEF_RE.findall(test_code)
-            failing_assertions = _ASSERT_RE.findall(test_code)
+            # Do not fabricate per-assertion attribution. The fallback runner
+            # has only mutant-level exit codes, so it cannot know which exact
+            # assertion executed and failed to kill a survivor. Member 2's
+            # shared pipeline must supply those fields for final experiments.
+            covering_tests: list[str] = []
+            failing_assertions: list[str] = []
 
             survivors = [
                 self._survivor_from_key(workdir, key, covering_tests, failing_assertions)
@@ -166,6 +203,8 @@ class MutmutMutationRunner:
             killed_mutants=killed,
             survivors=survivors,
             line_coverage_pct=round(coverage_pct, 1),
+            pass_rate_pct=round(100.0 * passed / collected, 1) if collected else 0.0,
+            branch_coverage_pct=branch_coverage_pct,
         )
 
     def _survivor_from_key(
@@ -233,6 +272,7 @@ class GeminiTextClient:
             )
         self.model = model or baselines_config.MODEL_ID
         self._client = genai.Client(api_key=api_key)
+        self.last_call_cost_usd = 0.0
 
     def generate(self, user_prompt: str, system_prompt: str = "") -> tuple[str, int]:
         from google.genai import types
@@ -247,6 +287,10 @@ class GeminiTextClient:
         thoughts = getattr(usage, "thoughts_token_count", None) or 0
         total = usage.total_token_count or (
             (usage.prompt_token_count or 0) + (usage.candidates_token_count or 0) + thoughts
+        )
+        self.last_call_cost_usd = (
+            (prompt_tokens / 1_000_000 * baselines_config.PRICE_PER_1M_INPUT_USD)
+            + ((candidate_tokens + thoughts) / 1_000_000 * baselines_config.PRICE_PER_1M_OUTPUT_USD)
         )
         text = (response.text or "").strip()
         # Model sometimes wraps output in ```python fences despite instructions
@@ -396,18 +440,20 @@ class GroqTextClient:
                 "before running with --provider groq."
             )
         self.model = model or GROQ_MODEL_ID
+        self.last_call_cost_usd = 0.0
 
     def generate(self, user_prompt: str, system_prompt: str = "") -> tuple[str, int]:
         messages = []
         if system_prompt:
             messages.append({"role": "system", "content": system_prompt})
         messages.append({"role": "user", "content": user_prompt})
-        content, _prompt_tok, _completion_tok, total = _groq_chat(
+        content, prompt_tok, completion_tok, total = _groq_chat(
             messages,
             temperature=baselines_config.TEMPERATURE,
             max_tokens=baselines_config.MAX_OUTPUT_TOKENS,
             model=self.model,
         )
+        self.last_call_cost_usd = groq_cost_usd(prompt_tok, completion_tok)
         text = content.strip()
         if text.startswith("```"):
             text = re.sub(r"^```[a-zA-Z]*\n?", "", text)
