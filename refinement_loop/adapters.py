@@ -342,6 +342,22 @@ def _groq_chat(
             headers={
                 "Authorization": f"Bearer {api_key}",
                 "Content-Type": "application/json",
+                "Accept": "application/json",
+                # Cloudflare (fronting api.groq.com) returns a 403/"error
+                # code: 1010" for urllib's default User-Agent
+                # (Python-urllib/x.y) -- documented Cloudflare behavior is
+                # that non-browser UA strings get blocked at the edge before
+                # the request reaches the origin at all (see Cloudflare
+                # community reports on error 1010). Not verified against a
+                # live call from this environment -- this sandbox can't
+                # reach api.groq.com -- so treat this as the leading
+                # hypothesis fix, and if a browser-shaped UA still 403s,
+                # switch _groq_chat to the official `groq` package instead of
+                # tuning headers further blind.
+                "User-Agent": (
+                    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+                    "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+                ),
             },
             method="POST",
         )
