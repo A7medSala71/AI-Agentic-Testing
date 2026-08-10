@@ -53,7 +53,6 @@ from __future__ import annotations
 import json
 import os
 import re
-import shutil
 import subprocess
 import sys
 import tempfile
@@ -65,8 +64,6 @@ from pathlib import Path
 from baselines import config as baselines_config
 from baselines.llm_client import _retry_delay_seconds
 from .models import MutationResult, SurvivingMutant
-
-VENV_BIN = Path(sys.executable).parent
 
 SETUP_CFG = """\
 [mutmut]
@@ -118,12 +115,12 @@ class MutmutMutationRunner:
 
             # coverage, for RunLog.line_coverage_pct
             subprocess.run(
-                [str(VENV_BIN / "python"), "-m", "coverage", "run",
+                [sys.executable, "-m", "coverage", "run",
                  f"--source={self.function_id}", "-m", "pytest", "-q", "tests/"],
                 cwd=workdir, capture_output=True, text=True, timeout=300,
             )
             subprocess.run(
-                [str(VENV_BIN / "python"), "-m", "coverage", "json", "-o", "cov.json"],
+                [sys.executable, "-m", "coverage", "json", "-o", "cov.json"],
                 cwd=workdir, capture_output=True, text=True, timeout=120,
             )
             coverage_pct = 0.0
@@ -133,9 +130,12 @@ class MutmutMutationRunner:
                     "totals"
                 ]["percent_covered"]
 
-            # mutation run
+            # mutation run. Invoked as `-m mutmut` rather than a `mutmut`
+            # console script, since sys.executable and pip's installed
+            # console-script bin dir aren't guaranteed to be the same
+            # directory outside a venv (e.g. Colab's system Python).
             subprocess.run(
-                [str(VENV_BIN / "mutmut"), "run"],
+                [sys.executable, "-m", "mutmut", "run"],
                 cwd=workdir, capture_output=True, text=True, timeout=1800,
             )
 
@@ -176,7 +176,7 @@ class MutmutMutationRunner:
         failing_assertions: list[str],
     ) -> SurvivingMutant | None:
         result = subprocess.run(
-            [str(VENV_BIN / "mutmut"), "show", key],
+            [sys.executable, "-m", "mutmut", "show", key],
             cwd=workdir, capture_output=True, text=True, timeout=60,
         )
         line_number, original_line, mutated_line = _parse_diff(result.stdout)
