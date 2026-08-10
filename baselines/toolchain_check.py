@@ -55,7 +55,8 @@ source_paths=function_03.py
 pytest_add_cli_args_test_selection=tests/
 """
 
-VENV_BIN = Path(sys.executable).parent
+# VENV_BIN removed -- see baselines/score.py for why (Colab's system Python
+# doesn't put mutmut/python in the same directory as sys.executable).
 
 
 def mutation_score(workdir: Path) -> tuple[int, int, list[str]]:
@@ -75,12 +76,12 @@ def mutation_score(workdir: Path) -> tuple[int, int, list[str]]:
 
 def line_coverage(workdir: Path) -> float:
     subprocess.run(
-        [str(VENV_BIN / "python"), "-m", "coverage", "run",
+        [sys.executable, "-m", "coverage", "run",
          "--source=function_03", "-m", "pytest", "-q", "tests/"],
         cwd=workdir, capture_output=True, text=True,
     )
     subprocess.run(
-        [str(VENV_BIN / "python"), "-m", "coverage", "json", "-o", "cov.json"],
+        [sys.executable, "-m", "coverage", "json", "-o", "cov.json"],
         cwd=workdir, capture_output=True, text=True,
     )
     data = json.loads((workdir / "cov.json").read_text(encoding="utf-8"))
@@ -97,7 +98,7 @@ def run_variant(name: str, test_source: str) -> dict:
 
         coverage_pct = line_coverage(workdir)
         subprocess.run(
-            [str(VENV_BIN / "mutmut"), "run"],
+            [sys.executable, "-m", "mutmut", "run"],
             cwd=workdir, capture_output=True, text=True,
         )
         killed, total, survivors = mutation_score(workdir)
