@@ -1,13 +1,23 @@
 """
-Member 4 -- live run: RefinementLoop wired to the real mutmut adapter and the
-real Gemini API, replacing the Fakes in examples/demo_run.py.
+Member 4 -- live run: RefinementLoop wired to a real mutation runner and a
+real LLM provider (Gemini or Groq), replacing the Fakes in examples/demo_run.py.
 
 The initial test suite (round 0, before any refinement) is generated the
-same way Baseline A does it, via baselines.baseline_a, so Proposed and
-Baseline A start from a comparable seed and RQ1's comparison stays fair.
+same way Baseline A does it, so Proposed and Baseline A start from a
+comparable seed and RQ1's comparison stays fair.
+
+Provider selection (--provider auto|gemini|groq, default auto):
+    auto prefers Groq if GROQ_API_KEY is set, else Gemini if GEMINI_API_KEY
+    is set. Explicit auto-preference for Groq exists because the Gemini
+    Cloud project used for this run started returning
+    403 PERMISSION_DENIED ("project has been denied access") independent of
+    the key's validity -- switching provider was a response to that, not a
+    style preference, so auto shouldn't silently fall back to a project
+    that's known to be blocked.
 
 Run:
     .venv/bin/python -m refinement_loop.run_live function_25
+    .venv/bin/python -m refinement_loop.run_live function_25 --provider groq
     .venv/bin/python -m refinement_loop.run_live function_25 --variant state_prediction
     .venv/bin/python -m refinement_loop.run_live --all --repeats 3
 """
@@ -22,9 +32,15 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT))
 
 from baselines import baseline_a, config as baselines_config
-from baselines.llm_client import LLMClient as StructuredLLMClient
+from baselines.llm_client import LLMClient as GeminiStructuredClient
 from baselines.prompt_context import build_context
-from refinement_loop.adapters import GeminiTextClient, MutmutMutationRunner
+from refinement_loop import adapters
+from refinement_loop.adapters import (
+    GeminiTextClient,
+    GroqStructuredClient,
+    GroqTextClient,
+    MutmutMutationRunner,
+)
 from refinement_loop.config import VARIANT_ERROR_TRACE, VARIANT_STATE_PREDICTION, RefinementConfig
 from refinement_loop.logger import validate_run_log, write_run_log
 from refinement_loop.loop_controller import RefinementLoop
@@ -35,32 +51,48 @@ VARIANT_ALIASES = {
 }
 
 
-def run_one(function_id: str, variant: str, run_index: int, force: bool = False) -> None:
-    if not baselines_config.has_api_key():
-        raise SystemExit(
-            "GEMINI_API_KEY not set -- put your key in .env (see .env.example) "
-            "or export it before running this script."
-        )
+def resolve_provider(requested: str) -> str:
+    if requested != "auto":
+        return requested
+    if adapters.has_groq_key():
+        return "groq"
+    if baselines_config.has_api_key():
+        return "gemini"
+    raise SystemExit(
+        "No API key found. Set GROQ_API_KEY or GEMINI_API_KEY (.env or "
+        "environment) before running this script."
+    )
 
+
+def run_one(
+    function_id: str, variant: str, run_index: int, provider: str, force: bool = False
+) -> None:
     out_path = (
         baselines_config.LOGS_DIR
-        / f"{function_id}__{variant}__run{run_index}.json"
+        / f"{function_id}__{variant}__run{run_index}__{provider}.json"
     )
     if not force and out_path.exists():
-        print(f"[{function_id}] run{run_index} ({variant}): skipped (already logged)")
+        print(f"[{function_id}] run{run_index} ({variant}, {provider}): "
+              f"skipped (already logged)")
         return
 
     ctx = build_context(baselines_config.DATASET_DIR / f"{function_id}.py")
 
-    print(f"[{function_id}] seeding initial suite (Baseline-A-style, 1 call)...")
-    structured_client = StructuredLLMClient()
+    print(f"[{function_id}] seeding initial suite via {provider} "
+          f"(Baseline-A-style, 1 call)...")
+    if provider == "groq":
+        structured_client = GroqStructuredClient()
+        text_client = GroqTextClient()
+    else:
+        structured_client = GeminiStructuredClient()
+        text_client = GeminiTextClient()
     seed = baseline_a.run(ctx, client=structured_client)
 
-    print(f"[{function_id}] running refinement loop ({variant})...")
+    print(f"[{function_id}] running refinement loop ({variant}, {provider})...")
     loop = RefinementLoop(
         config=RefinementConfig(variant=variant),
         mutation_runner=MutmutMutationRunner(function_id),
-        llm_client=GeminiTextClient(),
+        llm_client=text_client,
     )
     run_log = loop.run(
         function_id=function_id,
@@ -68,12 +100,19 @@ def run_one(function_id: str, variant: str, run_index: int, force: bool = False)
         function_name=ctx.primary_function,
         initial_test_code=seed.test_source,
     )
-    # fold in the seed call's usage so total_tokens_used reflects the whole run
+    # fold in the seed call's usage so total_tokens_used/cost reflect the whole run
     seed_summary = seed.tracker.summary()
     run_log.total_tokens_used += seed_summary["total_tokens_used"]
-    run_log.estimated_cost_usd = round(
-        run_log.estimated_cost_usd + seed_summary["estimated_cost_usd"], 6
-    )
+    if provider == "groq":
+        # UsageTracker.summary() prices against baselines.config's Gemini
+        # figures regardless of who made the call -- recompute with Groq's
+        # own price table instead of trusting that number here.
+        seed_cost = adapters.groq_cost_usd(
+            seed_summary["input_tokens"], seed_summary["output_tokens"]
+        )
+    else:
+        seed_cost = seed_summary["estimated_cost_usd"]
+    run_log.estimated_cost_usd = round(run_log.estimated_cost_usd + seed_cost, 6)
 
     validate_run_log(run_log)
     write_run_log(run_log, out_path)
@@ -94,6 +133,9 @@ def main() -> int:
         "--variant", choices=list(VARIANT_ALIASES), default="error_trace",
     )
     parser.add_argument(
+        "--provider", choices=["auto", "gemini", "groq"], default="auto",
+    )
+    parser.add_argument(
         "--force", action="store_true",
         help="re-run even if a log for this function/variant/run already exists",
     )
@@ -101,6 +143,9 @@ def main() -> int:
 
     if not args.function_id and not args.all:
         parser.error("pass a function_id or --all")
+
+    provider = resolve_provider(args.provider)
+    print(f"Using provider: {provider}")
 
     function_ids = (
         sorted(p.stem for p in baselines_config.DATASET_DIR.glob("function_*.py"))
@@ -116,10 +161,10 @@ def main() -> int:
         for run_index in range(1, args.repeats + 1):
             before = (
                 baselines_config.LOGS_DIR
-                / f"{function_id}__{variant}__run{run_index}.json"
+                / f"{function_id}__{variant}__run{run_index}__{provider}.json"
             ).exists()
             try:
-                run_one(function_id, variant, run_index, force=args.force)
+                run_one(function_id, variant, run_index, provider, force=args.force)
             except Exception as exc:  # noqa: BLE001 -- one function must not kill the sweep
                 failed += 1
                 print(f"[{function_id}] run{run_index}: FAILED -- "
