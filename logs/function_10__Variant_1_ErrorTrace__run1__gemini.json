@@ -1,0 +1,49 @@
+{
+  "function_id": "function_10",
+  "system_variant": "Variant_1_ErrorTrace",
+  "iteration_count": 1,
+  "total_tokens_used": 3506,
+  "mutation_score_pct": 88.89,
+  "line_coverage_pct": 100.0,
+  "estimated_cost_usd": 0.004613,
+  "iterations_detail": [
+    {
+      "iteration": 1,
+      "mutant_id": "function_10.x_bubble_sort_iterative__mutmut_4",
+      "generated_test_code": "from function_10 import bubble_sort_iterative, bubble_sort_recursive\n\n\ndef test_bubble_sort_iterative_nominal():\n    col = [5, 2, 9, 1, 5, 6]\n    res = bubble_sort_iterative(col)\n    assert res == [1, 2, 5, 5, 6, 9]\n    assert res is col\n\n\ndef test_bubble_sort_iterative_already_sorted():\n    col = [1, 2, 3, 4, 5]\n    res = bubble_sort_iterative(col)\n    assert res == [1, 2, 3, 4, 5]\n    assert res is col\n\n\ndef test_bubble_sort_iterative_reverse_sorted():\n    col = [5, 4, 3, 2, 1]\n    res = bubble_sort_iterative(col)\n    assert res == [1, 2, 3, 4, 5]\n    assert res is col\n\n\ndef test_bubble_sort_iterative_empty_and_single():\n    assert bubble_sort_iterative([]) == []\n    assert bubble_sort_iterative([42]) == [42]\n\n\ndef test_bubble_sort_iterative_duplicates():\n    # Kills ConditionalBoundary mutant (>= instead of >)\n    col = [2, 2, 1]\n    res = bubble_sort_iterative(col)\n    assert res == [1, 2, 2]\n    assert res is col\n\n\ndef test_bubble_sort_recursive_nominal():\n    col = [5, 2, 9, 1, 5, 6]\n    res = bubble_sort_recursive(col)\n    assert res == [1, 2, 5, 5, 6, 9]\n    assert res is col\n\n\ndef test_bubble_sort_recursive_already_sorted():\n    col = [1, 2, 3, 4, 5]\n    res = bubble_sort_recursive(col)\n    assert res == [1, 2, 3, 4, 5]\n    assert res is col\n\n\ndef test_bubble_sort_recursive_reverse_sorted():\n    col = [3, 2, 1]\n    res = bubble_sort_recursive(col)\n    assert res == [1, 2, 3]\n    assert res is col\n\n\ndef test_bubble_sort_recursive_empty_and_single():\n    assert bubble_sort_recursive([]) == []\n    assert bubble_sort_recursive([7]) == [7]",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_10.x_bubble_sort_iterative__mutmut_5",
+      "generated_test_code": "from function_10 import bubble_sort_iterative, bubble_sort_recursive\n\n\ndef test_bubble_sort_iterative_nominal():\n    col = [5, 2, 9, 1, 5, 6]\n    res = bubble_sort_iterative(col)\n    assert res == [1, 2, 5, 5, 6, 9]\n    assert res is col\n\n\ndef test_bubble_sort_iterative_already_sorted():\n    col = [1, 2, 3, 4, 5]\n    res = bubble_sort_iterative(col)\n    assert res == [1, 2, 3, 4, 5]\n    assert res is col\n\n\ndef test_bubble_sort_iterative_reverse_sorted():\n    col = [5, 4, 3, 2, 1]\n    res = bubble_sort_iterative(col)\n    assert res == [1, 2, 3, 4, 5]\n    assert res is col\n\n\ndef test_bubble_sort_iterative_empty_and_single():\n    assert bubble_sort_iterative([]) == []\n    assert bubble_sort_iterative([42]) == [42]\n\n\ndef test_bubble_sort_iterative_duplicates():\n    # Kills ConditionalBoundary mutant (>= instead of >)\n    col = [2, 2, 1]\n    res = bubble_sort_iterative(col)\n    assert res == [1, 2, 2]\n    assert res is col\n\n\ndef test_bubble_sort_recursive_nominal():\n    col = [5, 2, 9, 1, 5, 6]\n    res = bubble_sort_recursive(col)\n    assert res == [1, 2, 5, 5, 6, 9]\n    assert res is col\n\n\ndef test_bubble_sort_recursive_already_sorted():\n    col = [1, 2, 3, 4, 5]\n    res = bubble_sort_recursive(col)\n    assert res == [1, 2, 3, 4, 5]\n    assert res is col\n\n\ndef test_bubble_sort_recursive_reverse_sorted():\n    col = [3, 2, 1]\n    res = bubble_sort_recursive(col)\n    assert res == [1, 2, 3]\n    assert res is col\n\n\ndef test_bubble_sort_recursive_empty_and_single():\n    assert bubble_sort_recursive([]) == []\n    assert bubble_sort_recursive([7]) == [7]",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_10.x_bubble_sort_iterative__mutmut_7",
+      "generated_test_code": "from function_10 import bubble_sort_iterative, bubble_sort_recursive\n\n\ndef test_bubble_sort_iterative_nominal():\n    col = [5, 2, 9, 1, 5, 6]\n    res = bubble_sort_iterative(col)\n    assert res == [1, 2, 5, 5, 6, 9]\n    assert res is col\n\n\ndef test_bubble_sort_iterative_already_sorted():\n    col = [1, 2, 3, 4, 5]\n    res = bubble_sort_iterative(col)\n    assert res == [1, 2, 3, 4, 5]\n    assert res is col\n\n\ndef test_bubble_sort_iterative_reverse_sorted():\n    col = [5, 4, 3, 2, 1]\n    res = bubble_sort_iterative(col)\n    assert res == [1, 2, 3, 4, 5]\n    assert res is col\n\n\ndef test_bubble_sort_iterative_empty_and_single():\n    assert bubble_sort_iterative([]) == []\n    assert bubble_sort_iterative([42]) == [42]\n\n\ndef test_bubble_sort_iterative_duplicates():\n    # Kills ConditionalBoundary mutant (>= instead of >)\n    col = [2, 2, 1]\n    res = bubble_sort_iterative(col)\n    assert res == [1, 2, 2]\n    assert res is col\n\n\ndef test_bubble_sort_recursive_nominal():\n    col = [5, 2, 9, 1, 5, 6]\n    res = bubble_sort_recursive(col)\n    assert res == [1, 2, 5, 5, 6, 9]\n    assert res is col\n\n\ndef test_bubble_sort_recursive_already_sorted():\n    col = [1, 2, 3, 4, 5]\n    res = bubble_sort_recursive(col)\n    assert res == [1, 2, 3, 4, 5]\n    assert res is col\n\n\ndef test_bubble_sort_recursive_reverse_sorted():\n    col = [3, 2, 1]\n    res = bubble_sort_recursive(col)\n    assert res == [1, 2, 3]\n    assert res is col\n\n\ndef test_bubble_sort_recursive_empty_and_single():\n    assert bubble_sort_recursive([]) == []\n    assert bubble_sort_recursive([7]) == [7]",
+      "mutant_killed": false,
+      "mutant_operator": "ConditionalBoundary",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_10.x_bubble_sort_recursive__mutmut_2",
+      "generated_test_code": "from function_10 import bubble_sort_iterative, bubble_sort_recursive\n\n\ndef test_bubble_sort_iterative_nominal():\n    col = [5, 2, 9, 1, 5, 6]\n    res = bubble_sort_iterative(col)\n    assert res == [1, 2, 5, 5, 6, 9]\n    assert res is col\n\n\ndef test_bubble_sort_iterative_already_sorted():\n    col = [1, 2, 3, 4, 5]\n    res = bubble_sort_iterative(col)\n    assert res == [1, 2, 3, 4, 5]\n    assert res is col\n\n\ndef test_bubble_sort_iterative_reverse_sorted():\n    col = [5, 4, 3, 2, 1]\n    res = bubble_sort_iterative(col)\n    assert res == [1, 2, 3, 4, 5]\n    assert res is col\n\n\ndef test_bubble_sort_iterative_empty_and_single():\n    assert bubble_sort_iterative([]) == []\n    assert bubble_sort_iterative([42]) == [42]\n\n\ndef test_bubble_sort_iterative_duplicates():\n    # Kills ConditionalBoundary mutant (>= instead of >)\n    col = [2, 2, 1]\n    res = bubble_sort_iterative(col)\n    assert res == [1, 2, 2]\n    assert res is col\n\n\ndef test_bubble_sort_recursive_nominal():\n    col = [5, 2, 9, 1, 5, 6]\n    res = bubble_sort_recursive(col)\n    assert res == [1, 2, 5, 5, 6, 9]\n    assert res is col\n\n\ndef test_bubble_sort_recursive_already_sorted():\n    col = [1, 2, 3, 4, 5]\n    res = bubble_sort_recursive(col)\n    assert res == [1, 2, 3, 4, 5]\n    assert res is col\n\n\ndef test_bubble_sort_recursive_reverse_sorted():\n    col = [3, 2, 1]\n    res = bubble_sort_recursive(col)\n    assert res == [1, 2, 3]\n    assert res is col\n\n\ndef test_bubble_sort_recursive_empty_and_single():\n    assert bubble_sort_recursive([]) == []\n    assert bubble_sort_recursive([7]) == [7]",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    }
+  ],
+  "num_llm_calls": 2,
+  "pass_rate_pct": 100.0,
+  "initial_mutation_score_pct": 88.89,
+  "stop_reason": "plateau",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite"
+}

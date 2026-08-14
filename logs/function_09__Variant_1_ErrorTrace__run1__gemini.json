@@ -1,0 +1,33 @@
+{
+  "function_id": "function_09",
+  "system_variant": "Variant_1_ErrorTrace",
+  "iteration_count": 1,
+  "total_tokens_used": 3182,
+  "mutation_score_pct": 94.44,
+  "line_coverage_pct": 100.0,
+  "estimated_cost_usd": 0.00454,
+  "iterations_detail": [
+    {
+      "iteration": 1,
+      "mutant_id": "function_09.x_binary_insertion_sort__mutmut_4",
+      "generated_test_code": "import pytest\nfrom function_09 import binary_insertion_sort\n\n\ndef test_binary_insertion_sort_empty():\n    collection = []\n    res = binary_insertion_sort(collection)\n    assert res == []\n    assert res is collection\n\n\ndef test_binary_insertion_sort_single():\n    collection = [42]\n    res = binary_insertion_sort(collection)\n    assert res == [42]\n    assert res is collection\n\n\ndef test_binary_insertion_sort_already_sorted():\n    collection = [1, 2, 3, 4, 5]\n    res = binary_insertion_sort(collection)\n    assert res == [1, 2, 3, 4, 5]\n    assert res is collection\n\n\ndef test_binary_insertion_sort_reverse_sorted():\n    collection = [5, 4, 3, 2, 1]\n    res = binary_insertion_sort(collection)\n    assert res == [1, 2, 3, 4, 5]\n    assert res is collection\n\n\ndef test_binary_insertion_sort_duplicates():\n    collection = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]\n    res = binary_insertion_sort(collection)\n    assert res == [1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9]\n    assert res is collection\n\n\ndef test_binary_insertion_sort_strings():\n    collection = [\"banana\", \"apple\", \"cherry\", \"date\"]\n    res = binary_insertion_sort(collection)\n    assert res == [\"apple\", \"banana\", \"cherry\", \"date\"]\n    assert res is collection\n\n\ndef test_binary_insertion_sort_stability_and_duplicates():\n    # Kills mutant_18: value_to_insert <= collection[mid]\n    # Binary search with duplicates needs stability check (should insert after existing equal elements)\n    collection = [2, 2_bis]  # or using objects with equal values\n    # Let's use custom objects or tuples to test stable sorting with duplicates:\n    # If the comparison is <= instead of <, stable sorting order changes or indices shift incorrectly.\n    # Even simpler with standard ints and duplicates:\n    collection = [1, 1]\n    res = binary_insertion_sort(collection)\n    assert res == [1, 1]\n    assert res is collection\n    \n    # Another test with explicit duplicate elements where stable insertion order matters\n    # Original: value_to_insert < collection[mid] means if equal, it goes to the right (stable).\n    # Mutated (<=): if equal, it goes to the left, which can break stability or sort behavior on duplicates.\n    items = [2, 2, 1]\n    # Let's use a list of tuples to test stability clearly:\n    # (key, original_index)\n    class Item:\n        def __init__(self, val, idx):\n            self.val = val\n            self.idx = idx\n        def __lt__(self, other):\n            return self.val < other.val\n        def __le__(self, other):\n            return self.val <= other.val\n        def __repr__(self):\n            return f\"Item({self.val}, {self.idx})\"\n\n    collection = [Item(2, 1), Item(2, 2)]\n    binary_insertion_sort(collection)\n    # Stability means Item(2, 1) should remain before Item(2, 2)\n    assert collection[0].idx == 1\n    assert collection[1].idx == 2",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_09.x_binary_insertion_sort__mutmut_18",
+      "generated_test_code": "import pytest\nfrom function_09 import binary_insertion_sort\n\n\ndef test_binary_insertion_sort_empty():\n    collection = []\n    res = binary_insertion_sort(collection)\n    assert res == []\n    assert res is collection\n\n\ndef test_binary_insertion_sort_single():\n    collection = [42]\n    res = binary_insertion_sort(collection)\n    assert res == [42]\n    assert res is collection\n\n\ndef test_binary_insertion_sort_already_sorted():\n    collection = [1, 2, 3, 4, 5]\n    res = binary_insertion_sort(collection)\n    assert res == [1, 2, 3, 4, 5]\n    assert res is collection\n\n\ndef test_binary_insertion_sort_reverse_sorted():\n    collection = [5, 4, 3, 2, 1]\n    res = binary_insertion_sort(collection)\n    assert res == [1, 2, 3, 4, 5]\n    assert res is collection\n\n\ndef test_binary_insertion_sort_duplicates():\n    collection = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]\n    res = binary_insertion_sort(collection)\n    assert res == [1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9]\n    assert res is collection\n\n\ndef test_binary_insertion_sort_strings():\n    collection = [\"banana\", \"apple\", \"cherry\", \"date\"]\n    res = binary_insertion_sort(collection)\n    assert res == [\"apple\", \"banana\", \"cherry\", \"date\"]\n    assert res is collection\n\n\ndef test_binary_insertion_sort_stability_and_duplicates():\n    # Kills mutant_18: value_to_insert <= collection[mid]\n    # Binary search with duplicates needs stability check (should insert after existing equal elements)\n    collection = [2, 2_bis]  # or using objects with equal values\n    # Let's use custom objects or tuples to test stable sorting with duplicates:\n    # If the comparison is <= instead of <, stable sorting order changes or indices shift incorrectly.\n    # Even simpler with standard ints and duplicates:\n    collection = [1, 1]\n    res = binary_insertion_sort(collection)\n    assert res == [1, 1]\n    assert res is collection\n    \n    # Another test with explicit duplicate elements where stable insertion order matters\n    # Original: value_to_insert < collection[mid] means if equal, it goes to the right (stable).\n    # Mutated (<=): if equal, it goes to the left, which can break stability or sort behavior on duplicates.\n    items = [2, 2, 1]\n    # Let's use a list of tuples to test stability clearly:\n    # (key, original_index)\n    class Item:\n        def __init__(self, val, idx):\n            self.val = val\n            self.idx = idx\n        def __lt__(self, other):\n            return self.val < other.val\n        def __le__(self, other):\n            return self.val <= other.val\n        def __repr__(self):\n            return f\"Item({self.val}, {self.idx})\"\n\n    collection = [Item(2, 1), Item(2, 2)]\n    binary_insertion_sort(collection)\n    # Stability means Item(2, 1) should remain before Item(2, 2)\n    assert collection[0].idx == 1\n    assert collection[1].idx == 2",
+      "mutant_killed": false,
+      "mutant_operator": "ConditionalBoundary",
+      "predicted_state": null
+    }
+  ],
+  "num_llm_calls": 2,
+  "pass_rate_pct": 100.0,
+  "initial_mutation_score_pct": 94.44,
+  "stop_reason": "invalid_regeneration",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite"
+}

@@ -1,0 +1,33 @@
+{
+  "function_id": "function_09",
+  "system_variant": "Variant_1_ErrorTrace",
+  "iteration_count": 1,
+  "total_tokens_used": 3020,
+  "mutation_score_pct": 94.44,
+  "line_coverage_pct": 100.0,
+  "estimated_cost_usd": 0.004057,
+  "iterations_detail": [
+    {
+      "iteration": 1,
+      "mutant_id": "function_09.x_binary_insertion_sort__mutmut_4",
+      "generated_test_code": "import pytest\nfrom function_09 import binary_insertion_sort\n\n\ndef test_binary_insertion_sort_empty():\n    collection = []\n    res = binary_insertion_sort(collection)\n    assert res == []\n\n\ndef test_binary_insertion_sort_single_element():\n    collection = [42]\n    res = binary_insertion_sort(collection)\n    assert res == [42]\n\n\ndef test_binary_insertion_sort_already_sorted():\n    collection = [1, 2, 3, 4, 5]\n    res = binary_insertion_sort(collection)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_binary_insertion_sort_reverse_sorted():\n    collection = [5, 4, 3, 2, 1]\n    res = binary_insertion_sort(collection)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_binary_insertion_sort_duplicates():\n    collection = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]\n    res = binary_insertion_sort(collection)\n    assert res == [1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9]\n\n\ndef test_binary_insertion_sort_negative_numbers():\n    collection = [-3, -1, -4, 0, 2]\n    res = binary_insertion_sort(collection)\n    assert res == [-4, -3, -1, 0, 2]\n\n\ndef test_binary_insertion_sort_mutates_in_place():\n    collection = [3, 1, 2]\n    res = binary_insertion_sort(collection)\n    assert res is collection\n    assert collection == [1, 2, 3]\n\n\ndef test_binary_insertion_sort_stability_and_duplicates():\n    # Kills Mutant 18 (<= instead of <) by ensuring duplicate elements\n    # maintain stability or insert correctly after existing equal elements.\n    # [2_a, 2_b, 1] -> with '<=' vs '<', insertion behavior or position might differ,\n    # or specifically testing duplicates where binary search finds the rightmost/leftmost position.\n    collection = [2, 2, 1]\n    res = binary_insertion_sort(collection)\n    assert res == [1, 2, 2]",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_09.x_binary_insertion_sort__mutmut_18",
+      "generated_test_code": "import pytest\nfrom function_09 import binary_insertion_sort\n\n\ndef test_binary_insertion_sort_empty():\n    collection = []\n    res = binary_insertion_sort(collection)\n    assert res == []\n\n\ndef test_binary_insertion_sort_single_element():\n    collection = [42]\n    res = binary_insertion_sort(collection)\n    assert res == [42]\n\n\ndef test_binary_insertion_sort_already_sorted():\n    collection = [1, 2, 3, 4, 5]\n    res = binary_insertion_sort(collection)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_binary_insertion_sort_reverse_sorted():\n    collection = [5, 4, 3, 2, 1]\n    res = binary_insertion_sort(collection)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_binary_insertion_sort_duplicates():\n    collection = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]\n    res = binary_insertion_sort(collection)\n    assert res == [1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9]\n\n\ndef test_binary_insertion_sort_negative_numbers():\n    collection = [-3, -1, -4, 0, 2]\n    res = binary_insertion_sort(collection)\n    assert res == [-4, -3, -1, 0, 2]\n\n\ndef test_binary_insertion_sort_mutates_in_place():\n    collection = [3, 1, 2]\n    res = binary_insertion_sort(collection)\n    assert res is collection\n    assert collection == [1, 2, 3]\n\n\ndef test_binary_insertion_sort_stability_and_duplicates():\n    # Kills Mutant 18 (<= instead of <) by ensuring duplicate elements\n    # maintain stability or insert correctly after existing equal elements.\n    # [2_a, 2_b, 1] -> with '<=' vs '<', insertion behavior or position might differ,\n    # or specifically testing duplicates where binary search finds the rightmost/leftmost position.\n    collection = [2, 2, 1]\n    res = binary_insertion_sort(collection)\n    assert res == [1, 2, 2]",
+      "mutant_killed": false,
+      "mutant_operator": "ConditionalBoundary",
+      "predicted_state": null
+    }
+  ],
+  "num_llm_calls": 2,
+  "pass_rate_pct": 100.0,
+  "initial_mutation_score_pct": 94.44,
+  "stop_reason": "plateau",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite"
+}

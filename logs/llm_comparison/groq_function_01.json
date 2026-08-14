@@ -1,0 +1,11 @@
+{
+  "timestamp_utc": "2026-08-14T19:12:19.367321+00:00",
+  "comparison": "same_function_same_prompt_one_call",
+  "function": "function_01",
+  "provider": "groq",
+  "model": "llama-3.1-8b-instant",
+  "calls": 1,
+  "elapsed_seconds": 2.176177501678467,
+  "total_tokens": 1862,
+  "generated_test_code": "import pytest\nimport math\n\n@pytest.fixture\ndef primes_functions():\n    return {\n        'slow_primes': slow_primes,\n        'primes': primes,\n        'fast_primes': fast_primes\n    }\n\ndef test_empty_ranges(primes_functions):\n    primes = primes_functions\n    assert list(primes['slow_primes'](0)) == []\n    assert list(primes['primes'](0)) == []\n    assert list(primes['fast_primes'](0)) == []\n\ndef test_negative_ranges(primes_functions):\n    primes = primes_functions\n    assert list(primes['slow_primes'](-1)) == []\n    assert list(primes['primes'](-1)) == []\n    assert list(primes['fast_primes'](-1)) == []\n\ndef test_edge_cases(primes_functions):\n    primes = primes_functions\n    assert list(primes['slow_primes'](2)) == [2]\n    assert list(primes['primes'](2)) == [2]\n    assert list(primes['fast_primes'](2)) == []\n\ndef test_smaller_ranges(primes_functions):\n    primes = primes_functions\n    assert list(primes['slow_primes'](11)) == [2, 3, 5, 7, 11]\n    assert list(primes['primes'](11)) == [2, 3, 5, 7, 11]\n    assert list(primes['fast_primes'](11)) == [2, 3, 5, 7, 11]\n\ndef test_larger_ranges(primes_functions):\n    primes = primes_functions\n    assert list(primes['slow_primes'](1000)) == [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 991, 997]\n    assert list(primes['primes'](1000)) == [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 991, 997]\n    assert list(primes['fast_primes'](1000)) == [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 991, 997]\n\ndef test_large_range(primes_functions):\n    from timeit import timeit\n    primes = primes_functions\n    setup = \"from __main__ import slow_primes, primes, fast_primes\"\n    slow_time = timeit(\"slow_primes(1_000_000_000_000)\", setup=setup, number=1000)\n    fast_time = timeit(\"fast_primes(1_000_000_000_000)\", setup=setup, number=1000)\n    assert slow_time > fast_time"
+}

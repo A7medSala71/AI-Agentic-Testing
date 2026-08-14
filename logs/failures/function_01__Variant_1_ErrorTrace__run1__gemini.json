@@ -1,0 +1,10 @@
+{
+  "function_id": "function_01",
+  "system_variant": "Variant_1_ErrorTrace",
+  "repeat": 1,
+  "provider": "gemini",
+  "model": null,
+  "error_type": "TypeError",
+  "error": "cannot unpack non-iterable RunLog object",
+  "traceback": "Traceback (most recent call last):\n  File \"/content/AI-Agentic-Testing/refinement_loop/run_live.py\", line 151, in main\n    run_one(function_id, variant, 1, provider, force=True, model=model, output_dir=smoke_dir)\n  File \"/content/AI-Agentic-Testing/refinement_loop/run_live.py\", line 94, in run_one\n    run_log, final_test_code = loop.run(\n    ^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: cannot unpack non-iterable RunLog object\n"
+}

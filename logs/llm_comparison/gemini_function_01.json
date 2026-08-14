@@ -1,0 +1,11 @@
+{
+  "timestamp_utc": "2026-08-14T19:12:17.190614+00:00",
+  "comparison": "same_function_same_prompt_one_call",
+  "function": "function_01",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite",
+  "calls": 1,
+  "elapsed_seconds": 1.6346964836120605,
+  "total_tokens": 1768,
+  "generated_test_code": "import pytest\n\n\n@pytest.mark.parametrize(\"prime_func\", [slow_primes, primes, fast_primes])\ndef test_primes_negative_and_zero(prime_func):\n    assert list(prime_func(0)) == []\n    assert list(prime_func(-1)) == []\n    assert list(prime_func(-10)) == []\n\n\n@pytest.mark.parametrize(\"prime_func\", [slow_primes, primes, fast_primes])\ndef test_primes_boundary_one_and_two(prime_func):\n    assert list(prime_func(1)) == []\n    assert list(prime_func(2)) == [2]\n\n\n@pytest.mark.parametrize(\"prime_func\", [slow_primes, primes, fast_primes])\ndef test_primes_small_ranges(prime_func):\n    assert list(prime_func(11)) == [2, 3, 5, 7, 11]\n    assert list(prime_func(25)) == [2, 3, 5, 7, 11, 13, 17, 19, 23]\n    assert list(prime_func(33)) == [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31]\n\n\n@pytest.mark.parametrize(\"prime_func\", [slow_primes, primes, fast_primes])\ndef test_primes_larger_range(prime_func):\n    primes_list = list(prime_func(1000))\n    assert primes_list[-1] == 997\n    assert len(primes_list) == 168\n\n\n@pytest.mark.parametrize(\"prime_func\", [slow_primes, primes, fast_primes])\ndef test_primes_generator_type(prime_func):\n    gen = prime_func(10)\n    assert isinstance(gen, Generator)"
+}
