@@ -19,9 +19,9 @@
     },
     "iteration_count": {
       "type": "integer",
-      "minimum": 1,
+      "minimum": 0,
       "maximum": 5,
-      "description": "Total feedback iterations used (capped at 5)"
+      "description": "Number of Proposed refinement rounds actually executed (0 when the initial suite already kills all mutants; baselines may use 1 for their single generation pass). Maximum 5."
     },
     "total_tokens_used": {
       "type": "integer",
@@ -75,43 +75,49 @@
     },
     "num_llm_calls": {
       "type": "integer",
-      "minimum": 0
-    },
-    "input_tokens": {
-      "type": "integer",
-      "minimum": 0
-    },
-    "output_tokens": {
-      "type": "integer",
-      "minimum": 0
-    },
-    "thought_tokens": {
-      "type": "integer",
-      "minimum": 0
+      "minimum": 0,
+      "description": "Total LLM calls used for this run, including initial generation and refinement calls."
     },
     "pass_rate_pct": {
       "type": "number",
       "minimum": 0,
-      "maximum": 100
+      "maximum": 100,
+      "description": "Percentage of generated tests that pass against the original unmutated code."
     },
     "branch_coverage_pct": {
       "type": "number",
       "minimum": 0,
-      "maximum": 100
+      "maximum": 100,
+      "description": "Final branch coverage percentage when branch coverage is available."
     },
-    "mutants_total": {
-      "type": "integer",
-      "minimum": 0
+    "initial_mutation_score_pct": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Mutation score before the first refinement round; Proposed only."
     },
-    "mutants_killed": {
-      "type": "integer",
-      "minimum": 0
+    "stop_reason": {
+      "type": "string",
+      "enum": [
+        "no_survivors",
+        "plateau",
+        "max_iterations",
+        "invalid_regeneration",
+        "completed"
+      ],
+      "description": "Why the Proposed refinement loop stopped."
     },
     "provider": {
-      "type": "string"
+      "type": "string",
+      "enum": [
+        "gemini",
+        "groq"
+      ],
+      "description": "LLM provider used for this run."
     },
     "model": {
-      "type": "string"
+      "type": "string",
+      "description": "Exact model identifier used for this run."
     }
   },
   "required": [
