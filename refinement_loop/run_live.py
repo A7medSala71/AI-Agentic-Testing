@@ -1,6 +1,3 @@
-
-
-
 """Live runner for the two mutant-guided refinement variants.
 
 The runner is intentionally diagnostic and resumable: one failed function does
@@ -91,12 +88,15 @@ def run_one(function_id: str, variant: str, run_index: int, provider: str, force
         mutation_runner=MutmutMutationRunner(function_id),
         llm_client=text_client,
     )
-    run_log, final_test_code = loop.run(
+    # RefinementLoop.run() returns a RunLog. The final merged test suite is
+    # exposed separately through loop.final_test_code.
+    run_log = loop.run(
         function_id=function_id,
         function_source=ctx.source_for_prompt,
         function_name=ctx.primary_function,
         initial_test_code=seed.test_source,
     )
+    final_test_code = loop.final_test_code
 
     seed_summary = seed.tracker.summary()
     refinement_calls = int(getattr(text_client, "num_calls", 0))
