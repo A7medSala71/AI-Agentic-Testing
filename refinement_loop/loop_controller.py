@@ -1,146 +1,120 @@
-"""
-RefinementLoop: generate -> run mutation testing -> identify surviving mutants
--> feed them back through a PromptStrategy -> regenerate -> repeat.
-
-This is intentionally the only place that knows about iteration counting and
-the plateau stopping rule; PromptStrategy only knows how to turn mutants into
-text, and MutationRunner/LLMClient are injected so this class has no
-dependency on mutmut, coverage.py, or a specific model provider.
-"""
+"""Mutation-guided iterative refinement controller."""
 
 from __future__ import annotations
 
 from .config import RefinementConfig
 from .interfaces import LLMClient, MutationRunner
-from .models import IterationRecord, MutationResult, RunLog
+from .models import IterationRecord, RunLog
 from .prompt_strategies import get_strategy
 
 
 def _looks_like_pytest(code: str) -> bool:
-    """Minimal sanity check that a regeneration round returned test code,
-    not prose, a refusal, or an empty/truncated response."""
-    return "def test_" in code
+    import ast
+    try:
+        tree = ast.parse(code or "")
+    except SyntaxError:
+        return False
+    return any(isinstance(node, ast.FunctionDef) and node.name.startswith("test_") for node in tree.body)
 
 
 class RefinementLoop:
-    def __init__(
-        self,
-        config: RefinementConfig,
-        mutation_runner: MutationRunner,
-        llm_client: LLMClient,
-    ) -> None:
+    def __init__(self, config: RefinementConfig, mutation_runner: MutationRunner, llm_client: LLMClient) -> None:
         self.config = config
         self.mutation_runner = mutation_runner
         self.llm_client = llm_client
         self.strategy = get_strategy(config.variant)
+        self.final_test_code = ""
 
-    def run(
-        self,
-        function_id: str,
-        function_source: str,
-        function_name: str,
-        initial_test_code: str,
-    ) -> RunLog:
-        """
-        Runs the full refinement procedure for one function and returns a
-        RunLog ready to serialize against execution_log_schema.json.
-        """
+    def run(self, function_id: str, function_source: str, function_name: str, initial_test_code: str) -> RunLog:
         current_tests = initial_test_code
-        self.last_test_code = current_tests
         total_tokens = 0
         iterations_detail: list[IterationRecord] = []
 
         result = self.mutation_runner.run(function_source, current_tests)
+        if result.total_mutants <= 0:
+            raise RuntimeError(
+                f"{function_id}: mutation evaluation produced zero mutants; "
+                "refusing to report a 100% mutation score."
+            )
+
+        initial_score = result.mutation_score_pct
         iteration = 0
+        stop_reason = "no_survivors" if not result.survivors else None
 
         while iteration < self.config.max_iterations and result.survivors:
             iteration += 1
             targets = self.strategy._select_targets(result.survivors, self.config)
-
             system_prompt, user_prompt = self.strategy.build(
                 function_source, function_name, current_tests, result.survivors, self.config
             )
             generated_code, tokens = self.llm_client.generate(user_prompt, system_prompt)
             total_tokens += tokens
 
-            if self.config.discard_invalid_regeneration and not _looks_like_pytest(
-                generated_code
-            ):
-                # Round produced no usable test code. Keep the existing suite
-                # rather than overwrite it with prose/an empty response, but
-                # still charge the round against iterations/tokens and record
-                # that none of this round's targets were killed.
+            if self.config.discard_invalid_regeneration and not _looks_like_pytest(generated_code):
                 for m in targets:
-                    iterations_detail.append(
-                        IterationRecord(
-                            iteration=iteration,
-                            mutant_id=m.mutant_id,
-                            mutant_operator=m.mutant_operator,
-                            predicted_state=m.predicted_state,
-                            generated_test_code=generated_code,
-                            mutant_killed=False,
-                        )
-                    )
-                break  # no point continuing rounds if generation is broken
+                    iterations_detail.append(IterationRecord(
+                        iteration=iteration, mutant_id=m.mutant_id,
+                        mutant_operator=m.mutant_operator, predicted_state=m.predicted_state,
+                        generated_test_code=generated_code, mutant_killed=False))
+                stop_reason = "invalid_regeneration"
+                break
 
             current_tests = self._merge_tests(current_tests, generated_code)
-            self.last_test_code = current_tests
             new_result = self.mutation_runner.run(function_source, current_tests)
+            if new_result.total_mutants <= 0:
+                raise RuntimeError(f"{function_id}: refinement evaluation produced zero mutants.")
 
             still_surviving_ids = {m.mutant_id for m in new_result.survivors}
             for m in targets:
-                iterations_detail.append(
-                    IterationRecord(
-                        iteration=iteration,
-                        mutant_id=m.mutant_id,
-                        mutant_operator=m.mutant_operator,
-                        predicted_state=m.predicted_state,
-                        generated_test_code=generated_code,
-                        mutant_killed=m.mutant_id not in still_surviving_ids,
-                    )
-                )
+                iterations_detail.append(IterationRecord(
+                    iteration=iteration, mutant_id=m.mutant_id,
+                    mutant_operator=m.mutant_operator, predicted_state=m.predicted_state,
+                    generated_test_code=generated_code,
+                    mutant_killed=m.mutant_id not in still_surviving_ids))
 
             delta = new_result.mutation_score_pct - result.mutation_score_pct
             result = new_result
 
+            if not result.survivors:
+                stop_reason = "no_survivors"
+                break
             if delta < self.config.plateau_threshold_pp:
-                # RQ3: stop as soon as a round's gain drops below threshold,
-                # this round's iteration count IS the plateau point for this file.
+                stop_reason = "plateau"
                 break
 
-        # Provider adapters may expose exact usage counters for refinement calls.
-        refinement_calls = int(getattr(self.llm_client, "num_calls", 0))
-        refinement_input = int(getattr(self.llm_client, "input_tokens", 0))
-        refinement_output = int(getattr(self.llm_client, "output_tokens", 0))
-        pass_rate = (
-            100.0 * result.tests_passed / result.tests_collected
-            if result.tests_collected else 0.0
-        )
+        if stop_reason is None:
+            stop_reason = "max_iterations" if iteration >= self.config.max_iterations and result.survivors else "completed"
+
+        self.final_test_code = current_tests
         return RunLog(
             function_id=function_id,
             system_variant=self.config.variant,
-            iteration_count=max(iteration, 1),
+            iteration_count=iteration,
             total_tokens_used=total_tokens,
             mutation_score_pct=result.mutation_score_pct,
             line_coverage_pct=result.line_coverage_pct,
-            num_llm_calls=refinement_calls,
-            input_tokens=refinement_input,
-            output_tokens=refinement_output,
-            pass_rate_pct=round(pass_rate, 2),
             iterations_detail=iterations_detail,
+            pass_rate_pct=result.pass_rate_pct,
+            branch_coverage_pct=result.branch_coverage_pct,
+            initial_mutation_score_pct=initial_score,
+            stop_reason=stop_reason,
+            num_llm_calls=int(getattr(self.llm_client, "num_calls", 0)),
         )
 
     @staticmethod
     def _merge_tests(current_test_code: str, generated_code: str) -> str:
-        """
-        Combine the previous test file with the newly generated one.
+        """Keep newly generated tests while preserving existing test functions.
 
-        v0.1 policy: the LLM is prompted (see prompt_strategies.py) to return
-        the *complete updated file*, so we simply take its output as the new
-        current_tests, keeping the loop's job to just track history/tokens.
-        If v0.1 testing (Week 3) shows the model tends to drop working tests
-        instead of extending them, swap this for an AST-level merge (see
-        Section 1.2 of the brief) that unions test functions by name instead
-        of a full replace.
+        The model may accidentally omit a previously useful test. This merge
+        avoids silently deleting coverage from earlier rounds.
         """
-        return generated_code
+        import re
+        def blocks(code: str):
+            matches=list(re.finditer(r"(?m)^def\s+(test_\w+)\s*\(.*?(?=^def\s+test_|\Z)", code, re.S))
+            return {m.group(1): m.group(0).rstrip() for m in matches}
+        generated=blocks(generated_code)
+        existing=blocks(current_test_code)
+        missing=[existing[name] for name in existing if name not in generated]
+        if not missing:
+            return generated_code
+        return generated_code.rstrip()+"\n\n"+"\n\n".join(missing)+"\n"
