@@ -38,19 +38,24 @@ class SurvivingMutant:
 
 @dataclass
 class MutationResult:
-    """Output of one mutation-testing pass (Member 2's pipeline)."""
+    """Output of one mutation-testing/evaluation pass.
+
+    Member 2 owns the authoritative implementation. The optional coverage/pass-rate
+    fields let that implementation expose the complete project metrics without
+    forcing Member 4's loop to own scoring logic.
+    """
 
     total_mutants: int
     killed_mutants: int
     survivors: list[SurvivingMutant]
     line_coverage_pct: float
-    tests_collected: int = 0
-    tests_passed: int = 0
+    pass_rate_pct: float | None = None
+    branch_coverage_pct: float | None = None
 
     @property
     def mutation_score_pct(self) -> float:
-        if self.total_mutants == 0:
-            return 100.0
+        if self.total_mutants <= 0:
+            raise ValueError("Mutation score is undefined because mutmut produced zero mutants.")
         return round(100.0 * self.killed_mutants / self.total_mutants, 2)
 
 
@@ -79,16 +84,19 @@ class RunLog:
     total_tokens_used: int
     mutation_score_pct: float
     line_coverage_pct: float
-    tests_collected: int = 0
-    tests_passed: int = 0
     estimated_cost_usd: float = 0.0
-    num_llm_calls: int = 0
-    input_tokens: int = 0
-    output_tokens: int = 0
-    pass_rate_pct: float = 0.0
     iterations_detail: list[IterationRecord] = field(default_factory=list)
+    num_llm_calls: int | None = None
+    pass_rate_pct: float | None = None
+    branch_coverage_pct: float | None = None
+    initial_mutation_score_pct: float | None = None
+    stop_reason: str | None = None
+    provider: str | None = None
+    model: str | None = None
 
     def to_dict(self) -> dict:
         d = asdict(self)
         d["iterations_detail"] = [r.to_dict() for r in self.iterations_detail]
-        return d
+        # Optional metrics are omitted rather than serialized as null so the
+        # JSON remains compatible with the shared schema and older consumers.
+        return {k: v for k, v in d.items() if v is not None}
