@@ -124,10 +124,3 @@ Run from the repo root (`pytest` and `jsonschema` are already in the root
 .venv/bin/python refinement_loop/examples/demo_run.py   # runs both variants against dataset/function_25.py
 .venv/bin/python -m pytest refinement_loop/tests/ -v      # 8 tests covering prompt construction + stopping rule
 ```
-
-
-## Member-4 integration status
-
-The refinement loop treats Member 2's evaluator as the authoritative source of mutation score, coverage, pass rate, and per-mutant survivor attribution. The local `MutmutMutationRunner` is a development fallback only. It intentionally does **not** fabricate assertion-level attribution when the mutation tool cannot provide it. Before final experiments, wire Member 2's shared runner to the `MutationRunner.run(...) -> MutationResult` contract in `refinement_loop/interfaces.py`.
-
-`iteration_count` in Proposed logs is the number of actual refinement rounds; therefore a seed suite that already kills every mutant records `0`. `num_llm_calls` includes the initial seed generation call plus refinement calls.

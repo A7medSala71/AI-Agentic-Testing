@@ -19,9 +19,9 @@
     },
     "iteration_count": {
       "type": "integer",
-      "minimum": 0,
+      "minimum": 1,
       "maximum": 5,
-      "description": "Number of Proposed refinement rounds actually executed (0 when the initial suite already kills all mutants; baselines may use 1 for their single generation pass). Maximum 5."
+      "description": "Total feedback iterations used (capped at 5)"
     },
     "total_tokens_used": {
       "type": "integer",
@@ -75,37 +75,43 @@
     },
     "num_llm_calls": {
       "type": "integer",
-      "minimum": 0,
-      "description": "Total LLM calls used for this run, including initial generation and refinement calls."
+      "minimum": 0
+    },
+    "input_tokens": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "output_tokens": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "thought_tokens": {
+      "type": "integer",
+      "minimum": 0
     },
     "pass_rate_pct": {
       "type": "number",
       "minimum": 0,
-      "maximum": 100,
-      "description": "Percentage of generated tests that pass against the original unmutated code."
+      "maximum": 100
     },
     "branch_coverage_pct": {
       "type": "number",
       "minimum": 0,
-      "maximum": 100,
-      "description": "Final branch coverage percentage when branch coverage is available."
+      "maximum": 100
     },
-    "initial_mutation_score_pct": {
-      "type": "number",
-      "minimum": 0,
-      "maximum": 100,
-      "description": "Mutation score before the first refinement round; Proposed only."
+    "mutants_total": {
+      "type": "integer",
+      "minimum": 0
     },
-    "stop_reason": {
-      "type": "string",
-      "enum": [
-        "no_survivors",
-        "plateau",
-        "max_iterations",
-        "invalid_regeneration",
-        "completed"
-      ],
-      "description": "Why the Proposed refinement loop stopped."
+    "mutants_killed": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "provider": {
+      "type": "string"
+    },
+    "model": {
+      "type": "string"
     }
   },
   "required": [

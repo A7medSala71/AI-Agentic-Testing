@@ -26,8 +26,17 @@ from .prompt_context import FunctionContext, all_functions, build_context
 
 
 def _already_done(function_id: str, system_variant: str, run_index: int) -> bool:
-    name = run_log.log_filename(function_id, system_variant, run_index)
-    return (config.LOGS_DIR / name).exists()
+    """A run counts as done only when *both* its artefacts survive.
+
+    Keying on the log alone is not enough: deleting generated_tests/ while
+    keeping logs/ makes every run look complete, and the sweep then skips work
+    whose output no longer exists -- leaving a log that points at nothing.
+    """
+    log = config.LOGS_DIR / run_log.log_filename(function_id, system_variant, run_index)
+    suite = config.GENERATED_TESTS_DIR / (
+        f"{function_id}__{system_variant}__run{run_index}__test.py"
+    )
+    return log.exists() and suite.exists()
 
 
 def sweep(

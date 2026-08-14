@@ -109,8 +109,18 @@ class LLMClient:
         self.mocked = force_mock or not config.has_api_key()
         if not self.mocked:
             from google import genai
+            from google.genai import types
 
-            self._client = genai.Client(api_key=config.api_key())
+            # Without an explicit timeout a hung connection blocks forever.
+            # Observed: a sweep sat for 68 minutes having burned 5 seconds of
+            # CPU, waiting on a socket that never returned. A bounded request
+            # turns that into a retryable error instead of a stalled run.
+            self._client = genai.Client(
+                api_key=config.api_key(),
+                http_options=types.HttpOptions(
+                    timeout=config.REQUEST_TIMEOUT_MS
+                ),
+            )
 
     def generate(
         self,
@@ -195,14 +205,22 @@ class LLMClient:
                 )
             except Exception as exc:  # noqa: BLE001 - inspected, then re-raised
                 message = str(exc)
-                if "429" not in message and "RESOURCE_EXHAUSTED" not in message:
+                kind = _transient_kind(message)
+                if kind is None:
                     raise
                 last_error = exc
                 if attempt == config.MAX_RETRIES:
                     break
-                delay = _retry_delay_seconds(message)
+                if kind == "rate_limit":
+                    delay = _retry_delay_seconds(message)
+                    reason = "rate limited"
+                else:
+                    # A dropped connection carries no retry hint, so back off
+                    # exponentially and give DNS or the link time to recover.
+                    delay = min(5 * 2**attempt, config.MAX_RETRY_DELAY_SECONDS)
+                    reason = "connection error"
                 print(
-                    f"    [{label}] rate limited, waiting {delay:.0f}s "
+                    f"    [{label}] {reason}, waiting {delay:.0f}s "
                     f"(attempt {attempt + 1}/{config.MAX_RETRIES})"
                 )
                 time.sleep(delay)
@@ -232,6 +250,42 @@ class LLMClient:
             )
         )
         return obj
+
+
+def _transient_kind(error_message: str) -> str | None:
+    """Classify an error as worth retrying, or None to re-raise.
+
+    Rate limits were the obvious case, but a 450-call sweep runs long enough
+    that the network itself becomes the more likely failure: a single DNS blip
+    killed 59 of 90 runs in one sweep, each with
+    `ConnectError: nodename nor servname provided`. Those are recoverable by
+    waiting, and losing an hour of work to a few seconds of bad DNS is not.
+    """
+    if "429" in error_message or "RESOURCE_EXHAUSTED" in error_message:
+        # A per-day quota does not come back by waiting. The server still sends
+        # a retryDelay, so a naive retry sleeps the full budget on every call
+        # of a sweep that cannot succeed today -- 12 runs x 5 calls x 3 sleeps
+        # is over an hour of doing nothing. Fail fast and let the resume pick
+        # it up after the reset.
+        if "PerDay" in error_message or "per day" in error_message.lower():
+            return None
+        return "rate_limit"
+    lowered = error_message.lower()
+    network_markers = (
+        "connecterror",
+        "nodename nor servname",
+        "temporary failure in name resolution",
+        "connection reset",
+        "connection aborted",
+        "timeout",
+        "timed out",
+        "503",
+        "502",
+        "unavailable",
+    )
+    if any(marker in lowered for marker in network_markers):
+        return "network"
+    return None
 
 
 def _retry_delay_seconds(error_message: str) -> float:

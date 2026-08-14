@@ -136,7 +136,7 @@ Update the test suite so each surviving mutant above is killed."""
         assertions_txt = (
             "\n".join(f"    - {a}" for a in assertions)
             if assertions
-            else "    - (exact assertion-level attribution is unavailable from this mutation runner; target the mutated line directly)"
+            else "    - (no existing assertion covers this line)"
         )
         return f"""Mutant {m.mutant_id} ({m.mutant_operator}) at line {m.line_number}:
   original: {m.original_line.strip()}
@@ -197,7 +197,7 @@ test suite so the divergence is asserted on directly."""
         assertions_txt = (
             "\n".join(f"    - {a}" for a in assertions)
             if assertions
-            else "    - (exact assertion-level attribution is unavailable from this mutation runner; target the mutated line directly)"
+            else "    - (no existing assertion covers this line)"
         )
         prior_state = (
             f"\n  previously predicted state: {m.predicted_state}"

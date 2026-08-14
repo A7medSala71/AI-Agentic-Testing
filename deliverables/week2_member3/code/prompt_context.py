@@ -53,27 +53,56 @@ def _strip_doctests(docstring: str) -> str:
     return "\n".join(kept).rstrip()
 
 
+def _is_test_class(node: ast.ClassDef) -> bool:
+    """True for the dataset's own test scaffolding, e.g. function_25's
+    `class Test(unittest.TestCase)`. It is importable, so the depth check does
+    not catch it, but it is test code rather than code under test -- asking the
+    model to write tests for it produces tests of tests."""
+    for base in node.bases:
+        name = base.attr if isinstance(base, ast.Attribute) else getattr(base, "id", "")
+        if name == "TestCase":
+            return True
+    return node.name.startswith("Test") or node.name.endswith("Test")
+
+
 class _Transformer(ast.NodeTransformer):
+    """Strips scaffolding and doctests, and collects the importable targets.
+
+    Only **module-level** names are collected. A nested helper is not
+    importable -- `merge` inside `merge_sort` cannot be reached by
+    `from function_15 import merge` -- and neither is a method inside a class.
+    Listing one as a target makes the model write an import that raises
+    ImportError, which fails the whole suite before a single assertion runs.
+    """
+
     def __init__(self, include_doctests: bool):
         self.include_doctests = include_doctests
         self.public_functions: list[str] = []
+        self._depth = 0
 
     def visit_FunctionDef(self, node: ast.FunctionDef):  # noqa: N802
-        if node.name in config.EXCLUDE_FROM_PROMPT:
+        if self._depth == 0 and node.name in config.EXCLUDE_FROM_PROMPT:
             return None
-        if not node.name.startswith("_"):
+        if self._depth == 0 and not node.name.startswith("_"):
             self.public_functions.append(node.name)
         if not self.include_doctests:
             self._rewrite_docstring(node)
+        self._depth += 1
         self.generic_visit(node)
+        self._depth -= 1
         return node
 
+    def visit_AsyncFunctionDef(self, node):  # noqa: N802
+        return self.visit_FunctionDef(node)
+
     def visit_ClassDef(self, node: ast.ClassDef):  # noqa: N802
-        if not node.name.startswith("_"):
+        if self._depth == 0 and not node.name.startswith("_") and not _is_test_class(node):
             self.public_functions.append(node.name)
         if not self.include_doctests:
             self._rewrite_docstring(node)
+        self._depth += 1
         self.generic_visit(node)
+        self._depth -= 1
         return node
 
     def _rewrite_docstring(self, node) -> None:

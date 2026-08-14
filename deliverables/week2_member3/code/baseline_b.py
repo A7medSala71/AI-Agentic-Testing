@@ -107,6 +107,7 @@ def run(
         suite=final,
         test_source=final.to_source(),
         tracker=client.tracker,
+        panel_disagreement_pct=panel_disagreement(reviews),
     )
 
 

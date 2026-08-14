@@ -5,7 +5,7 @@
 | **Project** | Agentic Testing — Team 1: Oracle-Quality Test Generation |
 | **Supervisor** | Prof. Doaa Shawky |
 | **Week 2 scope per brief** | design Baseline A + Baseline B prompts and architecture |
-| **Status** | designed **and implemented**. Baseline A verified live; Baseline B verified in mock mode, live run pending API quota. |
+| **Status** | **complete** — 180 runs generated, scored and logged across all 30 functions |
 
 ---
 
@@ -14,7 +14,8 @@
 | File | What it is |
 |---|---|
 | `01_baseline_design.docx` / `.md` | Design and justification for both systems |
-| `02_integration_note_member2.md` | Handover note to Member 2: file format, working mutmut recipe, timeline |
+| `02_integration_note_member2.md` | Integration note: file format, working mutmut recipe |
+| `03_handover_to_member2.md` | **Handover — everything Member 2 needs to take over scoring** |
 | `code/` | Both baselines plus supporting infrastructure |
 | `sample_output/` | A real generated test suite (Baseline A, `function_03`) |
 | `evidence/` | Captured output of every verification run |
@@ -45,20 +46,58 @@ significant gain past 3), Interpreter agents collapsed into structured output
 
 ---
 
-## Measured results
+## Results
 
-**Baseline A, live, `function_03`** — 1 call, 2,532 tokens ($0.0069), 8 tests:
+**180 runs complete** — 30 functions x 3 repeats x 2 systems.
 
-| tests passing | line coverage | mutation score |
-|---|---|---|
-| 8/8 (100%) | 80.0% | **100.0%** (6/6) |
+| | runs | mutation score | line coverage |
+|---|---|---|---|
+| Baseline A | 90/90 | 94.5% +/- 6.9 | 73.7% |
+| Baseline B | 90/90 | 95.1% +/- 5.7 | 73.0% |
 
-All eight oracles are mathematically correct, imports are explicit, floats use
-`pytest.approx`. The generated suite is in `sample_output/`.
+Paired across all 30 functions:
 
-**Architecture, mock mode, all 30 functions** — Baseline A made exactly 30
-calls, Baseline B exactly 150. Call counts of 1× and 5× the function count
-confirm the architecture matches the design.
+```
+difference   +0.6 points
+tied         17 of 30 functions
+Wilcoxon     W = 28.0, p = 0.2213  -- not significant
+```
+
+### Why the panel does not help — measured
+
+| | panel disagreement |
+|---|---|
+| CANDOR (reported) | > 70% |
+| **This project (measured)** | **1.4% mean, 0.0% median** |
+
+The three panelists were **fully unanimous on 11 of 12 functions**. They are not
+disagreeing and being badly merged -- they simply agree, so consensus has
+nothing to resolve and the four extra calls buy almost nothing.
+
+That is the sentence that explains the headline result. Without it, "+0.6
+points, p = 0.22" reads as an inconclusive experiment rather than a mechanism
+that has been measured.
+
+**This is a result, not a failure.** RQ1 asks whether mutation-guided iteration
+beats consensus alone. A Baseline B that had leapt ahead would have undercut the
+premise of the refinement loop before Member 4 ran an experiment. What this
+establishes is the floor the variants must clear:
+
+```
+single-shot generation      94.5%
++ 3-panelist consensus      95.1%   (+0.6, 5x the cost, p = 0.22)
++ mutation-guided loop         ?    <- Variants 1 and 2
+```
+
+### Headroom for the refinement loop
+
+Baseline A already kills every mutant on **13 of 30** functions. The other **17**
+have surviving mutants, and those are where RQ1 and RQ4 can be answered at all.
+The richest are `function_11` (74.1%), `function_19` (76.8%) and `function_04`
+(85.7%).
+
+This is also the argument against a stronger model for the main experiment: one
+that kills more mutants leaves less for the loop to demonstrate.
 
 ---
 

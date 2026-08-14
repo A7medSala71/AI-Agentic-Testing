@@ -136,3 +136,12 @@ class ExecutionLog(BaseModel):
     num_llm_calls: int | None = None
     pass_rate_pct: float | None = None
     branch_coverage_pct: float | None = None
+
+    # Token breakdown, not just the total. `estimated_cost_usd` is computed
+    # from a price that is a property of the model, so a wrong price -- or a
+    # model change -- makes every stored cost wrong with no way to recompute
+    # from the total alone. Input and output bill at different rates, and
+    # reasoning tokens bill at the output rate while being reported separately.
+    input_tokens: int | None = None
+    output_tokens: int | None = None
+    thought_tokens: int | None = None

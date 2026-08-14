@@ -24,10 +24,20 @@ GENERATED_TESTS_DIR = REPO_ROOT / "generated_tests"
 PROVIDER = "gemini"
 API_KEY_ENV = "GEMINI_API_KEY"
 
-# The project brief names "Gemini 3 Flash", but that ID has since been
-# superseded. gemini-3.6-flash is the current GA Flash model.
-# https://ai.google.dev/gemini-api/docs/latest-model
-MODEL_ID = os.getenv("MODEL_ID", "gemini-3.6-flash")
+# The brief names "Gemini 3 Flash", which has since been superseded.
+#
+# All four systems run on gemini-3.5-flash-lite. Mixing models across systems
+# would compare models rather than systems, so this is fixed for the whole
+# experiment and must not be changed once results exist.
+#
+# Chosen over the larger gemini-3.6-flash for quota, not cost: the free tier
+# allows 500 requests/day here against 20 for 3.6-flash, and this project needs
+# ~540 for Baseline A + B alone. Quality was validated before committing --
+# on function_03 both models scored 100% mutation, and on function_21
+# (binary_search, 19 mutants) flash-lite scored 89.5% with all tests passing,
+# leaving two mutants alive. That residue matters: a model that kills
+# everything leaves the refinement-loop RQs nothing to improve on.
+MODEL_ID = os.getenv("MODEL_ID", "gemini-3.5-flash-lite")
 
 # Section 3.4 of the brief requires 3 repeats per function and reports
 # mean +/- standard deviation, which only carries information if generation
@@ -45,14 +55,21 @@ MAX_OUTPUT_TOKENS = int(os.getenv("MAX_OUTPUT_TOKENS", "8192"))
 MAX_RETRIES = int(os.getenv("MAX_RETRIES", "3"))
 MAX_RETRY_DELAY_SECONDS = float(os.getenv("MAX_RETRY_DELAY_SECONDS", "90"))
 
+# Per-request timeout in milliseconds. Without one, a hung connection blocks
+# indefinitely -- a sweep was observed sitting for 68 minutes on 5 seconds of
+# CPU, waiting on a socket that never returned. Generation takes seconds, so
+# two minutes is generous while still failing fast enough to retry.
+REQUEST_TIMEOUT_MS = int(os.getenv("REQUEST_TIMEOUT_MS", "120000"))
+
 # --- Cost ------------------------------------------------------------------
-# USD per 1M tokens. These are the figures quoted in the project brief for
-# "Gemini 3 Flash".
-# TODO(team): re-verify against current pricing for MODEL_ID before any cost
-# number goes into the paper. On the free tier real spend is $0, so treat
-# estimated_cost_usd as a list-price equivalent, not an invoice.
-PRICE_PER_1M_INPUT_USD = float(os.getenv("PRICE_IN", "0.50"))
-PRICE_PER_1M_OUTPUT_USD = float(os.getenv("PRICE_OUT", "3.00"))
+# USD per 1M tokens, paid-tier list price for MODEL_ID (gemini-3.5-flash-lite):
+# https://ai.google.dev/gemini-api/docs/pricing
+#
+# The brief quotes $0.50/$3.00, which is standard Flash, not Flash-Lite -- using
+# it overstated cost by roughly 25%. Change these together with MODEL_ID;
+# reasoning tokens bill at the output rate and are counted in UsageTracker.
+PRICE_PER_1M_INPUT_USD = float(os.getenv("PRICE_IN", "0.30"))
+PRICE_PER_1M_OUTPUT_USD = float(os.getenv("PRICE_OUT", "2.50"))
 
 # --- Experimental policy ---------------------------------------------------
 # DECIDED -- Prof. Doaa, Week 3: doctests are stripped from every prompt.

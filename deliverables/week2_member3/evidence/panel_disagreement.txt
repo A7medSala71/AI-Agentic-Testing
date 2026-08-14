@@ -1,0 +1,37 @@
+==================================================================
+Panel disagreement -- Baseline B
+==================================================================
+  sample: 12 functions, 1 run each
+  (separate sample; logs/ and generated_tests/ are not touched)
+
+    [B:panel3:function_01] rate limited, waiting 53s (attempt 1/3)
+  function_01     16.7%  (8 tests)
+  function_02      0.0%  (6 tests)
+    [B:panel2:function_03] rate limited, waiting 43s (attempt 1/3)
+  function_03      0.0%  (7 tests)
+  function_04      0.0%  (6 tests)
+    [B:panel2:function_05] rate limited, waiting 41s (attempt 1/3)
+  function_05      0.0%  (8 tests)
+  function_06      0.0%  (9 tests)
+    [B:panel1:function_07] rate limited, waiting 40s (attempt 1/3)
+  function_07      0.0%  (7 tests)
+    [B:curator:function_08] rate limited, waiting 42s (attempt 1/3)
+  function_08      0.0%  (9 tests)
+  function_09      0.0%  (7 tests)
+    [B:panel2:function_10] rate limited, waiting 42s (attempt 1/3)
+  function_10      0.0%  (10 tests)
+  function_11      0.0%  (9 tests)
+    [B:panel3:function_12] rate limited, waiting 36s (attempt 1/3)
+  function_12      0.0%  (9 tests)
+
+  mean     1.4%
+  median   0.0%
+  min      0.0%     max 16.7%
+  fully unanimous: 11 of 12 functions
+
+  CANDOR reports >70% disagreement.
+  Ours is far below that: the panelists mostly agree, so consensus
+  has little to resolve and Baseline B's four extra calls buy little.
+  That explains the headline A-vs-B result rather than contradicting it.
+
+  cost of this sample: {'num_llm_calls': 60, 'input_tokens': 55675, 'output_tokens': 37371, 'thought_tokens': 0, 'total_tokens_used': 93046, 'estimated_cost_usd': 0.11013}

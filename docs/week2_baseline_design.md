@@ -265,3 +265,97 @@ Also outstanding:
 1. Baseline B live on `function_03` — generation quality + panel-disagreement rate.
 2. Both systems on 5–10 functions, scored — the first honest A vs B comparison.
 3. Full scale: 30 functions × 3 repeats, once billing is confirmed.
+
+---
+
+## 9. Results — Baseline A vs Baseline B
+
+Complete: 30 functions × 3 repeats × 2 systems = **180 runs**. Generated with
+`gemini-3.5-flash-lite`, doctests stripped. Scored with `baselines/score.py`,
+compared with `baselines/compare.py`.
+
+| | runs | mutation score | line coverage |
+|---|---|---|---|
+| Baseline A | 90/90 | 94.5% ± 6.9 | 73.7% |
+| Baseline B | 90/90 | 95.1% ± 5.7 | 73.0% |
+
+Paired across all 30 functions, averaging the 3 repeats per function first:
+
+```
+difference        +0.6 points
+Baseline B better  9 functions
+Baseline A better  4 functions
+tied              17 functions
+
+Wilcoxon signed-rank (two-sided)
+  non-zero differences  13 of 30
+  W                     28.0
+  p                     0.2213   -- not significant
+```
+
+### Why the panel does not help — measured, not assumed
+
+Baseline B spends five times the calls for +0.6 points. The obvious question is
+whether the panel is failing to resolve conflicts, or whether there are no
+conflicts to resolve. `baselines/measure_panel.py` answers it directly:
+
+| | panel disagreement |
+|---|---|
+| **CANDOR (reported)** | **> 70%** |
+| **This project (measured, 12 functions)** | **1.4% mean, 0.0% median** |
+
+**The three panelists were fully unanimous on 11 of 12 functions.** They are not
+disagreeing and being badly merged — they simply agree. Consensus has nothing to
+resolve, so the four extra calls buy almost nothing.
+
+That is the sentence that explains the headline result. Without it, "+0.6 points,
+p = 0.22" reads as an inconclusive experiment rather than a mechanism that has
+been measured and understood.
+
+Why the gap from CANDOR is plausible: their subjects are Java methods with a
+separate natural-language specification, judged by a reasoning model that
+produces long deliberations. Ours are short, self-contained Python functions
+whose correct behaviour is largely unambiguous from the source, judged by a
+small fast model. There is less for reasonable reviewers to disagree about.
+
+### Reading this
+
+**This is a result, not a failure.** RQ1 asks whether *mutation-guided
+iteration* beats consensus alone; a Baseline B that had leapt ahead would have
+undercut the premise of the refinement loop before Member 4 ran an experiment.
+What this establishes is the floor the proposed variants have to clear:
+
+```
+single-shot generation      94.5%
++ 3-panelist consensus      95.1%   (+0.6, 5x the cost, p = 0.22)
++ mutation-guided loop         ?    <- Variants 1 and 2
+```
+
+**Report the tie rate and the disagreement rate alongside the p-value.** A
+significance test cannot find a difference that mostly is not there, and the
+p-value alone invites the reading that the study was underpowered rather than
+that the systems genuinely match.
+
+### Headroom for the refinement loop
+
+Baseline A already kills every mutant on **13 of 30** functions, leaving the
+refinement variants nothing to improve there. The other **17** have surviving
+mutants, and those are where RQ1 and RQ4 can be answered at all. The richest:
+
+| function | Baseline A mutation score |
+|---|---|
+| `function_11` | 74.1% |
+| `function_19` | 76.8% |
+| `function_04` | 85.7% |
+| `function_12` | 87.7% |
+| `function_21` (`binary_search`) | 89.5% |
+
+This is also the argument against moving to a stronger model for the main
+experiment: a model that kills more mutants leaves less for the loop to
+demonstrate.
+
+### Caveats
+
+- `function_18` cannot be imported at all (see the integration note) and scores 0 for every system. It depresses both equally and should be excluded once Member 1 rules on it.
+- These figures come from `score.py`, Member 3's local harness. The paper's numbers should come from Member 2's shared pipeline so all four systems are scored identically.
+- Cost figures written before this pass used standard-Flash pricing rather than Flash-Lite, overstating spend by roughly 25%. Fixed in `config.py`, and the token breakdown is now stored per run so a price correction never again requires re-running anything.

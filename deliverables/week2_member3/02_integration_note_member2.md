@@ -37,6 +37,39 @@ sample rather than a placeholder. See §4 for when the rest arrives.
 
 ---
 
+## 1a. `function_18` cannot be imported — dataset issue, not a generation issue
+
+`dataset/function_18.py` reads a data file **at import time**:
+
+```python
+data: str = Path(__file__).parent.joinpath("words.txt").read_text(encoding="utf-8")
+```
+
+`words.txt` is not in `dataset/`, so importing the module raises
+`FileNotFoundError` before any test runs. Verified across all 30 files —
+**it is the only one affected**:
+
+```
+ملفات مش بتتستورد لوحدها: 1 من 30
+  function_18: FileNotFoundError: No such file or directory: '.../words.txt'
+```
+
+Every generated suite for `function_18` therefore errors at collection, in all
+three repeats and for both systems. This is not a model failure and should not
+be counted as one — the generated tests themselves are fine.
+
+**Three options, for Member 1 to pick:**
+
+1. Add `words.txt` to `dataset/`.
+2. Move the file-reading lines under `if __name__ == "__main__":` so import is side-effect free.
+3. Drop `function_18` from the benchmark and report n=29.
+
+Until it is resolved, exclude `function_18` from reported means — leaving it in
+depresses every system's score identically, for a reason unrelated to oracle
+quality.
+
+---
+
 ## 2. Each suite must be scored in isolation
 
 A generated suite imports its module by bare name (`from function_03 import

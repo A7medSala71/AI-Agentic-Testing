@@ -26,6 +26,9 @@ class BaselineResult:
     suite: GeneratedTestSuite
     test_source: str
     tracker: UsageTracker
+    # Baseline B only: share of tests the panel did not unanimously agree on.
+    # None for single-agent systems, which have no panel to disagree.
+    panel_disagreement_pct: float | None = None
 
     def to_log(self, mutation_score_pct: float = 0.0, **extra) -> ExecutionLog:
         """Build a schema-valid record. Scores come from Member 2's pipeline.
@@ -43,6 +46,9 @@ class BaselineResult:
             total_tokens_used=summary["total_tokens_used"],
             estimated_cost_usd=summary["estimated_cost_usd"],
             num_llm_calls=summary["num_llm_calls"],
+            input_tokens=summary["input_tokens"],
+            output_tokens=summary["output_tokens"],
+            thought_tokens=summary["thought_tokens"],
             mutation_score_pct=mutation_score_pct,
             **extra,
         )

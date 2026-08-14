@@ -52,6 +52,27 @@ Baseline B's pipeline:
 
 ---
 
+## Final merged architecture
+
+The final repository combines the three member deliverables behind one evaluation
+contract:
+
+```text
+Baseline A/B ───────┐
+                    ├──> shared evaluation/ (pytest + coverage.py + mutmut)
+Refinement seed ────┤
+                    │
+                    └──> RefinementLoop
+                           ├─ surviving mutant extraction
+                           ├─ ErrorTrace strategy
+                           └─ StatePrediction strategy
+```
+
+The proposed system uses the **same Baseline-A-style seed** and then feeds the
+same shared mutation/coverage results back into the refinement loop. Final
+generated suites are saved under `generated_tests/`, and every live run writes
+a schema-validated JSON record under `logs/`.
+
 ## Repository layout
 
 | Path | Contents | Owner |
@@ -105,6 +126,28 @@ Runs are **resumable** — anything already logged is skipped, so a sweep
 interrupted by an API quota picks up where it stopped.
 
 ---
+
+## Proposed refinement commands
+
+```bash
+python -m refinement_loop.run_live function_03 --provider groq --variant error_trace
+python -m refinement_loop.run_live function_03 --provider groq --variant state_prediction
+python -m refinement_loop.run_live --all --repeats 3 --provider groq --variant error_trace
+python -m refinement_loop.run_live --all --repeats 3 --provider groq --variant state_prediction
+```
+
+For Gemini, replace `--provider groq` with `--provider gemini`.
+
+The proposed run counts the **seed generation call plus refinement calls** in
+`num_llm_calls` and token totals. The final suite is persisted, so the exact
+suite used for the logged mutation score can be replayed.
+
+## Colab / notebook
+
+Use `notebooks/final_experiment.ipynb`. It installs the pinned dependencies,
+runs the offline acceptance tests first, accepts an API key without storing it
+in the notebook, provides one-function smoke runs, and contains the resumable
+30-function × 3-repeat commands for the final experiment.
 
 ## Prompt rules (non-negotiable across all four systems)
 

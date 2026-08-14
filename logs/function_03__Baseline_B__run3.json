@@ -1,0 +1,11 @@
+{
+  "function_id": "function_03",
+  "system_variant": "Baseline_B",
+  "iteration_count": 1,
+  "total_tokens_used": 6197,
+  "mutation_score_pct": 100.0,
+  "estimated_cost_usd": 0.010276,
+  "line_coverage_pct": 80.0,
+  "num_llm_calls": 5,
+  "pass_rate_pct": 100.0
+}

@@ -23,7 +23,8 @@ import tempfile
 from dataclasses import dataclass
 from pathlib import Path
 
-from . import config
+from . import config, run_log
+from .schemas import ExecutionLog
 
 VENV_BIN = Path(sys.executable).parent
 
@@ -173,8 +174,44 @@ def score_generated(function_filter: str | None = None) -> list[Score]:
     return scores
 
 
+def update_logs(scores: list[Score]) -> int:
+    """Write measured metrics back into the run records in logs/.
+
+    Generation and scoring are deliberately separate passes: generation is
+    API-bound and must finish inside the daily quota window, scoring is
+    CPU-bound and can run any time. That split leaves the logs written during
+    generation without scores, and the sweep runner skips anything already
+    logged -- so without this the numbers would never reach the records the
+    team analyses.
+    """
+    written = 0
+    for score in scores:
+        path = config.LOGS_DIR / run_log.log_filename(
+            score.function_id, score.system_variant, score.run_index
+        )
+        if not path.exists():
+            continue
+        record = json.loads(path.read_text(encoding="utf-8"))
+        record["mutation_score_pct"] = round(score.mutation_score_pct, 2)
+        record["line_coverage_pct"] = round(score.line_coverage_pct, 2)
+        record["pass_rate_pct"] = round(score.pass_rate_pct, 2)
+        log = ExecutionLog.model_validate(record)
+        errors = run_log.validate(log)
+        if errors:
+            print(f"  {path.name}: schema violation -- {'; '.join(errors)}")
+            continue
+        path.write_text(
+            json.dumps(log.model_dump(exclude_none=True), indent=2) + "\n",
+            encoding="utf-8",
+        )
+        written += 1
+    return written
+
+
 def main() -> int:
-    function_filter = sys.argv[1] if len(sys.argv) > 1 else None
+    args = [a for a in sys.argv[1:] if not a.startswith("-")]
+    write_back = "--update-logs" in sys.argv
+    function_filter = args[0] if args else None
     scores = score_generated(function_filter)
 
     if not scores:
@@ -214,6 +251,10 @@ def main() -> int:
             )
         print("\n  n is far too small to compare systems -- this is a smoke test,")
         print("  not a result. RQ1 needs 30 functions x 3 repeats and a Wilcoxon test.")
+
+    if write_back:
+        written = update_logs(scores)
+        print(f"\n{written} log record(s) updated in {config.LOGS_DIR}")
 
     return 0
 
