@@ -1,0 +1,57 @@
+{
+  "function_id": "function_16",
+  "system_variant": "Variant_2_StatePrediction",
+  "iteration_count": 1,
+  "total_tokens_used": 3247,
+  "mutation_score_pct": 89.13,
+  "line_coverage_pct": 100.0,
+  "estimated_cost_usd": 0.003819,
+  "iterations_detail": [
+    {
+      "iteration": 1,
+      "mutant_id": "function_16.x_odd_even_sort__mutmut_5",
+      "generated_test_code": "from function_16 import odd_even_sort\n\n\ndef test_odd_even_sort_nominal():\n    data = [4, 3, 2, 1]\n    result = odd_even_sort(data)\n    assert result == [1, 2, 3, 4]\n    assert data is result\n\n\ndef test_odd_even_sort_already_sorted():\n    data = [1, 2, 3, 4, 5]\n    result = odd_even_sort(data)\n    assert result == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_reverse_sorted():\n    data = [5, 4, 3, 2, 1]\n    result = odd_even_sort(data)\n    assert result == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_empty_list():\n    data = []\n    result = odd_even_sort(data)\n    assert result == []\n\n\ndef test_odd_even_sort_single_element():\n    data = [42]\n    result = odd_even_sort(data)\n    assert result == [42]\n\n\ndef test_odd_even_sort_duplicates():\n    data = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3]\n    result = odd_even_sort(data)\n    assert result == [1, 1, 2, 3, 3, 4, 5, 5, 6, 9]\n\n\ndef test_odd_even_sort_mutmut_5_and_25_and_26():\n    # Mutant 5/25/26: changes is_sorted assignment to None or True, causing infinite loops or premature loop termination on unsorted data.\n    data = [2, 1]\n    result = odd_even_sort(data)\n    assert result == [1, 2]\n\n\ndef test_odd_even_sort_mutmut_12_and_32():\n    # Mutant 12/32: removes step argument in range() (defaults step to 1 instead of 2), causing incorrect indexing and sorting failure.\n    data = [3, 1, 2]\n    result = odd_even_sort(data)\n    assert result == [1, 2, 3]",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_16.x_odd_even_sort__mutmut_12",
+      "generated_test_code": "from function_16 import odd_even_sort\n\n\ndef test_odd_even_sort_nominal():\n    data = [4, 3, 2, 1]\n    result = odd_even_sort(data)\n    assert result == [1, 2, 3, 4]\n    assert data is result\n\n\ndef test_odd_even_sort_already_sorted():\n    data = [1, 2, 3, 4, 5]\n    result = odd_even_sort(data)\n    assert result == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_reverse_sorted():\n    data = [5, 4, 3, 2, 1]\n    result = odd_even_sort(data)\n    assert result == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_empty_list():\n    data = []\n    result = odd_even_sort(data)\n    assert result == []\n\n\ndef test_odd_even_sort_single_element():\n    data = [42]\n    result = odd_even_sort(data)\n    assert result == [42]\n\n\ndef test_odd_even_sort_duplicates():\n    data = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3]\n    result = odd_even_sort(data)\n    assert result == [1, 1, 2, 3, 3, 4, 5, 5, 6, 9]\n\n\ndef test_odd_even_sort_mutmut_5_and_25_and_26():\n    # Mutant 5/25/26: changes is_sorted assignment to None or True, causing infinite loops or premature loop termination on unsorted data.\n    data = [2, 1]\n    result = odd_even_sort(data)\n    assert result == [1, 2]\n\n\ndef test_odd_even_sort_mutmut_12_and_32():\n    # Mutant 12/32: removes step argument in range() (defaults step to 1 instead of 2), causing incorrect indexing and sorting failure.\n    data = [3, 1, 2]\n    result = odd_even_sort(data)\n    assert result == [1, 2, 3]",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_16.x_odd_even_sort__mutmut_25",
+      "generated_test_code": "from function_16 import odd_even_sort\n\n\ndef test_odd_even_sort_nominal():\n    data = [4, 3, 2, 1]\n    result = odd_even_sort(data)\n    assert result == [1, 2, 3, 4]\n    assert data is result\n\n\ndef test_odd_even_sort_already_sorted():\n    data = [1, 2, 3, 4, 5]\n    result = odd_even_sort(data)\n    assert result == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_reverse_sorted():\n    data = [5, 4, 3, 2, 1]\n    result = odd_even_sort(data)\n    assert result == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_empty_list():\n    data = []\n    result = odd_even_sort(data)\n    assert result == []\n\n\ndef test_odd_even_sort_single_element():\n    data = [42]\n    result = odd_even_sort(data)\n    assert result == [42]\n\n\ndef test_odd_even_sort_duplicates():\n    data = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3]\n    result = odd_even_sort(data)\n    assert result == [1, 1, 2, 3, 3, 4, 5, 5, 6, 9]\n\n\ndef test_odd_even_sort_mutmut_5_and_25_and_26():\n    # Mutant 5/25/26: changes is_sorted assignment to None or True, causing infinite loops or premature loop termination on unsorted data.\n    data = [2, 1]\n    result = odd_even_sort(data)\n    assert result == [1, 2]\n\n\ndef test_odd_even_sort_mutmut_12_and_32():\n    # Mutant 12/32: removes step argument in range() (defaults step to 1 instead of 2), causing incorrect indexing and sorting failure.\n    data = [3, 1, 2]\n    result = odd_even_sort(data)\n    assert result == [1, 2, 3]",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_16.x_odd_even_sort__mutmut_26",
+      "generated_test_code": "from function_16 import odd_even_sort\n\n\ndef test_odd_even_sort_nominal():\n    data = [4, 3, 2, 1]\n    result = odd_even_sort(data)\n    assert result == [1, 2, 3, 4]\n    assert data is result\n\n\ndef test_odd_even_sort_already_sorted():\n    data = [1, 2, 3, 4, 5]\n    result = odd_even_sort(data)\n    assert result == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_reverse_sorted():\n    data = [5, 4, 3, 2, 1]\n    result = odd_even_sort(data)\n    assert result == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_empty_list():\n    data = []\n    result = odd_even_sort(data)\n    assert result == []\n\n\ndef test_odd_even_sort_single_element():\n    data = [42]\n    result = odd_even_sort(data)\n    assert result == [42]\n\n\ndef test_odd_even_sort_duplicates():\n    data = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3]\n    result = odd_even_sort(data)\n    assert result == [1, 1, 2, 3, 3, 4, 5, 5, 6, 9]\n\n\ndef test_odd_even_sort_mutmut_5_and_25_and_26():\n    # Mutant 5/25/26: changes is_sorted assignment to None or True, causing infinite loops or premature loop termination on unsorted data.\n    data = [2, 1]\n    result = odd_even_sort(data)\n    assert result == [1, 2]\n\n\ndef test_odd_even_sort_mutmut_12_and_32():\n    # Mutant 12/32: removes step argument in range() (defaults step to 1 instead of 2), causing incorrect indexing and sorting failure.\n    data = [3, 1, 2]\n    result = odd_even_sort(data)\n    assert result == [1, 2, 3]",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_16.x_odd_even_sort__mutmut_32",
+      "generated_test_code": "from function_16 import odd_even_sort\n\n\ndef test_odd_even_sort_nominal():\n    data = [4, 3, 2, 1]\n    result = odd_even_sort(data)\n    assert result == [1, 2, 3, 4]\n    assert data is result\n\n\ndef test_odd_even_sort_already_sorted():\n    data = [1, 2, 3, 4, 5]\n    result = odd_even_sort(data)\n    assert result == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_reverse_sorted():\n    data = [5, 4, 3, 2, 1]\n    result = odd_even_sort(data)\n    assert result == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_empty_list():\n    data = []\n    result = odd_even_sort(data)\n    assert result == []\n\n\ndef test_odd_even_sort_single_element():\n    data = [42]\n    result = odd_even_sort(data)\n    assert result == [42]\n\n\ndef test_odd_even_sort_duplicates():\n    data = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3]\n    result = odd_even_sort(data)\n    assert result == [1, 1, 2, 3, 3, 4, 5, 5, 6, 9]\n\n\ndef test_odd_even_sort_mutmut_5_and_25_and_26():\n    # Mutant 5/25/26: changes is_sorted assignment to None or True, causing infinite loops or premature loop termination on unsorted data.\n    data = [2, 1]\n    result = odd_even_sort(data)\n    assert result == [1, 2]\n\n\ndef test_odd_even_sort_mutmut_12_and_32():\n    # Mutant 12/32: removes step argument in range() (defaults step to 1 instead of 2), causing incorrect indexing and sorting failure.\n    data = [3, 1, 2]\n    result = odd_even_sort(data)\n    assert result == [1, 2, 3]",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    }
+  ],
+  "num_llm_calls": 2,
+  "pass_rate_pct": 100.0,
+  "initial_mutation_score_pct": 89.13,
+  "stop_reason": "plateau",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite"
+}

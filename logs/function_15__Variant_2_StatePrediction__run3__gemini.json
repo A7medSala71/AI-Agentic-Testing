@@ -1,0 +1,25 @@
+{
+  "function_id": "function_15",
+  "system_variant": "Variant_2_StatePrediction",
+  "iteration_count": 1,
+  "total_tokens_used": 2669,
+  "mutation_score_pct": 95.65,
+  "line_coverage_pct": 100.0,
+  "estimated_cost_usd": 0.003183,
+  "iterations_detail": [
+    {
+      "iteration": 1,
+      "mutant_id": "function_15.x_merge_sort__mutmut_7",
+      "generated_test_code": "from function_15 import merge_sort\nimport pytest\n\n\ndef test_merge_sort_empty_and_single():\n    assert merge_sort([]) == []\n    assert merge_sort([1]) == [1]\n\n\ndef test_merge_sort_already_sorted():\n    assert merge_sort([1, 2, 3, 4, 5]) == [1, 2, 3, 4, 5]\n\n\ndef test_merge_sort_reverse_sorted():\n    assert merge_sort([5, 4, 3, 2, 1]) == [1, 2, 3, 4, 5]\n\n\ndef test_merge_sort_unsorted_duplicates():\n    assert merge_sort([3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]) == [1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9]\n\n\ndef test_merge_sort_negative_numbers():\n    assert merge_sort([-3, -1, -4, 0, 2, -2]) == [-4, -3, -2, -1, 0, 2]\n\n\ndef test_merge_sort_strings():\n    assert merge_sort([\"banana\", \"apple\", \"cherry\", \"date\"]) == [\"apple\", \"banana\", \"cherry\", \"date\"]\n\n\ndef test_merge_sort_conditional_boundary_duplicates():\n    # Mutant changes <= to < in merge; duplicate elements must remain stable (left comes before right)\n    assert merge_sort([2, 2, 1]) == [1, 2, 2]",
+      "mutant_killed": false,
+      "mutant_operator": "ConditionalBoundary",
+      "predicted_state": null
+    }
+  ],
+  "num_llm_calls": 2,
+  "pass_rate_pct": 100.0,
+  "initial_mutation_score_pct": 95.65,
+  "stop_reason": "plateau",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite"
+}

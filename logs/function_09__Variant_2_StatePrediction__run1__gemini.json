@@ -1,0 +1,33 @@
+{
+  "function_id": "function_09",
+  "system_variant": "Variant_2_StatePrediction",
+  "iteration_count": 1,
+  "total_tokens_used": 3258,
+  "mutation_score_pct": 94.44,
+  "line_coverage_pct": 100.0,
+  "estimated_cost_usd": 0.004476,
+  "iterations_detail": [
+    {
+      "iteration": 1,
+      "mutant_id": "function_09.x_binary_insertion_sort__mutmut_4",
+      "generated_test_code": "import pytest\nfrom function_09 import binary_insertion_sort\n\n\ndef test_binary_insertion_sort_empty():\n    collection = []\n    res = binary_insertion_sort(collection)\n    assert res == []\n\n\ndef test_binary_insertion_sort_single():\n    collection = [42]\n    res = binary_insertion_sort(collection)\n    assert res == [42]\n\n\ndef test_binary_insertion_sort_already_sorted():\n    collection = [1, 2, 3, 4, 5]\n    res = binary_insertion_sort(collection)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_binary_insertion_sort_reverse_sorted():\n    collection = [5, 4, 3, 2, 1]\n    res = binary_insertion_sort(collection)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_binary_insertion_sort_duplicates():\n    collection = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]\n    res = binary_insertion_sort(collection)\n    assert res == [1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9]\n\n\ndef test_binary_insertion_sort_strings():\n    collection = [\"banana\", \"apple\", \"cherry\", \"date\"]\n    res = binary_insertion_sort(collection)\n    assert res == [\"apple\", \"banana\", \"cherry\", \"date\"]\n\n\ndef test_binary_insertion_sort_mutates_in_place():\n    collection = [3, 1, 2]\n    res = binary_insertion_sort(collection)\n    assert res is collection\n    assert res == [1, 2, 3]\n\n\ndef test_binary_insertion_sort_range_starts_at_zero():\n    # Mutant mutmut_4: if range starts at 0, i=0 does value_to_insert = collection[0] and tries to insert it, shifting collection[0] incorrectly.\n    # State divergence: collection[0] might be overwritten or duplicated incorrectly if i=0 runs.\n    collection = [10, 5]\n    res = binary_insertion_sort(collection)\n    assert res == [5, 10]\n\n\ndef test_binary_insertion_sort_conditional_boundary_duplicates():\n    # Mutant mutmut_18: value_to_insert <= collection[mid] instead of <.\n    # State divergence: when value_to_insert equals collection[mid], it treats it as smaller and inserts to the left, breaking stability for duplicates.\n    # We can check stability by inserting an object or struct, or simply verifying duplicate order stability.\n    # Let's use a list of objects or tuples where the second element distinguishes equal keys.\n    # E.g., sorting by first element: (2, 'a'), (2, 'b') should stay (2, 'a'), (2, 'b').\n    collection = [(2, 'a'), (2, 'b')]\n    res = binary_insertion_sort(collection)\n    assert res == [(2, 'a'), (2, 'b')]",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_09.x_binary_insertion_sort__mutmut_18",
+      "generated_test_code": "import pytest\nfrom function_09 import binary_insertion_sort\n\n\ndef test_binary_insertion_sort_empty():\n    collection = []\n    res = binary_insertion_sort(collection)\n    assert res == []\n\n\ndef test_binary_insertion_sort_single():\n    collection = [42]\n    res = binary_insertion_sort(collection)\n    assert res == [42]\n\n\ndef test_binary_insertion_sort_already_sorted():\n    collection = [1, 2, 3, 4, 5]\n    res = binary_insertion_sort(collection)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_binary_insertion_sort_reverse_sorted():\n    collection = [5, 4, 3, 2, 1]\n    res = binary_insertion_sort(collection)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_binary_insertion_sort_duplicates():\n    collection = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]\n    res = binary_insertion_sort(collection)\n    assert res == [1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9]\n\n\ndef test_binary_insertion_sort_strings():\n    collection = [\"banana\", \"apple\", \"cherry\", \"date\"]\n    res = binary_insertion_sort(collection)\n    assert res == [\"apple\", \"banana\", \"cherry\", \"date\"]\n\n\ndef test_binary_insertion_sort_mutates_in_place():\n    collection = [3, 1, 2]\n    res = binary_insertion_sort(collection)\n    assert res is collection\n    assert res == [1, 2, 3]\n\n\ndef test_binary_insertion_sort_range_starts_at_zero():\n    # Mutant mutmut_4: if range starts at 0, i=0 does value_to_insert = collection[0] and tries to insert it, shifting collection[0] incorrectly.\n    # State divergence: collection[0] might be overwritten or duplicated incorrectly if i=0 runs.\n    collection = [10, 5]\n    res = binary_insertion_sort(collection)\n    assert res == [5, 10]\n\n\ndef test_binary_insertion_sort_conditional_boundary_duplicates():\n    # Mutant mutmut_18: value_to_insert <= collection[mid] instead of <.\n    # State divergence: when value_to_insert equals collection[mid], it treats it as smaller and inserts to the left, breaking stability for duplicates.\n    # We can check stability by inserting an object or struct, or simply verifying duplicate order stability.\n    # Let's use a list of objects or tuples where the second element distinguishes equal keys.\n    # E.g., sorting by first element: (2, 'a'), (2, 'b') should stay (2, 'a'), (2, 'b').\n    collection = [(2, 'a'), (2, 'b')]\n    res = binary_insertion_sort(collection)\n    assert res == [(2, 'a'), (2, 'b')]",
+      "mutant_killed": false,
+      "mutant_operator": "ConditionalBoundary",
+      "predicted_state": null
+    }
+  ],
+  "num_llm_calls": 2,
+  "pass_rate_pct": 100.0,
+  "initial_mutation_score_pct": 94.44,
+  "stop_reason": "plateau",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite"
+}

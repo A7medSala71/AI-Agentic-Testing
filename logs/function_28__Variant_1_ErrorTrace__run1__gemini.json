@@ -1,0 +1,41 @@
+{
+  "function_id": "function_28",
+  "system_variant": "Variant_1_ErrorTrace",
+  "iteration_count": 1,
+  "total_tokens_used": 2715,
+  "mutation_score_pct": 90.62,
+  "line_coverage_pct": 100.0,
+  "estimated_cost_usd": 0.003206,
+  "iterations_detail": [
+    {
+      "iteration": 1,
+      "mutant_id": "function_28.x_sin__mutmut_1",
+      "generated_test_code": "import pytest\nfrom function_28 import sin\n\n\ndef test_sin_zero():\n    assert sin(0.0) == 0.0\n\n\ndef test_sin_standard_angles():\n    assert sin(30.0) == 0.5\n    assert sin(90.0) == 1.0\n    assert sin(180.0) == 0.0\n    assert sin(270.0) == -1.0\n    assert sin(360.0) == 0.0\n\n\ndef test_sin_negative_angles():\n    assert sin(-30.0) == -0.5\n    assert sin(-90.0) == -1.0\n\n\ndef test_sin_large_angles():\n    assert sin(390.0) == 0.5\n    assert sin(-330.0) == 0.5\n\n\ndef test_sin_custom_rounding():\n    val = sin(30.0, rounded_values_count=2)\n    assert val == 0.5\n\n\ndef test_sin_custom_accuracy():\n    val_low = sin(30.0, accuracy=1, rounded_values_count=10)\n    val_high = sin(30.0, accuracy=20, rounded_values_count=10)\n    assert val_low != val_high\n    assert val_high == 0.5\n\n\ndef test_default_parameters():\n    import inspect\n    sig = inspect.signature(sin)\n    assert sig.parameters['accuracy'].default == 18\n    assert sig.parameters['rounded_values_count'].default == 10\n\n\ndef test_angle_normalization_boundary():\n    assert sin(361.0) == sin(1.0)\n    assert sin(360.0) == 0.0",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_28.x_sin__mutmut_2",
+      "generated_test_code": "import pytest\nfrom function_28 import sin\n\n\ndef test_sin_zero():\n    assert sin(0.0) == 0.0\n\n\ndef test_sin_standard_angles():\n    assert sin(30.0) == 0.5\n    assert sin(90.0) == 1.0\n    assert sin(180.0) == 0.0\n    assert sin(270.0) == -1.0\n    assert sin(360.0) == 0.0\n\n\ndef test_sin_negative_angles():\n    assert sin(-30.0) == -0.5\n    assert sin(-90.0) == -1.0\n\n\ndef test_sin_large_angles():\n    assert sin(390.0) == 0.5\n    assert sin(-330.0) == 0.5\n\n\ndef test_sin_custom_rounding():\n    val = sin(30.0, rounded_values_count=2)\n    assert val == 0.5\n\n\ndef test_sin_custom_accuracy():\n    val_low = sin(30.0, accuracy=1, rounded_values_count=10)\n    val_high = sin(30.0, accuracy=20, rounded_values_count=10)\n    assert val_low != val_high\n    assert val_high == 0.5\n\n\ndef test_default_parameters():\n    import inspect\n    sig = inspect.signature(sin)\n    assert sig.parameters['accuracy'].default == 18\n    assert sig.parameters['rounded_values_count'].default == 10\n\n\ndef test_angle_normalization_boundary():\n    assert sin(361.0) == sin(1.0)\n    assert sin(360.0) == 0.0",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_28.x_sin__mutmut_7",
+      "generated_test_code": "import pytest\nfrom function_28 import sin\n\n\ndef test_sin_zero():\n    assert sin(0.0) == 0.0\n\n\ndef test_sin_standard_angles():\n    assert sin(30.0) == 0.5\n    assert sin(90.0) == 1.0\n    assert sin(180.0) == 0.0\n    assert sin(270.0) == -1.0\n    assert sin(360.0) == 0.0\n\n\ndef test_sin_negative_angles():\n    assert sin(-30.0) == -0.5\n    assert sin(-90.0) == -1.0\n\n\ndef test_sin_large_angles():\n    assert sin(390.0) == 0.5\n    assert sin(-330.0) == 0.5\n\n\ndef test_sin_custom_rounding():\n    val = sin(30.0, rounded_values_count=2)\n    assert val == 0.5\n\n\ndef test_sin_custom_accuracy():\n    val_low = sin(30.0, accuracy=1, rounded_values_count=10)\n    val_high = sin(30.0, accuracy=20, rounded_values_count=10)\n    assert val_low != val_high\n    assert val_high == 0.5\n\n\ndef test_default_parameters():\n    import inspect\n    sig = inspect.signature(sin)\n    assert sig.parameters['accuracy'].default == 18\n    assert sig.parameters['rounded_values_count'].default == 10\n\n\ndef test_angle_normalization_boundary():\n    assert sin(361.0) == sin(1.0)\n    assert sin(360.0) == 0.0",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    }
+  ],
+  "num_llm_calls": 2,
+  "pass_rate_pct": 100.0,
+  "initial_mutation_score_pct": 90.62,
+  "stop_reason": "plateau",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite"
+}

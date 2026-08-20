@@ -1,0 +1,57 @@
+{
+  "function_id": "function_16",
+  "system_variant": "Variant_1_ErrorTrace",
+  "iteration_count": 1,
+  "total_tokens_used": 3070,
+  "mutation_score_pct": 89.13,
+  "line_coverage_pct": 100.0,
+  "estimated_cost_usd": 0.003566,
+  "iterations_detail": [
+    {
+      "iteration": 1,
+      "mutant_id": "function_16.x_odd_even_sort__mutmut_5",
+      "generated_test_code": "import pytest\nfrom function_16 import odd_even_sort\n\n\ndef test_odd_even_sort_nominal():\n    arr = [4, 3, 2, 1]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4]\n    assert arr is res\n\n\ndef test_odd_even_sort_empty():\n    arr = []\n    res = odd_even_sort(arr)\n    assert res == []\n\n\ndef test_odd_even_sort_single_element():\n    arr = [42]\n    res = odd_even_sort(arr)\n    assert res == [42]\n\n\ndef test_odd_even_sort_already_sorted():\n    arr = [1, 2, 3, 4, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_reverse_sorted():\n    arr = [5, 4, 3, 2, 1]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_duplicates():\n    arr = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9]\n\n\ndef test_odd_even_sort_unsorted_requires_multiple_passes():\n    # Requires multiple passes where both even and odd phase swaps happen\n    arr = [2, 3, 4, 1]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4]",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_16.x_odd_even_sort__mutmut_12",
+      "generated_test_code": "import pytest\nfrom function_16 import odd_even_sort\n\n\ndef test_odd_even_sort_nominal():\n    arr = [4, 3, 2, 1]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4]\n    assert arr is res\n\n\ndef test_odd_even_sort_empty():\n    arr = []\n    res = odd_even_sort(arr)\n    assert res == []\n\n\ndef test_odd_even_sort_single_element():\n    arr = [42]\n    res = odd_even_sort(arr)\n    assert res == [42]\n\n\ndef test_odd_even_sort_already_sorted():\n    arr = [1, 2, 3, 4, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_reverse_sorted():\n    arr = [5, 4, 3, 2, 1]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_duplicates():\n    arr = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9]\n\n\ndef test_odd_even_sort_unsorted_requires_multiple_passes():\n    # Requires multiple passes where both even and odd phase swaps happen\n    arr = [2, 3, 4, 1]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4]",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_16.x_odd_even_sort__mutmut_25",
+      "generated_test_code": "import pytest\nfrom function_16 import odd_even_sort\n\n\ndef test_odd_even_sort_nominal():\n    arr = [4, 3, 2, 1]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4]\n    assert arr is res\n\n\ndef test_odd_even_sort_empty():\n    arr = []\n    res = odd_even_sort(arr)\n    assert res == []\n\n\ndef test_odd_even_sort_single_element():\n    arr = [42]\n    res = odd_even_sort(arr)\n    assert res == [42]\n\n\ndef test_odd_even_sort_already_sorted():\n    arr = [1, 2, 3, 4, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_reverse_sorted():\n    arr = [5, 4, 3, 2, 1]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_duplicates():\n    arr = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9]\n\n\ndef test_odd_even_sort_unsorted_requires_multiple_passes():\n    # Requires multiple passes where both even and odd phase swaps happen\n    arr = [2, 3, 4, 1]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4]",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_16.x_odd_even_sort__mutmut_26",
+      "generated_test_code": "import pytest\nfrom function_16 import odd_even_sort\n\n\ndef test_odd_even_sort_nominal():\n    arr = [4, 3, 2, 1]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4]\n    assert arr is res\n\n\ndef test_odd_even_sort_empty():\n    arr = []\n    res = odd_even_sort(arr)\n    assert res == []\n\n\ndef test_odd_even_sort_single_element():\n    arr = [42]\n    res = odd_even_sort(arr)\n    assert res == [42]\n\n\ndef test_odd_even_sort_already_sorted():\n    arr = [1, 2, 3, 4, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_reverse_sorted():\n    arr = [5, 4, 3, 2, 1]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_duplicates():\n    arr = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9]\n\n\ndef test_odd_even_sort_unsorted_requires_multiple_passes():\n    # Requires multiple passes where both even and odd phase swaps happen\n    arr = [2, 3, 4, 1]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4]",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_16.x_odd_even_sort__mutmut_32",
+      "generated_test_code": "import pytest\nfrom function_16 import odd_even_sort\n\n\ndef test_odd_even_sort_nominal():\n    arr = [4, 3, 2, 1]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4]\n    assert arr is res\n\n\ndef test_odd_even_sort_empty():\n    arr = []\n    res = odd_even_sort(arr)\n    assert res == []\n\n\ndef test_odd_even_sort_single_element():\n    arr = [42]\n    res = odd_even_sort(arr)\n    assert res == [42]\n\n\ndef test_odd_even_sort_already_sorted():\n    arr = [1, 2, 3, 4, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_reverse_sorted():\n    arr = [5, 4, 3, 2, 1]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_duplicates():\n    arr = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9]\n\n\ndef test_odd_even_sort_unsorted_requires_multiple_passes():\n    # Requires multiple passes where both even and odd phase swaps happen\n    arr = [2, 3, 4, 1]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4]",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    }
+  ],
+  "num_llm_calls": 2,
+  "pass_rate_pct": 100.0,
+  "initial_mutation_score_pct": 89.13,
+  "stop_reason": "plateau",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite"
+}

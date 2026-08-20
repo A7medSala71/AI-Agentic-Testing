@@ -1,0 +1,41 @@
+{
+  "function_id": "function_28",
+  "system_variant": "Variant_1_ErrorTrace",
+  "iteration_count": 1,
+  "total_tokens_used": 2549,
+  "mutation_score_pct": 90.62,
+  "line_coverage_pct": 100.0,
+  "estimated_cost_usd": 0.002876,
+  "iterations_detail": [
+    {
+      "iteration": 1,
+      "mutant_id": "function_28.x_sin__mutmut_1",
+      "generated_test_code": "import pytest\nfrom function_28 import sin\n\n\ndef test_sin_zero():\n    assert sin(0.0) == 0.0\n\n\ndef test_sin_standard_angles():\n    assert sin(30.0) == 0.5\n    assert sin(90.0) == 1.0\n    assert sin(180.0) == 0.0\n    assert sin(270.0) == -1.0\n\n\ndef test_sin_angle_normalization():\n    assert sin(390.0) == sin(30.0)\n    assert sin(-330.0) == sin(30.0)\n    assert sin(720.0) == sin(0.0)\n\n\ndef test_sin_custom_accuracy_and_rounding():\n    res_low = sin(30.0, accuracy=1, rounded_values_count=2)\n    res_high = sin(30.0, accuracy=10, rounded_values_count=5)\n    assert isinstance(res_low, float)\n    assert isinstance(res_high, float)\n    assert sin(30.0, accuracy=18, rounded_values_count=4) == 0.5\n\n\ndef test_sin_default_parameters_inspection():\n    import inspect\n    sig = inspect.signature(sin)\n    assert sig.parameters['accuracy'].default == 18\n    assert sig.parameters['rounded_values_count'].default == 10\n\n\ndef test_sin_normalization_boundary_360():\n    # Tests value right around 360 to ensure 360.0 vs 361.0 in modulo/normalization matters\n    assert sin(360.0) == sin(0.0)\n    assert sin(361.0) == sin(1.0)",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_28.x_sin__mutmut_2",
+      "generated_test_code": "import pytest\nfrom function_28 import sin\n\n\ndef test_sin_zero():\n    assert sin(0.0) == 0.0\n\n\ndef test_sin_standard_angles():\n    assert sin(30.0) == 0.5\n    assert sin(90.0) == 1.0\n    assert sin(180.0) == 0.0\n    assert sin(270.0) == -1.0\n\n\ndef test_sin_angle_normalization():\n    assert sin(390.0) == sin(30.0)\n    assert sin(-330.0) == sin(30.0)\n    assert sin(720.0) == sin(0.0)\n\n\ndef test_sin_custom_accuracy_and_rounding():\n    res_low = sin(30.0, accuracy=1, rounded_values_count=2)\n    res_high = sin(30.0, accuracy=10, rounded_values_count=5)\n    assert isinstance(res_low, float)\n    assert isinstance(res_high, float)\n    assert sin(30.0, accuracy=18, rounded_values_count=4) == 0.5\n\n\ndef test_sin_default_parameters_inspection():\n    import inspect\n    sig = inspect.signature(sin)\n    assert sig.parameters['accuracy'].default == 18\n    assert sig.parameters['rounded_values_count'].default == 10\n\n\ndef test_sin_normalization_boundary_360():\n    # Tests value right around 360 to ensure 360.0 vs 361.0 in modulo/normalization matters\n    assert sin(360.0) == sin(0.0)\n    assert sin(361.0) == sin(1.0)",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_28.x_sin__mutmut_7",
+      "generated_test_code": "import pytest\nfrom function_28 import sin\n\n\ndef test_sin_zero():\n    assert sin(0.0) == 0.0\n\n\ndef test_sin_standard_angles():\n    assert sin(30.0) == 0.5\n    assert sin(90.0) == 1.0\n    assert sin(180.0) == 0.0\n    assert sin(270.0) == -1.0\n\n\ndef test_sin_angle_normalization():\n    assert sin(390.0) == sin(30.0)\n    assert sin(-330.0) == sin(30.0)\n    assert sin(720.0) == sin(0.0)\n\n\ndef test_sin_custom_accuracy_and_rounding():\n    res_low = sin(30.0, accuracy=1, rounded_values_count=2)\n    res_high = sin(30.0, accuracy=10, rounded_values_count=5)\n    assert isinstance(res_low, float)\n    assert isinstance(res_high, float)\n    assert sin(30.0, accuracy=18, rounded_values_count=4) == 0.5\n\n\ndef test_sin_default_parameters_inspection():\n    import inspect\n    sig = inspect.signature(sin)\n    assert sig.parameters['accuracy'].default == 18\n    assert sig.parameters['rounded_values_count'].default == 10\n\n\ndef test_sin_normalization_boundary_360():\n    # Tests value right around 360 to ensure 360.0 vs 361.0 in modulo/normalization matters\n    assert sin(360.0) == sin(0.0)\n    assert sin(361.0) == sin(1.0)",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    }
+  ],
+  "num_llm_calls": 2,
+  "pass_rate_pct": 100.0,
+  "initial_mutation_score_pct": 90.62,
+  "stop_reason": "plateau",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite"
+}

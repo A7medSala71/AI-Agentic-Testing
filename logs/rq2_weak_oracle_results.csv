@@ -1,0 +1,5 @@
+comparison,n_pairs,wilcoxon_stat,p_value,mean_lhs,mean_rhs
+Variant_1_ErrorTrace vs Baseline_A (weak-oracle gap),90,27.0,6.3030427958421915e-16,0.49388888888888877,-20.802333333333333
+Variant_1_ErrorTrace vs Baseline_B (weak-oracle gap),90,17.0,3.0558870802084387e-16,0.49388888888888877,-22.075111111111113
+Variant_2_StatePrediction vs Baseline_A (weak-oracle gap),90,132.0,1.9537443974610232e-14,-1.4354444444444445,-20.802333333333333
+Variant_2_StatePrediction vs Baseline_B (weak-oracle gap),90,128.0,1.1244280476815932e-14,-1.4354444444444445,-22.075111111111113

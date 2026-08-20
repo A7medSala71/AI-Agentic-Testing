@@ -1,0 +1,73 @@
+{
+  "function_id": "function_26",
+  "system_variant": "Variant_1_ErrorTrace",
+  "iteration_count": 3,
+  "total_tokens_used": 5714,
+  "mutation_score_pct": 96.97,
+  "line_coverage_pct": 100.0,
+  "estimated_cost_usd": 0.006743,
+  "iterations_detail": [
+    {
+      "iteration": 1,
+      "mutant_id": "function_26.x_prime_factors__mutmut_11",
+      "generated_test_code": "import pytest\nfrom function_26 import prime_factors\nfrom function_26 import unique_prime_factors\n\n\ndef test_prime_factors_nominal_composite():\n    assert prime_factors(60) == [2, 2, 3, 5]\n\n\ndef test_prime_factors_prime():\n    assert prime_factors(13) == [13]\n\n\ndef test_prime_factors_power():\n    assert prime_factors(8) == [2, 2, 2]\n\n\ndef test_prime_factors_one():\n    assert prime_factors(1) == []\n\n\ndef test_prime_factors_division_type():\n    res = prime_factors(4)\n    assert res == [2, 2]\n    assert isinstance(res[0], int)\n\n\ndef test_unique_prime_factors_nominal_composite():\n    assert unique_prime_factors(60) == [2, 3, 5]\n\n\ndef test_unique_prime_factors_prime():\n    assert unique_prime_factors(13) == [13]\n\n\ndef test_unique_prime_factors_power():\n    assert unique_prime_factors(8) == [2]\n\n\ndef test_unique_prime_factors_one():\n    assert unique_prime_factors(1) == []\n\n\ndef test_unique_prime_factors_boundary_square():\n    # Tests i * i <= n boundary for unique_prime_factors when n is a square (e.g., 9 = 3*3)\n    assert unique_prime_factors(9) == [3]\n\n\ndef test_unique_prime_factors_division_type():\n    res = unique_prime_factors(4)\n    assert res == [2]\n    assert isinstance(res[0], int)\n\n\ndef test_unique_prime_factors_n_greater_than_one():\n    # Tests n > 1 vs n > 2 leftover prime check (e.g., n = 2 after stripping factors of something, or just a prime like 2)\n    assert unique_prime_factors(2) == [2]",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_26.x_unique_prime_factors__mutmut_5",
+      "generated_test_code": "import pytest\nfrom function_26 import prime_factors\nfrom function_26 import unique_prime_factors\n\n\ndef test_prime_factors_nominal_composite():\n    assert prime_factors(60) == [2, 2, 3, 5]\n\n\ndef test_prime_factors_prime():\n    assert prime_factors(13) == [13]\n\n\ndef test_prime_factors_power():\n    assert prime_factors(8) == [2, 2, 2]\n\n\ndef test_prime_factors_one():\n    assert prime_factors(1) == []\n\n\ndef test_prime_factors_division_type():\n    res = prime_factors(4)\n    assert res == [2, 2]\n    assert isinstance(res[0], int)\n\n\ndef test_unique_prime_factors_nominal_composite():\n    assert unique_prime_factors(60) == [2, 3, 5]\n\n\ndef test_unique_prime_factors_prime():\n    assert unique_prime_factors(13) == [13]\n\n\ndef test_unique_prime_factors_power():\n    assert unique_prime_factors(8) == [2]\n\n\ndef test_unique_prime_factors_one():\n    assert unique_prime_factors(1) == []\n\n\ndef test_unique_prime_factors_boundary_square():\n    # Tests i * i <= n boundary for unique_prime_factors when n is a square (e.g., 9 = 3*3)\n    assert unique_prime_factors(9) == [3]\n\n\ndef test_unique_prime_factors_division_type():\n    res = unique_prime_factors(4)\n    assert res == [2]\n    assert isinstance(res[0], int)\n\n\ndef test_unique_prime_factors_n_greater_than_one():\n    # Tests n > 1 vs n > 2 leftover prime check (e.g., n = 2 after stripping factors of something, or just a prime like 2)\n    assert unique_prime_factors(2) == [2]",
+      "mutant_killed": true,
+      "mutant_operator": "ConditionalBoundary",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_26.x_unique_prime_factors__mutmut_11",
+      "generated_test_code": "import pytest\nfrom function_26 import prime_factors\nfrom function_26 import unique_prime_factors\n\n\ndef test_prime_factors_nominal_composite():\n    assert prime_factors(60) == [2, 2, 3, 5]\n\n\ndef test_prime_factors_prime():\n    assert prime_factors(13) == [13]\n\n\ndef test_prime_factors_power():\n    assert prime_factors(8) == [2, 2, 2]\n\n\ndef test_prime_factors_one():\n    assert prime_factors(1) == []\n\n\ndef test_prime_factors_division_type():\n    res = prime_factors(4)\n    assert res == [2, 2]\n    assert isinstance(res[0], int)\n\n\ndef test_unique_prime_factors_nominal_composite():\n    assert unique_prime_factors(60) == [2, 3, 5]\n\n\ndef test_unique_prime_factors_prime():\n    assert unique_prime_factors(13) == [13]\n\n\ndef test_unique_prime_factors_power():\n    assert unique_prime_factors(8) == [2]\n\n\ndef test_unique_prime_factors_one():\n    assert unique_prime_factors(1) == []\n\n\ndef test_unique_prime_factors_boundary_square():\n    # Tests i * i <= n boundary for unique_prime_factors when n is a square (e.g., 9 = 3*3)\n    assert unique_prime_factors(9) == [3]\n\n\ndef test_unique_prime_factors_division_type():\n    res = unique_prime_factors(4)\n    assert res == [2]\n    assert isinstance(res[0], int)\n\n\ndef test_unique_prime_factors_n_greater_than_one():\n    # Tests n > 1 vs n > 2 leftover prime check (e.g., n = 2 after stripping factors of something, or just a prime like 2)\n    assert unique_prime_factors(2) == [2]",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_26.x_unique_prime_factors__mutmut_17",
+      "generated_test_code": "import pytest\nfrom function_26 import prime_factors\nfrom function_26 import unique_prime_factors\n\n\ndef test_prime_factors_nominal_composite():\n    assert prime_factors(60) == [2, 2, 3, 5]\n\n\ndef test_prime_factors_prime():\n    assert prime_factors(13) == [13]\n\n\ndef test_prime_factors_power():\n    assert prime_factors(8) == [2, 2, 2]\n\n\ndef test_prime_factors_one():\n    assert prime_factors(1) == []\n\n\ndef test_prime_factors_division_type():\n    res = prime_factors(4)\n    assert res == [2, 2]\n    assert isinstance(res[0], int)\n\n\ndef test_unique_prime_factors_nominal_composite():\n    assert unique_prime_factors(60) == [2, 3, 5]\n\n\ndef test_unique_prime_factors_prime():\n    assert unique_prime_factors(13) == [13]\n\n\ndef test_unique_prime_factors_power():\n    assert unique_prime_factors(8) == [2]\n\n\ndef test_unique_prime_factors_one():\n    assert unique_prime_factors(1) == []\n\n\ndef test_unique_prime_factors_boundary_square():\n    # Tests i * i <= n boundary for unique_prime_factors when n is a square (e.g., 9 = 3*3)\n    assert unique_prime_factors(9) == [3]\n\n\ndef test_unique_prime_factors_division_type():\n    res = unique_prime_factors(4)\n    assert res == [2]\n    assert isinstance(res[0], int)\n\n\ndef test_unique_prime_factors_n_greater_than_one():\n    # Tests n > 1 vs n > 2 leftover prime check (e.g., n = 2 after stripping factors of something, or just a prime like 2)\n    assert unique_prime_factors(2) == [2]",
+      "mutant_killed": true,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 2,
+      "mutant_id": "function_26.x_prime_factors__mutmut_11",
+      "generated_test_code": "import pytest\nfrom function_26 import prime_factors\nfrom function_26 import unique_prime_factors\n\n\ndef test_prime_factors_nominal_composite():\n    assert prime_factors(60) == [2, 2, 3, 5]\n\n\ndef test_prime_factors_prime():\n    assert prime_factors(13) == [13]\n\n\ndef test_prime_factors_power():\n    assert prime_factors(8) == [2, 2, 2]\n\n\ndef test_prime_factors_one():\n    assert prime_factors(1) == []\n\n\ndef test_prime_factors_division_type():\n    res = prime_factors(4)\n    assert res == [2, 2]\n    assert isinstance(res[0], int)\n    # Check that integer division was used rather than float division (which leaves floats or triggers floats in division)\n    for factor in res:\n        assert type(factor) is int\n\n\ndef test_unique_prime_factors_nominal_composite():\n    assert unique_prime_factors(60) == [2, 3, 5]\n\n\ndef test_unique_prime_factors_prime():\n    assert unique_prime_factors(13) == [13]\n\n\ndef test_unique_prime_factors_power():\n    assert unique_prime_factors(8) == [2]\n\n\ndef test_unique_prime_factors_one():\n    assert unique_prime_factors(1) == []\n\n\ndef test_unique_prime_factors_boundary_square():\n    # Tests i * i <= n boundary for unique_prime_factors when n is a square (e.g., 9 = 3*3)\n    assert unique_prime_factors(9) == [3]\n\n\ndef test_unique_prime_factors_division_type():\n    res = unique_prime_factors(4)\n    assert res == [2]\n    assert isinstance(res[0], int)\n    for factor in res:\n        assert type(factor) is int\n\n\ndef test_unique_prime_factors_n_greater_than_one():\n    # Tests n > 1 vs n > 2 leftover prime check (e.g., n = 2 after stripping factors of something, or just a prime like 2)\n    assert unique_prime_factors(2) == [2]",
+      "mutant_killed": true,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 2,
+      "mutant_id": "function_26.x_unique_prime_factors__mutmut_11",
+      "generated_test_code": "import pytest\nfrom function_26 import prime_factors\nfrom function_26 import unique_prime_factors\n\n\ndef test_prime_factors_nominal_composite():\n    assert prime_factors(60) == [2, 2, 3, 5]\n\n\ndef test_prime_factors_prime():\n    assert prime_factors(13) == [13]\n\n\ndef test_prime_factors_power():\n    assert prime_factors(8) == [2, 2, 2]\n\n\ndef test_prime_factors_one():\n    assert prime_factors(1) == []\n\n\ndef test_prime_factors_division_type():\n    res = prime_factors(4)\n    assert res == [2, 2]\n    assert isinstance(res[0], int)\n    # Check that integer division was used rather than float division (which leaves floats or triggers floats in division)\n    for factor in res:\n        assert type(factor) is int\n\n\ndef test_unique_prime_factors_nominal_composite():\n    assert unique_prime_factors(60) == [2, 3, 5]\n\n\ndef test_unique_prime_factors_prime():\n    assert unique_prime_factors(13) == [13]\n\n\ndef test_unique_prime_factors_power():\n    assert unique_prime_factors(8) == [2]\n\n\ndef test_unique_prime_factors_one():\n    assert unique_prime_factors(1) == []\n\n\ndef test_unique_prime_factors_boundary_square():\n    # Tests i * i <= n boundary for unique_prime_factors when n is a square (e.g., 9 = 3*3)\n    assert unique_prime_factors(9) == [3]\n\n\ndef test_unique_prime_factors_division_type():\n    res = unique_prime_factors(4)\n    assert res == [2]\n    assert isinstance(res[0], int)\n    for factor in res:\n        assert type(factor) is int\n\n\ndef test_unique_prime_factors_n_greater_than_one():\n    # Tests n > 1 vs n > 2 leftover prime check (e.g., n = 2 after stripping factors of something, or just a prime like 2)\n    assert unique_prime_factors(2) == [2]",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 3,
+      "mutant_id": "function_26.x_unique_prime_factors__mutmut_11",
+      "generated_test_code": "import pytest\nfrom function_26 import prime_factors\nfrom function_26 import unique_prime_factors\n\n\ndef test_prime_factors_nominal_composite():\n    assert prime_factors(60) == [2, 2, 3, 5]\n\n\ndef test_prime_factors_prime():\n    assert prime_factors(13) == [13]\n\n\ndef test_prime_factors_power():\n    assert prime_factors(8) == [2, 2, 2]\n\n\ndef test_prime_factors_one():\n    assert prime_factors(1) == []\n\n\ndef test_prime_factors_division_type():\n    res = prime_factors(4)\n    assert res == [2, 2]\n    assert isinstance(res[0], int)\n    # Check that integer division was used rather than float division (which leaves floats or triggers floats in division)\n    for factor in res:\n        assert type(factor) is int\n\n\ndef test_unique_prime_factors_nominal_composite():\n    assert unique_prime_factors(60) == [2, 3, 5]\n\n\ndef test_unique_prime_factors_prime():\n    assert unique_prime_factors(13) == [13]\n\n\ndef test_unique_prime_factors_power():\n    assert unique_prime_factors(8) == [2]\n\n\ndef test_unique_prime_factors_one():\n    assert unique_prime_factors(1) == []\n\n\ndef test_unique_prime_factors_boundary_square():\n    # Tests i * i <= n boundary for unique_prime_factors when n is a square (e.g., 9 = 3*3)\n    assert unique_prime_factors(9) == [3]\n\n\ndef test_unique_prime_factors_division_type():\n    res = unique_prime_factors(4)\n    assert res == [2]\n    assert isinstance(res[0], int)\n    for factor in res:\n        assert type(factor) is int\n\n\ndef test_unique_prime_factors_n_greater_than_one():\n    # Tests n > 1 vs n > 2 leftover prime check (e.g., n = 2 after stripping factors of something, or just a prime like 2)\n    assert unique_prime_factors(2) == [2]\n\n\ndef test_unique_prime_factors_integer_division_mutant():\n    res = unique_prime_factors(8)\n    assert res == [2]\n    for factor in res:\n        assert type(factor) is int",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    }
+  ],
+  "num_llm_calls": 4,
+  "pass_rate_pct": 100.0,
+  "initial_mutation_score_pct": 87.88,
+  "stop_reason": "plateau",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite"
+}

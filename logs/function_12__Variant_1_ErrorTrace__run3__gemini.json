@@ -1,0 +1,65 @@
+{
+  "function_id": "function_12",
+  "system_variant": "Variant_1_ErrorTrace",
+  "iteration_count": 1,
+  "total_tokens_used": 2993,
+  "mutation_score_pct": 91.18,
+  "line_coverage_pct": 100.0,
+  "estimated_cost_usd": 0.003254,
+  "iterations_detail": [
+    {
+      "iteration": 1,
+      "mutant_id": "function_12.x_circle_sort__mutmut_3",
+      "generated_test_code": "from function_12 import circle_sort\n\n\ndef test_empty_collection():\n    collection = []\n    assert circle_sort(collection) == []\n\n\ndef test_single_element():\n    collection = [42]\n    assert circle_sort(collection) == [42]\n\n\ndef test_already_sorted():\n    collection = [1, 2, 3, 4, 5]\n    assert circle_sort(collection) == [1, 2, 3, 4, 5]\n\n\ndef test_reverse_sorted():\n    collection = [5, 4, 3, 2, 1]\n    assert circle_sort(collection) == [1, 2, 3, 4, 5]\n\n\ndef test_unsorted_duplicates():\n    collection = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]\n    assert circle_sort(collection) == [1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9]\n\n\ndef test_two_elements_unsorted():\n    collection = [2, 1]\n    assert circle_sort(collection) == [1, 2]\n\n\ndef test_requires_multiple_passes_and_middle_swap():\n    # This test ensures that:\n    # 1. Swaps are correctly detected (killing swapped = None/False mutants)\n    # 2. The middle comparison swap `collection[left] > collection[right + 1]` is exercised and necessary\n    # 3. The `swapped or left_swap or right_swap` logic requires `right_swap` to be able to propagate upward via `or` rather than `and`.\n    collection = [3, 4, 2, 1]\n    assert circle_sort(collection) == [1, 2, 3, 4]",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_12.x_circle_sort__mutmut_11",
+      "generated_test_code": "from function_12 import circle_sort\n\n\ndef test_empty_collection():\n    collection = []\n    assert circle_sort(collection) == []\n\n\ndef test_single_element():\n    collection = [42]\n    assert circle_sort(collection) == [42]\n\n\ndef test_already_sorted():\n    collection = [1, 2, 3, 4, 5]\n    assert circle_sort(collection) == [1, 2, 3, 4, 5]\n\n\ndef test_reverse_sorted():\n    collection = [5, 4, 3, 2, 1]\n    assert circle_sort(collection) == [1, 2, 3, 4, 5]\n\n\ndef test_unsorted_duplicates():\n    collection = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]\n    assert circle_sort(collection) == [1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9]\n\n\ndef test_two_elements_unsorted():\n    collection = [2, 1]\n    assert circle_sort(collection) == [1, 2]\n\n\ndef test_requires_multiple_passes_and_middle_swap():\n    # This test ensures that:\n    # 1. Swaps are correctly detected (killing swapped = None/False mutants)\n    # 2. The middle comparison swap `collection[left] > collection[right + 1]` is exercised and necessary\n    # 3. The `swapped or left_swap or right_swap` logic requires `right_swap` to be able to propagate upward via `or` rather than `and`.\n    collection = [3, 4, 2, 1]\n    assert circle_sort(collection) == [1, 2, 3, 4]",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_12.x_circle_sort__mutmut_12",
+      "generated_test_code": "from function_12 import circle_sort\n\n\ndef test_empty_collection():\n    collection = []\n    assert circle_sort(collection) == []\n\n\ndef test_single_element():\n    collection = [42]\n    assert circle_sort(collection) == [42]\n\n\ndef test_already_sorted():\n    collection = [1, 2, 3, 4, 5]\n    assert circle_sort(collection) == [1, 2, 3, 4, 5]\n\n\ndef test_reverse_sorted():\n    collection = [5, 4, 3, 2, 1]\n    assert circle_sort(collection) == [1, 2, 3, 4, 5]\n\n\ndef test_unsorted_duplicates():\n    collection = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]\n    assert circle_sort(collection) == [1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9]\n\n\ndef test_two_elements_unsorted():\n    collection = [2, 1]\n    assert circle_sort(collection) == [1, 2]\n\n\ndef test_requires_multiple_passes_and_middle_swap():\n    # This test ensures that:\n    # 1. Swaps are correctly detected (killing swapped = None/False mutants)\n    # 2. The middle comparison swap `collection[left] > collection[right + 1]` is exercised and necessary\n    # 3. The `swapped or left_swap or right_swap` logic requires `right_swap` to be able to propagate upward via `or` rather than `and`.\n    collection = [3, 4, 2, 1]\n    assert circle_sort(collection) == [1, 2, 3, 4]",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_12.x_circle_sort__mutmut_29",
+      "generated_test_code": "from function_12 import circle_sort\n\n\ndef test_empty_collection():\n    collection = []\n    assert circle_sort(collection) == []\n\n\ndef test_single_element():\n    collection = [42]\n    assert circle_sort(collection) == [42]\n\n\ndef test_already_sorted():\n    collection = [1, 2, 3, 4, 5]\n    assert circle_sort(collection) == [1, 2, 3, 4, 5]\n\n\ndef test_reverse_sorted():\n    collection = [5, 4, 3, 2, 1]\n    assert circle_sort(collection) == [1, 2, 3, 4, 5]\n\n\ndef test_unsorted_duplicates():\n    collection = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]\n    assert circle_sort(collection) == [1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9]\n\n\ndef test_two_elements_unsorted():\n    collection = [2, 1]\n    assert circle_sort(collection) == [1, 2]\n\n\ndef test_requires_multiple_passes_and_middle_swap():\n    # This test ensures that:\n    # 1. Swaps are correctly detected (killing swapped = None/False mutants)\n    # 2. The middle comparison swap `collection[left] > collection[right + 1]` is exercised and necessary\n    # 3. The `swapped or left_swap or right_swap` logic requires `right_swap` to be able to propagate upward via `or` rather than `and`.\n    collection = [3, 4, 2, 1]\n    assert circle_sort(collection) == [1, 2, 3, 4]",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_12.x_circle_sort__mutmut_30",
+      "generated_test_code": "from function_12 import circle_sort\n\n\ndef test_empty_collection():\n    collection = []\n    assert circle_sort(collection) == []\n\n\ndef test_single_element():\n    collection = [42]\n    assert circle_sort(collection) == [42]\n\n\ndef test_already_sorted():\n    collection = [1, 2, 3, 4, 5]\n    assert circle_sort(collection) == [1, 2, 3, 4, 5]\n\n\ndef test_reverse_sorted():\n    collection = [5, 4, 3, 2, 1]\n    assert circle_sort(collection) == [1, 2, 3, 4, 5]\n\n\ndef test_unsorted_duplicates():\n    collection = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]\n    assert circle_sort(collection) == [1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9]\n\n\ndef test_two_elements_unsorted():\n    collection = [2, 1]\n    assert circle_sort(collection) == [1, 2]\n\n\ndef test_requires_multiple_passes_and_middle_swap():\n    # This test ensures that:\n    # 1. Swaps are correctly detected (killing swapped = None/False mutants)\n    # 2. The middle comparison swap `collection[left] > collection[right + 1]` is exercised and necessary\n    # 3. The `swapped or left_swap or right_swap` logic requires `right_swap` to be able to propagate upward via `or` rather than `and`.\n    collection = [3, 4, 2, 1]\n    assert circle_sort(collection) == [1, 2, 3, 4]",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_12.x_circle_sort__mutmut_53",
+      "generated_test_code": "from function_12 import circle_sort\n\n\ndef test_empty_collection():\n    collection = []\n    assert circle_sort(collection) == []\n\n\ndef test_single_element():\n    collection = [42]\n    assert circle_sort(collection) == [42]\n\n\ndef test_already_sorted():\n    collection = [1, 2, 3, 4, 5]\n    assert circle_sort(collection) == [1, 2, 3, 4, 5]\n\n\ndef test_reverse_sorted():\n    collection = [5, 4, 3, 2, 1]\n    assert circle_sort(collection) == [1, 2, 3, 4, 5]\n\n\ndef test_unsorted_duplicates():\n    collection = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]\n    assert circle_sort(collection) == [1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9]\n\n\ndef test_two_elements_unsorted():\n    collection = [2, 1]\n    assert circle_sort(collection) == [1, 2]\n\n\ndef test_requires_multiple_passes_and_middle_swap():\n    # This test ensures that:\n    # 1. Swaps are correctly detected (killing swapped = None/False mutants)\n    # 2. The middle comparison swap `collection[left] > collection[right + 1]` is exercised and necessary\n    # 3. The `swapped or left_swap or right_swap` logic requires `right_swap` to be able to propagate upward via `or` rather than `and`.\n    collection = [3, 4, 2, 1]\n    assert circle_sort(collection) == [1, 2, 3, 4]",
+      "mutant_killed": false,
+      "mutant_operator": "LogicalOperator",
+      "predicted_state": null
+    }
+  ],
+  "num_llm_calls": 2,
+  "pass_rate_pct": 100.0,
+  "initial_mutation_score_pct": 91.18,
+  "stop_reason": "plateau",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite"
+}

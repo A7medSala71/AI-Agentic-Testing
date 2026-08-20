@@ -1,0 +1,49 @@
+{
+  "function_id": "function_23",
+  "system_variant": "Variant_2_StatePrediction",
+  "iteration_count": 1,
+  "total_tokens_used": 3696,
+  "mutation_score_pct": 95.59,
+  "line_coverage_pct": 100.0,
+  "estimated_cost_usd": 0.004321,
+  "iterations_detail": [
+    {
+      "iteration": 1,
+      "mutant_id": "function_23.x__partition__mutmut_6",
+      "generated_test_code": "from function_23 import quick_select, median, _partition\nimport pytest\n\n\ndef test_quick_select_nominal():\n    items = [9, 1, 5, 3, 7, 2, 8, 4, 6]\n    assert quick_select(items, 0) == 1\n    assert quick_select(items, 4) == 5\n    assert quick_select(items, 8) == 9\n\n\ndef test_quick_select_duplicates():\n    items = [5, 1, 5, 3, 3, 5, 2]\n    sorted_items = sorted(items)\n    for i in range(len(items)):\n        assert quick_select(items, i) == sorted_items[i]\n\n\ndef test_quick_select_out_of_bounds():\n    items = [1, 2, 3]\n    assert quick_select(items, -1) is None\n    assert quick_select(items, 3) is None\n    assert quick_select(items, 100) is None\n\n\ndef test_median_odd_length():\n    items = [3, 1, 4, 1, 5, 9, 2]\n    assert median(items) == 3\n\n\ndef test_median_even_length():\n    items = [3, 1, 4, 1, 5, 9, 2, 6]\n    sorted_items = sorted(items)\n    expected = (sorted_items[3] + sorted_items[4]) / 2\n    assert median(items) == pytest.approx(expected)\n\n\ndef test_median_single_element():\n    items = [42]\n    assert median(items) == 42\n\n\ndef test_partition_equal_append_mutation():\n    # Mutator changes equal.append(element) to equal.append(None), so equal list contains None instead of element\n    # State divergence: equal list will contain [None] instead of [2] for pivot=2\n    _, equal, _ = _partition([2], 2)\n    assert equal == [2]\n\n\ndef test_quick_select_count_initialization_mutations():\n    # Mutator changes count = 0 to count = None or 1, causing count to be wrong for elements equal to pivot\n    # State divergence: when selecting an element equal to the pivot, count is miscalculated, causing incorrect branch entry\n    items = [5, 5, 5]\n    assert quick_select(items, 1) == 5\n\n\ndef test_quick_select_conditional_boundary_m_ge_index():\n    # Mutator changes elif m > index to elif m >= index, making m >= index trigger smaller recursive call instead of target or larger\n    # State divergence: when m == index, m >= index wrongly enters smaller branch instead of returning pivot\n    items = [5, 5, 5]\n    assert quick_select(items, 1) == 5",
+      "mutant_killed": true,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_23.x_quick_select__mutmut_13",
+      "generated_test_code": "from function_23 import quick_select, median, _partition\nimport pytest\n\n\ndef test_quick_select_nominal():\n    items = [9, 1, 5, 3, 7, 2, 8, 4, 6]\n    assert quick_select(items, 0) == 1\n    assert quick_select(items, 4) == 5\n    assert quick_select(items, 8) == 9\n\n\ndef test_quick_select_duplicates():\n    items = [5, 1, 5, 3, 3, 5, 2]\n    sorted_items = sorted(items)\n    for i in range(len(items)):\n        assert quick_select(items, i) == sorted_items[i]\n\n\ndef test_quick_select_out_of_bounds():\n    items = [1, 2, 3]\n    assert quick_select(items, -1) is None\n    assert quick_select(items, 3) is None\n    assert quick_select(items, 100) is None\n\n\ndef test_median_odd_length():\n    items = [3, 1, 4, 1, 5, 9, 2]\n    assert median(items) == 3\n\n\ndef test_median_even_length():\n    items = [3, 1, 4, 1, 5, 9, 2, 6]\n    sorted_items = sorted(items)\n    expected = (sorted_items[3] + sorted_items[4]) / 2\n    assert median(items) == pytest.approx(expected)\n\n\ndef test_median_single_element():\n    items = [42]\n    assert median(items) == 42\n\n\ndef test_partition_equal_append_mutation():\n    # Mutator changes equal.append(element) to equal.append(None), so equal list contains None instead of element\n    # State divergence: equal list will contain [None] instead of [2] for pivot=2\n    _, equal, _ = _partition([2], 2)\n    assert equal == [2]\n\n\ndef test_quick_select_count_initialization_mutations():\n    # Mutator changes count = 0 to count = None or 1, causing count to be wrong for elements equal to pivot\n    # State divergence: when selecting an element equal to the pivot, count is miscalculated, causing incorrect branch entry\n    items = [5, 5, 5]\n    assert quick_select(items, 1) == 5\n\n\ndef test_quick_select_conditional_boundary_m_ge_index():\n    # Mutator changes elif m > index to elif m >= index, making m >= index trigger smaller recursive call instead of target or larger\n    # State divergence: when m == index, m >= index wrongly enters smaller branch instead of returning pivot\n    items = [5, 5, 5]\n    assert quick_select(items, 1) == 5",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_23.x_quick_select__mutmut_14",
+      "generated_test_code": "from function_23 import quick_select, median, _partition\nimport pytest\n\n\ndef test_quick_select_nominal():\n    items = [9, 1, 5, 3, 7, 2, 8, 4, 6]\n    assert quick_select(items, 0) == 1\n    assert quick_select(items, 4) == 5\n    assert quick_select(items, 8) == 9\n\n\ndef test_quick_select_duplicates():\n    items = [5, 1, 5, 3, 3, 5, 2]\n    sorted_items = sorted(items)\n    for i in range(len(items)):\n        assert quick_select(items, i) == sorted_items[i]\n\n\ndef test_quick_select_out_of_bounds():\n    items = [1, 2, 3]\n    assert quick_select(items, -1) is None\n    assert quick_select(items, 3) is None\n    assert quick_select(items, 100) is None\n\n\ndef test_median_odd_length():\n    items = [3, 1, 4, 1, 5, 9, 2]\n    assert median(items) == 3\n\n\ndef test_median_even_length():\n    items = [3, 1, 4, 1, 5, 9, 2, 6]\n    sorted_items = sorted(items)\n    expected = (sorted_items[3] + sorted_items[4]) / 2\n    assert median(items) == pytest.approx(expected)\n\n\ndef test_median_single_element():\n    items = [42]\n    assert median(items) == 42\n\n\ndef test_partition_equal_append_mutation():\n    # Mutator changes equal.append(element) to equal.append(None), so equal list contains None instead of element\n    # State divergence: equal list will contain [None] instead of [2] for pivot=2\n    _, equal, _ = _partition([2], 2)\n    assert equal == [2]\n\n\ndef test_quick_select_count_initialization_mutations():\n    # Mutator changes count = 0 to count = None or 1, causing count to be wrong for elements equal to pivot\n    # State divergence: when selecting an element equal to the pivot, count is miscalculated, causing incorrect branch entry\n    items = [5, 5, 5]\n    assert quick_select(items, 1) == 5\n\n\ndef test_quick_select_conditional_boundary_m_ge_index():\n    # Mutator changes elif m > index to elif m >= index, making m >= index trigger smaller recursive call instead of target or larger\n    # State divergence: when m == index, m >= index wrongly enters smaller branch instead of returning pivot\n    items = [5, 5, 5]\n    assert quick_select(items, 1) == 5",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_23.x_quick_select__mutmut_25",
+      "generated_test_code": "from function_23 import quick_select, median, _partition\nimport pytest\n\n\ndef test_quick_select_nominal():\n    items = [9, 1, 5, 3, 7, 2, 8, 4, 6]\n    assert quick_select(items, 0) == 1\n    assert quick_select(items, 4) == 5\n    assert quick_select(items, 8) == 9\n\n\ndef test_quick_select_duplicates():\n    items = [5, 1, 5, 3, 3, 5, 2]\n    sorted_items = sorted(items)\n    for i in range(len(items)):\n        assert quick_select(items, i) == sorted_items[i]\n\n\ndef test_quick_select_out_of_bounds():\n    items = [1, 2, 3]\n    assert quick_select(items, -1) is None\n    assert quick_select(items, 3) is None\n    assert quick_select(items, 100) is None\n\n\ndef test_median_odd_length():\n    items = [3, 1, 4, 1, 5, 9, 2]\n    assert median(items) == 3\n\n\ndef test_median_even_length():\n    items = [3, 1, 4, 1, 5, 9, 2, 6]\n    sorted_items = sorted(items)\n    expected = (sorted_items[3] + sorted_items[4]) / 2\n    assert median(items) == pytest.approx(expected)\n\n\ndef test_median_single_element():\n    items = [42]\n    assert median(items) == 42\n\n\ndef test_partition_equal_append_mutation():\n    # Mutator changes equal.append(element) to equal.append(None), so equal list contains None instead of element\n    # State divergence: equal list will contain [None] instead of [2] for pivot=2\n    _, equal, _ = _partition([2], 2)\n    assert equal == [2]\n\n\ndef test_quick_select_count_initialization_mutations():\n    # Mutator changes count = 0 to count = None or 1, causing count to be wrong for elements equal to pivot\n    # State divergence: when selecting an element equal to the pivot, count is miscalculated, causing incorrect branch entry\n    items = [5, 5, 5]\n    assert quick_select(items, 1) == 5\n\n\ndef test_quick_select_conditional_boundary_m_ge_index():\n    # Mutator changes elif m > index to elif m >= index, making m >= index trigger smaller recursive call instead of target or larger\n    # State divergence: when m == index, m >= index wrongly enters smaller branch instead of returning pivot\n    items = [5, 5, 5]\n    assert quick_select(items, 1) == 5",
+      "mutant_killed": false,
+      "mutant_operator": "ConditionalBoundary",
+      "predicted_state": null
+    }
+  ],
+  "num_llm_calls": 2,
+  "pass_rate_pct": 100.0,
+  "initial_mutation_score_pct": 94.12,
+  "stop_reason": "plateau",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite"
+}

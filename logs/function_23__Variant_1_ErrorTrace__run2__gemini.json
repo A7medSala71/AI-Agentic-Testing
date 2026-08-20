@@ -1,0 +1,49 @@
+{
+  "function_id": "function_23",
+  "system_variant": "Variant_1_ErrorTrace",
+  "iteration_count": 1,
+  "total_tokens_used": 3456,
+  "mutation_score_pct": 95.59,
+  "line_coverage_pct": 100.0,
+  "estimated_cost_usd": 0.004022,
+  "iterations_detail": [
+    {
+      "iteration": 1,
+      "mutant_id": "function_23.x__partition__mutmut_6",
+      "generated_test_code": "import pytest\nfrom function_23 import quick_select, median, _partition\n\n\ndef test_quick_sub_nominal():\n    items = [7, 2, 1, 6, 8, 5, 3, 4]\n    sorted_items = sorted(items)\n    for i in range(len(items)):\n        assert quick_select(items, i) == sorted_items[i]\n\n\ndef test_quick_select_out_of_bounds():\n    items = [1, 2, 3]\n    assert quick_select(items, -1) is None\n    assert quick_select(items, 3) is None\n    assert quick_select(items, 100) is None\n\n\ndef test_quick_select_duplicates():\n    items = [5, 1, 5, 3, 5, 2, 1]\n    sorted_items = sorted(items)\n    for i in range(len(items)):\n        assert quick_select(items, i) == sorted_items[i]\n\n\ndef test_median_odd_length():\n    items = [9, 1, 5, 3, 7]\n    assert median(items) == 5\n\n\ndef test_median_even_length():\n    items = [10, 1, 4, 2]\n    sorted_items = sorted(items)\n    expected = (sorted_items[1] + sorted_items[2]) / 2\n    assert median(items) == expected\n\n\ndef test_median_single_element():\n    assert median([42]) == 42\n\n\ndef test_partition_equal_elements():\n    # Kills mutants on count = 0 / 1 / None and equal.append(None)\n    less, equal, greater = _partition([5, 5, 5], 5)\n    assert less == []\n    assert equal == [5, 5, 5]\n    assert greater == []\n\n\ndef test_quick_select_index_equals_m():\n    # Kills mutant changing `elif m > index:` to `elif m >= index:`\n    # When m == index, it should fall into the `else` branch (or return pivot),\n    # not incorrectly recurse into `smaller`.\n    items = [3, 1, 2]\n    # sorted: 1, 2, 3. smaller = [1], equal = [2], larger = [3].\n    # m = 1 (smaller has len 1), index = 1 -> should return 2 (the pivot).\n    # If `m >= index` triggers, it goes to `quick_select(smaller, 1)` which returns None.\n    assert quick_select(items, 1) == 2",
+      "mutant_killed": true,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_23.x_quick_select__mutmut_13",
+      "generated_test_code": "import pytest\nfrom function_23 import quick_select, median, _partition\n\n\ndef test_quick_sub_nominal():\n    items = [7, 2, 1, 6, 8, 5, 3, 4]\n    sorted_items = sorted(items)\n    for i in range(len(items)):\n        assert quick_select(items, i) == sorted_items[i]\n\n\ndef test_quick_select_out_of_bounds():\n    items = [1, 2, 3]\n    assert quick_select(items, -1) is None\n    assert quick_select(items, 3) is None\n    assert quick_select(items, 100) is None\n\n\ndef test_quick_select_duplicates():\n    items = [5, 1, 5, 3, 5, 2, 1]\n    sorted_items = sorted(items)\n    for i in range(len(items)):\n        assert quick_select(items, i) == sorted_items[i]\n\n\ndef test_median_odd_length():\n    items = [9, 1, 5, 3, 7]\n    assert median(items) == 5\n\n\ndef test_median_even_length():\n    items = [10, 1, 4, 2]\n    sorted_items = sorted(items)\n    expected = (sorted_items[1] + sorted_items[2]) / 2\n    assert median(items) == expected\n\n\ndef test_median_single_element():\n    assert median([42]) == 42\n\n\ndef test_partition_equal_elements():\n    # Kills mutants on count = 0 / 1 / None and equal.append(None)\n    less, equal, greater = _partition([5, 5, 5], 5)\n    assert less == []\n    assert equal == [5, 5, 5]\n    assert greater == []\n\n\ndef test_quick_select_index_equals_m():\n    # Kills mutant changing `elif m > index:` to `elif m >= index:`\n    # When m == index, it should fall into the `else` branch (or return pivot),\n    # not incorrectly recurse into `smaller`.\n    items = [3, 1, 2]\n    # sorted: 1, 2, 3. smaller = [1], equal = [2], larger = [3].\n    # m = 1 (smaller has len 1), index = 1 -> should return 2 (the pivot).\n    # If `m >= index` triggers, it goes to `quick_select(smaller, 1)` which returns None.\n    assert quick_select(items, 1) == 2",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_23.x_quick_select__mutmut_14",
+      "generated_test_code": "import pytest\nfrom function_23 import quick_select, median, _partition\n\n\ndef test_quick_sub_nominal():\n    items = [7, 2, 1, 6, 8, 5, 3, 4]\n    sorted_items = sorted(items)\n    for i in range(len(items)):\n        assert quick_select(items, i) == sorted_items[i]\n\n\ndef test_quick_select_out_of_bounds():\n    items = [1, 2, 3]\n    assert quick_select(items, -1) is None\n    assert quick_select(items, 3) is None\n    assert quick_select(items, 100) is None\n\n\ndef test_quick_select_duplicates():\n    items = [5, 1, 5, 3, 5, 2, 1]\n    sorted_items = sorted(items)\n    for i in range(len(items)):\n        assert quick_select(items, i) == sorted_items[i]\n\n\ndef test_median_odd_length():\n    items = [9, 1, 5, 3, 7]\n    assert median(items) == 5\n\n\ndef test_median_even_length():\n    items = [10, 1, 4, 2]\n    sorted_items = sorted(items)\n    expected = (sorted_items[1] + sorted_items[2]) / 2\n    assert median(items) == expected\n\n\ndef test_median_single_element():\n    assert median([42]) == 42\n\n\ndef test_partition_equal_elements():\n    # Kills mutants on count = 0 / 1 / None and equal.append(None)\n    less, equal, greater = _partition([5, 5, 5], 5)\n    assert less == []\n    assert equal == [5, 5, 5]\n    assert greater == []\n\n\ndef test_quick_select_index_equals_m():\n    # Kills mutant changing `elif m > index:` to `elif m >= index:`\n    # When m == index, it should fall into the `else` branch (or return pivot),\n    # not incorrectly recurse into `smaller`.\n    items = [3, 1, 2]\n    # sorted: 1, 2, 3. smaller = [1], equal = [2], larger = [3].\n    # m = 1 (smaller has len 1), index = 1 -> should return 2 (the pivot).\n    # If `m >= index` triggers, it goes to `quick_select(smaller, 1)` which returns None.\n    assert quick_select(items, 1) == 2",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_23.x_quick_select__mutmut_25",
+      "generated_test_code": "import pytest\nfrom function_23 import quick_select, median, _partition\n\n\ndef test_quick_sub_nominal():\n    items = [7, 2, 1, 6, 8, 5, 3, 4]\n    sorted_items = sorted(items)\n    for i in range(len(items)):\n        assert quick_select(items, i) == sorted_items[i]\n\n\ndef test_quick_select_out_of_bounds():\n    items = [1, 2, 3]\n    assert quick_select(items, -1) is None\n    assert quick_select(items, 3) is None\n    assert quick_select(items, 100) is None\n\n\ndef test_quick_select_duplicates():\n    items = [5, 1, 5, 3, 5, 2, 1]\n    sorted_items = sorted(items)\n    for i in range(len(items)):\n        assert quick_select(items, i) == sorted_items[i]\n\n\ndef test_median_odd_length():\n    items = [9, 1, 5, 3, 7]\n    assert median(items) == 5\n\n\ndef test_median_even_length():\n    items = [10, 1, 4, 2]\n    sorted_items = sorted(items)\n    expected = (sorted_items[1] + sorted_items[2]) / 2\n    assert median(items) == expected\n\n\ndef test_median_single_element():\n    assert median([42]) == 42\n\n\ndef test_partition_equal_elements():\n    # Kills mutants on count = 0 / 1 / None and equal.append(None)\n    less, equal, greater = _partition([5, 5, 5], 5)\n    assert less == []\n    assert equal == [5, 5, 5]\n    assert greater == []\n\n\ndef test_quick_select_index_equals_m():\n    # Kills mutant changing `elif m > index:` to `elif m >= index:`\n    # When m == index, it should fall into the `else` branch (or return pivot),\n    # not incorrectly recurse into `smaller`.\n    items = [3, 1, 2]\n    # sorted: 1, 2, 3. smaller = [1], equal = [2], larger = [3].\n    # m = 1 (smaller has len 1), index = 1 -> should return 2 (the pivot).\n    # If `m >= index` triggers, it goes to `quick_select(smaller, 1)` which returns None.\n    assert quick_select(items, 1) == 2",
+      "mutant_killed": false,
+      "mutant_operator": "ConditionalBoundary",
+      "predicted_state": null
+    }
+  ],
+  "num_llm_calls": 2,
+  "pass_rate_pct": 100.0,
+  "initial_mutation_score_pct": 94.12,
+  "stop_reason": "plateau",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite"
+}

@@ -1,0 +1,16 @@
+{
+  "function_id": "function_07",
+  "system_variant": "Variant_2_StatePrediction",
+  "iteration_count": 0,
+  "total_tokens_used": 1185,
+  "mutation_score_pct": 100.0,
+  "line_coverage_pct": 100.0,
+  "estimated_cost_usd": 0.001935,
+  "iterations_detail": [],
+  "num_llm_calls": 1,
+  "pass_rate_pct": 83.3,
+  "initial_mutation_score_pct": 100.0,
+  "stop_reason": "no_survivors",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite"
+}

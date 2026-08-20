@@ -1,0 +1,25 @@
+{
+  "function_id": "function_15",
+  "system_variant": "Variant_1_ErrorTrace",
+  "iteration_count": 1,
+  "total_tokens_used": 2721,
+  "mutation_score_pct": 95.65,
+  "line_coverage_pct": 100.0,
+  "estimated_cost_usd": 0.003507,
+  "iterations_detail": [
+    {
+      "iteration": 1,
+      "mutant_id": "function_15.x_merge_sort__mutmut_7",
+      "generated_test_code": "from function_15 import merge_sort\n\n\ndef test_merge_sort_empty():\n    collection = []\n    assert merge_sort(collection) == []\n\n\ndef test_merge_sort_single_element():\n    collection = [42]\n    assert merge_sort(collection) == [42]\n\n\ndef test_merge_sort_already_sorted():\n    collection = [1, 2, 3, 4, 5]\n    assert merge_sort(collection) == [1, 2, 3, 4, 5]\n\n\ndef test_merge_sort_reverse_sorted():\n    collection = [5, 4, 3, 2, 1]\n    assert merge_sort(collection) == [1, 2, 3, 4, 5]\n\n\ndef test_merge_sort_unsorted_duplicates():\n    collection = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]\n    assert merge_sort(collection) == [1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9]\n\n\ndef test_merge_sort_negative_numbers():\n    collection = [-3, 5, 0, -1, 2]\n    assert merge_sort(collection) == [-3, -1, 0, 2, 5]\n\n\ndef test_merge_sort_stable_sorting_duplicates():\n    # This test specifically checks duplicate stability (elements with equal values),\n    # which exercises the `<=` vs `<` boundary in `left[0] <= right[0]`.\n    # Let's use custom objects or distinguishable items if values are equal,\n    # or ensure equal items from left and right preserve relative order.\n    # Since the algorithm compares values, if left has an item equal to right,\n    # left should be chosen first for stability.\n    collection = [2, 2, 1, 1]\n    assert merge_sort(collection) == [1, 1, 2, 2]\n    \n    # Another test specifically with duplicates where left and right sublists\n    # have equal elements to ensure the left element is popped when equal.\n    # Sublist left: [2], right: [2] -> should pick left's 2 first.\n    assert merge_sort([2, 2]) == [2, 2]",
+      "mutant_killed": false,
+      "mutant_operator": "ConditionalBoundary",
+      "predicted_state": null
+    }
+  ],
+  "num_llm_calls": 2,
+  "pass_rate_pct": 100.0,
+  "initial_mutation_score_pct": 95.65,
+  "stop_reason": "plateau",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite"
+}

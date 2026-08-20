@@ -1,0 +1,25 @@
+{
+  "function_id": "function_22",
+  "system_variant": "Variant_1_ErrorTrace",
+  "iteration_count": 1,
+  "total_tokens_used": 2589,
+  "mutation_score_pct": 100.0,
+  "line_coverage_pct": 100.0,
+  "estimated_cost_usd": 0.003679,
+  "iterations_detail": [
+    {
+      "iteration": 1,
+      "mutant_id": "function_22.x_sentinel_linear_search__mutmut_7",
+      "generated_test_code": "import pytest\nfrom function_22 import sentinel_linear_search\n\n\ndef test_sentinel_linear_search_found_beginning():\n    seq = [10, 20, 30, 40]\n    assert sentinel_linear_search(seq, 10) == 0\n    assert seq == [10, 20, 30, 40]\n\n\ndef test_sentinel_linear_search_found_middle():\n    seq = [5, 3, 8, 6, 2]\n    assert sentinel_linear_search(seq, 8) == 2\n    assert seq == [5, 3, 8, 6, 2]\n\n\ndef test_sentinel_linear_search_found_end():\n    seq = ['a', 'b', 'c']\n    assert sentinel_linear_search(seq, 'c') == 2\n    assert seq == ['a', 'b', 'c']\n\n\ndef test_sentinel_linear_search_not_found():\n    seq = [1, 2, 3, 4]\n    assert sentinel_linear_search(seq, 99) is None\n    assert seq == [1, 2, 3, 4]\n\n\ndef test_sentinel_linear_search_empty_sequence():\n    seq = []\n    assert sentinel_linear_search(seq, 5) is None\n    assert seq == []\n\n\ndef test_sentinel_linear_search_duplicates():\n    seq = [4, 1, 4, 2, 4]\n    assert sentinel_linear_search(seq, 4) == 0\n    assert seq == [4, 1, 4, 2, 4]\n\n\ndef test_sentinel_linear_search_adjacent_elements():\n    # Targets an index step of +1 vs +2 by ensuring elements right next to each other are correctly found\n    seq = [1, 2, 3, 4, 5]\n    assert sentinel_linear_search(seq, 2) == 1\n    assert sentinel_linear_search(seq, 3) == 2\n    assert sentinel_linear_search(seq, 4) == 3\n    assert seq == [1, 2, 3, 4, 5]",
+      "mutant_killed": true,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    }
+  ],
+  "num_llm_calls": 2,
+  "pass_rate_pct": 100.0,
+  "initial_mutation_score_pct": 87.5,
+  "stop_reason": "no_survivors",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite"
+}

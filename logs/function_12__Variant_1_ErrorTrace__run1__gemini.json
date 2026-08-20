@@ -1,0 +1,81 @@
+{
+  "function_id": "function_12",
+  "system_variant": "Variant_1_ErrorTrace",
+  "iteration_count": 1,
+  "total_tokens_used": 3329,
+  "mutation_score_pct": 82.35,
+  "line_coverage_pct": 92.3,
+  "estimated_cost_usd": 0.003423,
+  "iterations_detail": [
+    {
+      "iteration": 1,
+      "mutant_id": "function_12.x_circle_sort__mutmut_3",
+      "generated_test_code": "from function_12 import circle_sort\n\n\ndef test_circle_sort_empty():\n    collection = []\n    assert circle_sort(collection) == []\n\n\ndef test_circle_sort_single_element():\n    collection = [42]\n    assert circle_sort(collection) == [42]\n\n\ndef test_circle_sort_already_sorted():\n    collection = [1, 2, 3, 4, 5]\n    assert circle_sort(collection) == [1, 2, 3, 4, 5]\n\n\ndef test_circle_sort_reverse_sorted():\n    collection = [5, 4, 3, 2, 1]\n    assert circle_sort(collection) == [1, 2, 3, 4, 5]\n\n\ndef test_circle_sort_random_order():\n    collection = [3, 1, 4, 1, 5, 9, 2, 6]\n    assert circle_sort(collection) == [1, 1, 2, 3, 4, 5, 6, 9]\n\n\ndef test_circle_sort_two_elements():\n    collection = [2, 1]\n    assert circle_sort(collection) == [1, 2]\n\n\ndef test_circle_sort_odd_length_comparisons():\n    # Targets specific branches in circle_sort_util involving odd lengths,\n    # mid calculations, middle element comparisons (left == right / right + 1 / right - 1),\n    # logical operators in return (or vs and), and multiple iterations (swapped = False / None).\n    collection = [3, 1, 2]\n    assert circle_sort(collection) == [1, 2, 3]\n\n\ndef test_circle_sort_with_duplicates_triggering_mid_swaps():\n    # Targets equality conditions (>= vs >) and specific indexing offsets during center checks.\n    collection = [2, 2, 1, 3]\n    assert circle_sort(collection) == [1, 2, 2, 3]",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_12.x_circle_sort__mutmut_8",
+      "generated_test_code": "from function_12 import circle_sort\n\n\ndef test_circle_sort_empty():\n    collection = []\n    assert circle_sort(collection) == []\n\n\ndef test_circle_sort_single_element():\n    collection = [42]\n    assert circle_sort(collection) == [42]\n\n\ndef test_circle_sort_already_sorted():\n    collection = [1, 2, 3, 4, 5]\n    assert circle_sort(collection) == [1, 2, 3, 4, 5]\n\n\ndef test_circle_sort_reverse_sorted():\n    collection = [5, 4, 3, 2, 1]\n    assert circle_sort(collection) == [1, 2, 3, 4, 5]\n\n\ndef test_circle_sort_random_order():\n    collection = [3, 1, 4, 1, 5, 9, 2, 6]\n    assert circle_sort(collection) == [1, 1, 2, 3, 4, 5, 6, 9]\n\n\ndef test_circle_sort_two_elements():\n    collection = [2, 1]\n    assert circle_sort(collection) == [1, 2]\n\n\ndef test_circle_sort_odd_length_comparisons():\n    # Targets specific branches in circle_sort_util involving odd lengths,\n    # mid calculations, middle element comparisons (left == right / right + 1 / right - 1),\n    # logical operators in return (or vs and), and multiple iterations (swapped = False / None).\n    collection = [3, 1, 2]\n    assert circle_sort(collection) == [1, 2, 3]\n\n\ndef test_circle_sort_with_duplicates_triggering_mid_swaps():\n    # Targets equality conditions (>= vs >) and specific indexing offsets during center checks.\n    collection = [2, 2, 1, 3]\n    assert circle_sort(collection) == [1, 2, 2, 3]",
+      "mutant_killed": false,
+      "mutant_operator": "ConditionalBoundary",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_12.x_circle_sort__mutmut_20",
+      "generated_test_code": "from function_12 import circle_sort\n\n\ndef test_circle_sort_empty():\n    collection = []\n    assert circle_sort(collection) == []\n\n\ndef test_circle_sort_single_element():\n    collection = [42]\n    assert circle_sort(collection) == [42]\n\n\ndef test_circle_sort_already_sorted():\n    collection = [1, 2, 3, 4, 5]\n    assert circle_sort(collection) == [1, 2, 3, 4, 5]\n\n\ndef test_circle_sort_reverse_sorted():\n    collection = [5, 4, 3, 2, 1]\n    assert circle_sort(collection) == [1, 2, 3, 4, 5]\n\n\ndef test_circle_sort_random_order():\n    collection = [3, 1, 4, 1, 5, 9, 2, 6]\n    assert circle_sort(collection) == [1, 1, 2, 3, 4, 5, 6, 9]\n\n\ndef test_circle_sort_two_elements():\n    collection = [2, 1]\n    assert circle_sort(collection) == [1, 2]\n\n\ndef test_circle_sort_odd_length_comparisons():\n    # Targets specific branches in circle_sort_util involving odd lengths,\n    # mid calculations, middle element comparisons (left == right / right + 1 / right - 1),\n    # logical operators in return (or vs and), and multiple iterations (swapped = False / None).\n    collection = [3, 1, 2]\n    assert circle_sort(collection) == [1, 2, 3]\n\n\ndef test_circle_sort_with_duplicates_triggering_mid_swaps():\n    # Targets equality conditions (>= vs >) and specific indexing offsets during center checks.\n    collection = [2, 2, 1, 3]\n    assert circle_sort(collection) == [1, 2, 2, 3]",
+      "mutant_killed": false,
+      "mutant_operator": "ComparisonOperator",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_12.x_circle_sort__mutmut_25",
+      "generated_test_code": "from function_12 import circle_sort\n\n\ndef test_circle_sort_empty():\n    collection = []\n    assert circle_sort(collection) == []\n\n\ndef test_circle_sort_single_element():\n    collection = [42]\n    assert circle_sort(collection) == [42]\n\n\ndef test_circle_sort_already_sorted():\n    collection = [1, 2, 3, 4, 5]\n    assert circle_sort(collection) == [1, 2, 3, 4, 5]\n\n\ndef test_circle_sort_reverse_sorted():\n    collection = [5, 4, 3, 2, 1]\n    assert circle_sort(collection) == [1, 2, 3, 4, 5]\n\n\ndef test_circle_sort_random_order():\n    collection = [3, 1, 4, 1, 5, 9, 2, 6]\n    assert circle_sort(collection) == [1, 1, 2, 3, 4, 5, 6, 9]\n\n\ndef test_circle_sort_two_elements():\n    collection = [2, 1]\n    assert circle_sort(collection) == [1, 2]\n\n\ndef test_circle_sort_odd_length_comparisons():\n    # Targets specific branches in circle_sort_util involving odd lengths,\n    # mid calculations, middle element comparisons (left == right / right + 1 / right - 1),\n    # logical operators in return (or vs and), and multiple iterations (swapped = False / None).\n    collection = [3, 1, 2]\n    assert circle_sort(collection) == [1, 2, 3]\n\n\ndef test_circle_sort_with_duplicates_triggering_mid_swaps():\n    # Targets equality conditions (>= vs >) and specific indexing offsets during center checks.\n    collection = [2, 2, 1, 3]\n    assert circle_sort(collection) == [1, 2, 2, 3]",
+      "mutant_killed": false,
+      "mutant_operator": "ArithmeticOperator",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_12.x_circle_sort__mutmut_53",
+      "generated_test_code": "from function_12 import circle_sort\n\n\ndef test_circle_sort_empty():\n    collection = []\n    assert circle_sort(collection) == []\n\n\ndef test_circle_sort_single_element():\n    collection = [42]\n    assert circle_sort(collection) == [42]\n\n\ndef test_circle_sort_already_sorted():\n    collection = [1, 2, 3, 4, 5]\n    assert circle_sort(collection) == [1, 2, 3, 4, 5]\n\n\ndef test_circle_sort_reverse_sorted():\n    collection = [5, 4, 3, 2, 1]\n    assert circle_sort(collection) == [1, 2, 3, 4, 5]\n\n\ndef test_circle_sort_random_order():\n    collection = [3, 1, 4, 1, 5, 9, 2, 6]\n    assert circle_sort(collection) == [1, 1, 2, 3, 4, 5, 6, 9]\n\n\ndef test_circle_sort_two_elements():\n    collection = [2, 1]\n    assert circle_sort(collection) == [1, 2]\n\n\ndef test_circle_sort_odd_length_comparisons():\n    # Targets specific branches in circle_sort_util involving odd lengths,\n    # mid calculations, middle element comparisons (left == right / right + 1 / right - 1),\n    # logical operators in return (or vs and), and multiple iterations (swapped = False / None).\n    collection = [3, 1, 2]\n    assert circle_sort(collection) == [1, 2, 3]\n\n\ndef test_circle_sort_with_duplicates_triggering_mid_swaps():\n    # Targets equality conditions (>= vs >) and specific indexing offsets during center checks.\n    collection = [2, 2, 1, 3]\n    assert circle_sort(collection) == [1, 2, 2, 3]",
+      "mutant_killed": false,
+      "mutant_operator": "LogicalOperator",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_12.x_circle_sort__mutmut_23",
+      "generated_test_code": "from function_12 import circle_sort\n\n\ndef test_circle_sort_empty():\n    collection = []\n    assert circle_sort(collection) == []\n\n\ndef test_circle_sort_single_element():\n    collection = [42]\n    assert circle_sort(collection) == [42]\n\n\ndef test_circle_sort_already_sorted():\n    collection = [1, 2, 3, 4, 5]\n    assert circle_sort(collection) == [1, 2, 3, 4, 5]\n\n\ndef test_circle_sort_reverse_sorted():\n    collection = [5, 4, 3, 2, 1]\n    assert circle_sort(collection) == [1, 2, 3, 4, 5]\n\n\ndef test_circle_sort_random_order():\n    collection = [3, 1, 4, 1, 5, 9, 2, 6]\n    assert circle_sort(collection) == [1, 1, 2, 3, 4, 5, 6, 9]\n\n\ndef test_circle_sort_two_elements():\n    collection = [2, 1]\n    assert circle_sort(collection) == [1, 2]\n\n\ndef test_circle_sort_odd_length_comparisons():\n    # Targets specific branches in circle_sort_util involving odd lengths,\n    # mid calculations, middle element comparisons (left == right / right + 1 / right - 1),\n    # logical operators in return (or vs and), and multiple iterations (swapped = False / None).\n    collection = [3, 1, 2]\n    assert circle_sort(collection) == [1, 2, 3]\n\n\ndef test_circle_sort_with_duplicates_triggering_mid_swaps():\n    # Targets equality conditions (>= vs >) and specific indexing offsets during center checks.\n    collection = [2, 2, 1, 3]\n    assert circle_sort(collection) == [1, 2, 2, 3]",
+      "mutant_killed": true,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_12.x_circle_sort__mutmut_21",
+      "generated_test_code": "from function_12 import circle_sort\n\n\ndef test_circle_sort_empty():\n    collection = []\n    assert circle_sort(collection) == []\n\n\ndef test_circle_sort_single_element():\n    collection = [42]\n    assert circle_sort(collection) == [42]\n\n\ndef test_circle_sort_already_sorted():\n    collection = [1, 2, 3, 4, 5]\n    assert circle_sort(collection) == [1, 2, 3, 4, 5]\n\n\ndef test_circle_sort_reverse_sorted():\n    collection = [5, 4, 3, 2, 1]\n    assert circle_sort(collection) == [1, 2, 3, 4, 5]\n\n\ndef test_circle_sort_random_order():\n    collection = [3, 1, 4, 1, 5, 9, 2, 6]\n    assert circle_sort(collection) == [1, 1, 2, 3, 4, 5, 6, 9]\n\n\ndef test_circle_sort_two_elements():\n    collection = [2, 1]\n    assert circle_sort(collection) == [1, 2]\n\n\ndef test_circle_sort_odd_length_comparisons():\n    # Targets specific branches in circle_sort_util involving odd lengths,\n    # mid calculations, middle element comparisons (left == right / right + 1 / right - 1),\n    # logical operators in return (or vs and), and multiple iterations (swapped = False / None).\n    collection = [3, 1, 2]\n    assert circle_sort(collection) == [1, 2, 3]\n\n\ndef test_circle_sort_with_duplicates_triggering_mid_swaps():\n    # Targets equality conditions (>= vs >) and specific indexing offsets during center checks.\n    collection = [2, 2, 1, 3]\n    assert circle_sort(collection) == [1, 2, 2, 3]",
+      "mutant_killed": false,
+      "mutant_operator": "ConditionalBoundary",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_12.x_circle_sort__mutmut_27",
+      "generated_test_code": "from function_12 import circle_sort\n\n\ndef test_circle_sort_empty():\n    collection = []\n    assert circle_sort(collection) == []\n\n\ndef test_circle_sort_single_element():\n    collection = [42]\n    assert circle_sort(collection) == [42]\n\n\ndef test_circle_sort_already_sorted():\n    collection = [1, 2, 3, 4, 5]\n    assert circle_sort(collection) == [1, 2, 3, 4, 5]\n\n\ndef test_circle_sort_reverse_sorted():\n    collection = [5, 4, 3, 2, 1]\n    assert circle_sort(collection) == [1, 2, 3, 4, 5]\n\n\ndef test_circle_sort_random_order():\n    collection = [3, 1, 4, 1, 5, 9, 2, 6]\n    assert circle_sort(collection) == [1, 1, 2, 3, 4, 5, 6, 9]\n\n\ndef test_circle_sort_two_elements():\n    collection = [2, 1]\n    assert circle_sort(collection) == [1, 2]\n\n\ndef test_circle_sort_odd_length_comparisons():\n    # Targets specific branches in circle_sort_util involving odd lengths,\n    # mid calculations, middle element comparisons (left == right / right + 1 / right - 1),\n    # logical operators in return (or vs and), and multiple iterations (swapped = False / None).\n    collection = [3, 1, 2]\n    assert circle_sort(collection) == [1, 2, 3]\n\n\ndef test_circle_sort_with_duplicates_triggering_mid_swaps():\n    # Targets equality conditions (>= vs >) and specific indexing offsets during center checks.\n    collection = [2, 2, 1, 3]\n    assert circle_sort(collection) == [1, 2, 2, 3]",
+      "mutant_killed": false,
+      "mutant_operator": "ArithmeticOperator",
+      "predicted_state": null
+    }
+  ],
+  "num_llm_calls": 2,
+  "pass_rate_pct": 100.0,
+  "initial_mutation_score_pct": 80.88,
+  "stop_reason": "plateau",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite"
+}

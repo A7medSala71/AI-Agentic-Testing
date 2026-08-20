@@ -1,0 +1,7 @@
+,,,mutation_score_pct,mutation_score_pct,mutation_score_pct,line_coverage_pct,line_coverage_pct,line_coverage_pct,pass_rate_pct,pass_rate_pct,pass_rate_pct,iteration_count,iteration_count,iteration_count,num_llm_calls,num_llm_calls,num_llm_calls,total_tokens_used,total_tokens_used,total_tokens_used,estimated_cost_usd,estimated_cost_usd,estimated_cost_usd
+,,,mean,std,count,mean,std,count,mean,std,count,mean,std,count,mean,std,count,mean,std,count,mean,std,count
+provider,model,system_variant,,,,,,,,,,,,,,,,,,,,,
+gemini,gemini-3.5-flash-lite,Baseline_A,94.4846,7.4005,90,73.6822,13.503,90,90.6349,19.6723,90,1.0,0.0,90,1.0,0.0,90,1322.8444,313.1009,90,0.0027,0.0007,90
+gemini,gemini-3.5-flash-lite,Baseline_B,95.1018,6.5103,90,73.0267,15.6248,90,90.1147,23.5418,90,1.0,0.0,90,5.0,0.0,90,8430.2778,2023.2823,90,0.0125,0.0031,90
+gemini,gemini-3.5-flash-lite,Variant_1_ErrorTrace,95.8394,6.8904,90,96.3333,12.8786,90,91.3344,19.6973,90,0.6778,0.8049,90,1.6778,0.8049,90,2659.2667,1790.5736,90,0.0036,0.002,90
+gemini,gemini-3.5-flash-lite,Variant_2_StatePrediction,96.7877,6.5072,90,95.3522,16.405,90,87.6922,22.3631,90,0.5889,0.7774,90,1.5889,0.7774,90,2719.6556,2124.9078,90,0.0037,0.0025,90

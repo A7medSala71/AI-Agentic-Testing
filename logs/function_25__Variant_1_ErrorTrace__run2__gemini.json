@@ -1,0 +1,113 @@
+{
+  "function_id": "function_25",
+  "system_variant": "Variant_1_ErrorTrace",
+  "iteration_count": 2,
+  "total_tokens_used": 5907,
+  "mutation_score_pct": 96.43,
+  "line_coverage_pct": 47.2,
+  "estimated_cost_usd": 0.00604,
+  "iterations_detail": [
+    {
+      "iteration": 1,
+      "mutant_id": "function_25.x_is_prime__mutmut_6",
+      "generated_test_code": "import pytest\nfrom function_25 import is_prime\n\n\ndef test_is_prime_negative_number():\n    with pytest.raises(ValueError) as excinfo:\n        is_prime(-1)\n    assert str(excinfo.value) == 'is_prime() only accepts positive integers'\n\n\ndef test_is_prime_non_integer():\n    with pytest.raises(ValueError) as excinfo:\n        is_prime(2.5)\n    assert str(excinfo.value) == 'is_prime() only accepts positive integers'\n\n\ndef test_is_prime_zero():\n    assert is_prime(0) is False\n\n\ndef test_is_prime_one():\n    assert is_prime(1) is False\n\n\ndef test_is_prime_small_primes():\n    assert is_prime(2) is True\n    assert is_prime(3) is True\n\n\ndef test_is_prime_even_numbers():\n    assert is_prime(4) is False\n    assert is_prime(6) is False\n    assert is_prime(100) is False\n\n\ndef test_is_prime_multiples_of_three():\n    assert is_prime(9) is False\n    assert is_prime(15) is False\n    assert is_prime(21) is False\n\n\ndef test_is_prime_composite_numbers():\n    assert is_prime(25) is False\n    assert is_prime(35) is False\n    assert is_prime(49) is False\n\n\ndef test_is_prime_large_primes():\n    assert is_prime(31) is True\n    assert is_prime(97) is True\n    assert is_prime(101) is True\n\n\ndef test_is_prime_larger_composite():\n    # Kills range/sqrt/step mutants like range(5, 6) or range(..., +2) or missing step\n    assert is_prime(121) is False  # 11 * 11\n    assert is_prime(143) is False  # 11 * 13\n    assert is_prime(169) is False  # 13 * 13",
+      "mutant_killed": true,
+      "mutant_operator": "ComparisonOperator",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_25.x_is_prime__mutmut_16",
+      "generated_test_code": "import pytest\nfrom function_25 import is_prime\n\n\ndef test_is_prime_negative_number():\n    with pytest.raises(ValueError) as excinfo:\n        is_prime(-1)\n    assert str(excinfo.value) == 'is_prime() only accepts positive integers'\n\n\ndef test_is_prime_non_integer():\n    with pytest.raises(ValueError) as excinfo:\n        is_prime(2.5)\n    assert str(excinfo.value) == 'is_prime() only accepts positive integers'\n\n\ndef test_is_prime_zero():\n    assert is_prime(0) is False\n\n\ndef test_is_prime_one():\n    assert is_prime(1) is False\n\n\ndef test_is_prime_small_primes():\n    assert is_prime(2) is True\n    assert is_prime(3) is True\n\n\ndef test_is_prime_even_numbers():\n    assert is_prime(4) is False\n    assert is_prime(6) is False\n    assert is_prime(100) is False\n\n\ndef test_is_prime_multiples_of_three():\n    assert is_prime(9) is False\n    assert is_prime(15) is False\n    assert is_prime(21) is False\n\n\ndef test_is_prime_composite_numbers():\n    assert is_prime(25) is False\n    assert is_prime(35) is False\n    assert is_prime(49) is False\n\n\ndef test_is_prime_large_primes():\n    assert is_prime(31) is True\n    assert is_prime(97) is True\n    assert is_prime(101) is True\n\n\ndef test_is_prime_larger_composite():\n    # Kills range/sqrt/step mutants like range(5, 6) or range(..., +2) or missing step\n    assert is_prime(121) is False  # 11 * 11\n    assert is_prime(143) is False  # 11 * 13\n    assert is_prime(169) is False  # 13 * 13",
+      "mutant_killed": false,
+      "mutant_operator": "ConditionalBoundary",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_25.x_is_prime__mutmut_17",
+      "generated_test_code": "import pytest\nfrom function_25 import is_prime\n\n\ndef test_is_prime_negative_number():\n    with pytest.raises(ValueError) as excinfo:\n        is_prime(-1)\n    assert str(excinfo.value) == 'is_prime() only accepts positive integers'\n\n\ndef test_is_prime_non_integer():\n    with pytest.raises(ValueError) as excinfo:\n        is_prime(2.5)\n    assert str(excinfo.value) == 'is_prime() only accepts positive integers'\n\n\ndef test_is_prime_zero():\n    assert is_prime(0) is False\n\n\ndef test_is_prime_one():\n    assert is_prime(1) is False\n\n\ndef test_is_prime_small_primes():\n    assert is_prime(2) is True\n    assert is_prime(3) is True\n\n\ndef test_is_prime_even_numbers():\n    assert is_prime(4) is False\n    assert is_prime(6) is False\n    assert is_prime(100) is False\n\n\ndef test_is_prime_multiples_of_three():\n    assert is_prime(9) is False\n    assert is_prime(15) is False\n    assert is_prime(21) is False\n\n\ndef test_is_prime_composite_numbers():\n    assert is_prime(25) is False\n    assert is_prime(35) is False\n    assert is_prime(49) is False\n\n\ndef test_is_prime_large_primes():\n    assert is_prime(31) is True\n    assert is_prime(97) is True\n    assert is_prime(101) is True\n\n\ndef test_is_prime_larger_composite():\n    # Kills range/sqrt/step mutants like range(5, 6) or range(..., +2) or missing step\n    assert is_prime(121) is False  # 11 * 11\n    assert is_prime(143) is False  # 11 * 13\n    assert is_prime(169) is False  # 13 * 13",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_25.x_is_prime__mutmut_31",
+      "generated_test_code": "import pytest\nfrom function_25 import is_prime\n\n\ndef test_is_prime_negative_number():\n    with pytest.raises(ValueError) as excinfo:\n        is_prime(-1)\n    assert str(excinfo.value) == 'is_prime() only accepts positive integers'\n\n\ndef test_is_prime_non_integer():\n    with pytest.raises(ValueError) as excinfo:\n        is_prime(2.5)\n    assert str(excinfo.value) == 'is_prime() only accepts positive integers'\n\n\ndef test_is_prime_zero():\n    assert is_prime(0) is False\n\n\ndef test_is_prime_one():\n    assert is_prime(1) is False\n\n\ndef test_is_prime_small_primes():\n    assert is_prime(2) is True\n    assert is_prime(3) is True\n\n\ndef test_is_prime_even_numbers():\n    assert is_prime(4) is False\n    assert is_prime(6) is False\n    assert is_prime(100) is False\n\n\ndef test_is_prime_multiples_of_three():\n    assert is_prime(9) is False\n    assert is_prime(15) is False\n    assert is_prime(21) is False\n\n\ndef test_is_prime_composite_numbers():\n    assert is_prime(25) is False\n    assert is_prime(35) is False\n    assert is_prime(49) is False\n\n\ndef test_is_prime_large_primes():\n    assert is_prime(31) is True\n    assert is_prime(97) is True\n    assert is_prime(101) is True\n\n\ndef test_is_prime_larger_composite():\n    # Kills range/sqrt/step mutants like range(5, 6) or range(..., +2) or missing step\n    assert is_prime(121) is False  # 11 * 11\n    assert is_prime(143) is False  # 11 * 13\n    assert is_prime(169) is False  # 13 * 13",
+      "mutant_killed": true,
+      "mutant_operator": "ArithmeticOperator",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_25.x_is_prime__mutmut_7",
+      "generated_test_code": "import pytest\nfrom function_25 import is_prime\n\n\ndef test_is_prime_negative_number():\n    with pytest.raises(ValueError) as excinfo:\n        is_prime(-1)\n    assert str(excinfo.value) == 'is_prime() only accepts positive integers'\n\n\ndef test_is_prime_non_integer():\n    with pytest.raises(ValueError) as excinfo:\n        is_prime(2.5)\n    assert str(excinfo.value) == 'is_prime() only accepts positive integers'\n\n\ndef test_is_prime_zero():\n    assert is_prime(0) is False\n\n\ndef test_is_prime_one():\n    assert is_prime(1) is False\n\n\ndef test_is_prime_small_primes():\n    assert is_prime(2) is True\n    assert is_prime(3) is True\n\n\ndef test_is_prime_even_numbers():\n    assert is_prime(4) is False\n    assert is_prime(6) is False\n    assert is_prime(100) is False\n\n\ndef test_is_prime_multiples_of_three():\n    assert is_prime(9) is False\n    assert is_prime(15) is False\n    assert is_prime(21) is False\n\n\ndef test_is_prime_composite_numbers():\n    assert is_prime(25) is False\n    assert is_prime(35) is False\n    assert is_prime(49) is False\n\n\ndef test_is_prime_large_primes():\n    assert is_prime(31) is True\n    assert is_prime(97) is True\n    assert is_prime(101) is True\n\n\ndef test_is_prime_larger_composite():\n    # Kills range/sqrt/step mutants like range(5, 6) or range(..., +2) or missing step\n    assert is_prime(121) is False  # 11 * 11\n    assert is_prime(143) is False  # 11 * 13\n    assert is_prime(169) is False  # 13 * 13",
+      "mutant_killed": true,
+      "mutant_operator": "ComparisonOperator",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_25.x_is_prime__mutmut_32",
+      "generated_test_code": "import pytest\nfrom function_25 import is_prime\n\n\ndef test_is_prime_negative_number():\n    with pytest.raises(ValueError) as excinfo:\n        is_prime(-1)\n    assert str(excinfo.value) == 'is_prime() only accepts positive integers'\n\n\ndef test_is_prime_non_integer():\n    with pytest.raises(ValueError) as excinfo:\n        is_prime(2.5)\n    assert str(excinfo.value) == 'is_prime() only accepts positive integers'\n\n\ndef test_is_prime_zero():\n    assert is_prime(0) is False\n\n\ndef test_is_prime_one():\n    assert is_prime(1) is False\n\n\ndef test_is_prime_small_primes():\n    assert is_prime(2) is True\n    assert is_prime(3) is True\n\n\ndef test_is_prime_even_numbers():\n    assert is_prime(4) is False\n    assert is_prime(6) is False\n    assert is_prime(100) is False\n\n\ndef test_is_prime_multiples_of_three():\n    assert is_prime(9) is False\n    assert is_prime(15) is False\n    assert is_prime(21) is False\n\n\ndef test_is_prime_composite_numbers():\n    assert is_prime(25) is False\n    assert is_prime(35) is False\n    assert is_prime(49) is False\n\n\ndef test_is_prime_large_primes():\n    assert is_prime(31) is True\n    assert is_prime(97) is True\n    assert is_prime(101) is True\n\n\ndef test_is_prime_larger_composite():\n    # Kills range/sqrt/step mutants like range(5, 6) or range(..., +2) or missing step\n    assert is_prime(121) is False  # 11 * 11\n    assert is_prime(143) is False  # 11 * 13\n    assert is_prime(169) is False  # 13 * 13",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_25.x_is_prime__mutmut_8",
+      "generated_test_code": "import pytest\nfrom function_25 import is_prime\n\n\ndef test_is_prime_negative_number():\n    with pytest.raises(ValueError) as excinfo:\n        is_prime(-1)\n    assert str(excinfo.value) == 'is_prime() only accepts positive integers'\n\n\ndef test_is_prime_non_integer():\n    with pytest.raises(ValueError) as excinfo:\n        is_prime(2.5)\n    assert str(excinfo.value) == 'is_prime() only accepts positive integers'\n\n\ndef test_is_prime_zero():\n    assert is_prime(0) is False\n\n\ndef test_is_prime_one():\n    assert is_prime(1) is False\n\n\ndef test_is_prime_small_primes():\n    assert is_prime(2) is True\n    assert is_prime(3) is True\n\n\ndef test_is_prime_even_numbers():\n    assert is_prime(4) is False\n    assert is_prime(6) is False\n    assert is_prime(100) is False\n\n\ndef test_is_prime_multiples_of_three():\n    assert is_prime(9) is False\n    assert is_prime(15) is False\n    assert is_prime(21) is False\n\n\ndef test_is_prime_composite_numbers():\n    assert is_prime(25) is False\n    assert is_prime(35) is False\n    assert is_prime(49) is False\n\n\ndef test_is_prime_large_primes():\n    assert is_prime(31) is True\n    assert is_prime(97) is True\n    assert is_prime(101) is True\n\n\ndef test_is_prime_larger_composite():\n    # Kills range/sqrt/step mutants like range(5, 6) or range(..., +2) or missing step\n    assert is_prime(121) is False  # 11 * 11\n    assert is_prime(143) is False  # 11 * 13\n    assert is_prime(169) is False  # 13 * 13",
+      "mutant_killed": true,
+      "mutant_operator": "ComparisonOperator",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_25.x_is_prime__mutmut_37",
+      "generated_test_code": "import pytest\nfrom function_25 import is_prime\n\n\ndef test_is_prime_negative_number():\n    with pytest.raises(ValueError) as excinfo:\n        is_prime(-1)\n    assert str(excinfo.value) == 'is_prime() only accepts positive integers'\n\n\ndef test_is_prime_non_integer():\n    with pytest.raises(ValueError) as excinfo:\n        is_prime(2.5)\n    assert str(excinfo.value) == 'is_prime() only accepts positive integers'\n\n\ndef test_is_prime_zero():\n    assert is_prime(0) is False\n\n\ndef test_is_prime_one():\n    assert is_prime(1) is False\n\n\ndef test_is_prime_small_primes():\n    assert is_prime(2) is True\n    assert is_prime(3) is True\n\n\ndef test_is_prime_even_numbers():\n    assert is_prime(4) is False\n    assert is_prime(6) is False\n    assert is_prime(100) is False\n\n\ndef test_is_prime_multiples_of_three():\n    assert is_prime(9) is False\n    assert is_prime(15) is False\n    assert is_prime(21) is False\n\n\ndef test_is_prime_composite_numbers():\n    assert is_prime(25) is False\n    assert is_prime(35) is False\n    assert is_prime(49) is False\n\n\ndef test_is_prime_large_primes():\n    assert is_prime(31) is True\n    assert is_prime(97) is True\n    assert is_prime(101) is True\n\n\ndef test_is_prime_larger_composite():\n    # Kills range/sqrt/step mutants like range(5, 6) or range(..., +2) or missing step\n    assert is_prime(121) is False  # 11 * 11\n    assert is_prime(143) is False  # 11 * 13\n    assert is_prime(169) is False  # 13 * 13",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 2,
+      "mutant_id": "function_25.x_is_prime__mutmut_16",
+      "generated_test_code": "import pytest\nfrom function_25 import is_prime\n\n\ndef test_is_prime_negative_number():\n    with pytest.raises(ValueError) as excinfo:\n        is_prime(-1)\n    assert str(excinfo.value) == 'is_prime() only accepts positive integers'\n\n\ndef test_is_prime_non_integer():\n    with pytest.raises(ValueError) as excinfo:\n        is_prime(2.5)\n    assert str(excinfo.value) == 'is_prime() only accepts positive integers'\n\n\ndef test_is_prime_zero():\n    assert is_prime(0) is False\n\n\ndef test_is_prime_one():\n    assert is_prime(1) is False\n\n\ndef test_is_prime_small_primes():\n    assert is_prime(2) is True\n    assert is_prime(3) is True\n\n\ndef test_is_prime_even_numbers():\n    assert is_prime(4) is False\n    assert is_prime(6) is False\n    assert is_prime(100) is False\n\n\ndef test_is_prime_multiples_of_three():\n    assert is_prime(9) is False\n    assert is_prime(15) is False\n    assert is_prime(21) is False\n\n\ndef test_is_prime_composite_numbers():\n    assert is_prime(25) is False\n    assert is_prime(35) is False\n    assert is_prime(49) is False\n\n\ndef test_is_prime_large_primes():\n    assert is_prime(31) is True\n    assert is_prime(97) is True\n    assert is_prime(101) is True\n\n\ndef test_is_prime_larger_composite():\n    # Kills range/sqrt/step mutants like range(5, 6) or range(..., +2) or missing step\n    assert is_prime(121) is False  # 11 * 11\n    assert is_prime(143) is False  # 11 * 13\n    assert is_prime(169) is False  # 13 * 13\n\n\ndef test_is_prime_mutant_killers():\n    # Kills mutants on `number < 2` (e.g. number <= 2 or number < 3)\n    # 2 is a prime, so is_prime(2) must return True. If `number <= 2` or `number < 3`, \n    # then 2 would hit the elif branch and return False.\n    assert is_prime(2) is True",
+      "mutant_killed": false,
+      "mutant_operator": "ConditionalBoundary",
+      "predicted_state": null
+    },
+    {
+      "iteration": 2,
+      "mutant_id": "function_25.x_is_prime__mutmut_17",
+      "generated_test_code": "import pytest\nfrom function_25 import is_prime\n\n\ndef test_is_prime_negative_number():\n    with pytest.raises(ValueError) as excinfo:\n        is_prime(-1)\n    assert str(excinfo.value) == 'is_prime() only accepts positive integers'\n\n\ndef test_is_prime_non_integer():\n    with pytest.raises(ValueError) as excinfo:\n        is_prime(2.5)\n    assert str(excinfo.value) == 'is_prime() only accepts positive integers'\n\n\ndef test_is_prime_zero():\n    assert is_prime(0) is False\n\n\ndef test_is_prime_one():\n    assert is_prime(1) is False\n\n\ndef test_is_prime_small_primes():\n    assert is_prime(2) is True\n    assert is_prime(3) is True\n\n\ndef test_is_prime_even_numbers():\n    assert is_prime(4) is False\n    assert is_prime(6) is False\n    assert is_prime(100) is False\n\n\ndef test_is_prime_multiples_of_three():\n    assert is_prime(9) is False\n    assert is_prime(15) is False\n    assert is_prime(21) is False\n\n\ndef test_is_prime_composite_numbers():\n    assert is_prime(25) is False\n    assert is_prime(35) is False\n    assert is_prime(49) is False\n\n\ndef test_is_prime_large_primes():\n    assert is_prime(31) is True\n    assert is_prime(97) is True\n    assert is_prime(101) is True\n\n\ndef test_is_prime_larger_composite():\n    # Kills range/sqrt/step mutants like range(5, 6) or range(..., +2) or missing step\n    assert is_prime(121) is False  # 11 * 11\n    assert is_prime(143) is False  # 11 * 13\n    assert is_prime(169) is False  # 13 * 13\n\n\ndef test_is_prime_mutant_killers():\n    # Kills mutants on `number < 2` (e.g. number <= 2 or number < 3)\n    # 2 is a prime, so is_prime(2) must return True. If `number <= 2` or `number < 3`, \n    # then 2 would hit the elif branch and return False.\n    assert is_prime(2) is True",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 2,
+      "mutant_id": "function_25.x_is_prime__mutmut_32",
+      "generated_test_code": "import pytest\nfrom function_25 import is_prime\n\n\ndef test_is_prime_negative_number():\n    with pytest.raises(ValueError) as excinfo:\n        is_prime(-1)\n    assert str(excinfo.value) == 'is_prime() only accepts positive integers'\n\n\ndef test_is_prime_non_integer():\n    with pytest.raises(ValueError) as excinfo:\n        is_prime(2.5)\n    assert str(excinfo.value) == 'is_prime() only accepts positive integers'\n\n\ndef test_is_prime_zero():\n    assert is_prime(0) is False\n\n\ndef test_is_prime_one():\n    assert is_prime(1) is False\n\n\ndef test_is_prime_small_primes():\n    assert is_prime(2) is True\n    assert is_prime(3) is True\n\n\ndef test_is_prime_even_numbers():\n    assert is_prime(4) is False\n    assert is_prime(6) is False\n    assert is_prime(100) is False\n\n\ndef test_is_prime_multiples_of_three():\n    assert is_prime(9) is False\n    assert is_prime(15) is False\n    assert is_prime(21) is False\n\n\ndef test_is_prime_composite_numbers():\n    assert is_prime(25) is False\n    assert is_prime(35) is False\n    assert is_prime(49) is False\n\n\ndef test_is_prime_large_primes():\n    assert is_prime(31) is True\n    assert is_prime(97) is True\n    assert is_prime(101) is True\n\n\ndef test_is_prime_larger_composite():\n    # Kills range/sqrt/step mutants like range(5, 6) or range(..., +2) or missing step\n    assert is_prime(121) is False  # 11 * 11\n    assert is_prime(143) is False  # 11 * 13\n    assert is_prime(169) is False  # 13 * 13\n\n\ndef test_is_prime_mutant_killers():\n    # Kills mutants on `number < 2` (e.g. number <= 2 or number < 3)\n    # 2 is a prime, so is_prime(2) must return True. If `number <= 2` or `number < 3`, \n    # then 2 would hit the elif branch and return False.\n    assert is_prime(2) is True",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 2,
+      "mutant_id": "function_25.x_is_prime__mutmut_37",
+      "generated_test_code": "import pytest\nfrom function_25 import is_prime\n\n\ndef test_is_prime_negative_number():\n    with pytest.raises(ValueError) as excinfo:\n        is_prime(-1)\n    assert str(excinfo.value) == 'is_prime() only accepts positive integers'\n\n\ndef test_is_prime_non_integer():\n    with pytest.raises(ValueError) as excinfo:\n        is_prime(2.5)\n    assert str(excinfo.value) == 'is_prime() only accepts positive integers'\n\n\ndef test_is_prime_zero():\n    assert is_prime(0) is False\n\n\ndef test_is_prime_one():\n    assert is_prime(1) is False\n\n\ndef test_is_prime_small_primes():\n    assert is_prime(2) is True\n    assert is_prime(3) is True\n\n\ndef test_is_prime_even_numbers():\n    assert is_prime(4) is False\n    assert is_prime(6) is False\n    assert is_prime(100) is False\n\n\ndef test_is_prime_multiples_of_three():\n    assert is_prime(9) is False\n    assert is_prime(15) is False\n    assert is_prime(21) is False\n\n\ndef test_is_prime_composite_numbers():\n    assert is_prime(25) is False\n    assert is_prime(35) is False\n    assert is_prime(49) is False\n\n\ndef test_is_prime_large_primes():\n    assert is_prime(31) is True\n    assert is_prime(97) is True\n    assert is_prime(101) is True\n\n\ndef test_is_prime_larger_composite():\n    # Kills range/sqrt/step mutants like range(5, 6) or range(..., +2) or missing step\n    assert is_prime(121) is False  # 11 * 11\n    assert is_prime(143) is False  # 11 * 13\n    assert is_prime(169) is False  # 13 * 13\n\n\ndef test_is_prime_mutant_killers():\n    # Kills mutants on `number < 2` (e.g. number <= 2 or number < 3)\n    # 2 is a prime, so is_prime(2) must return True. If `number <= 2` or `number < 3`, \n    # then 2 would hit the elif branch and return False.\n    assert is_prime(2) is True",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    }
+  ],
+  "num_llm_calls": 3,
+  "pass_rate_pct": 100.0,
+  "initial_mutation_score_pct": 91.96,
+  "stop_reason": "plateau",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite"
+}

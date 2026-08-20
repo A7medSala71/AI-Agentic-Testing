@@ -1,0 +1,33 @@
+{
+  "function_id": "function_26",
+  "system_variant": "Variant_2_StatePrediction",
+  "iteration_count": 1,
+  "total_tokens_used": 2476,
+  "mutation_score_pct": 100.0,
+  "line_coverage_pct": 100.0,
+  "estimated_cost_usd": 0.003081,
+  "iterations_detail": [
+    {
+      "iteration": 1,
+      "mutant_id": "function_26.x_prime_factors__mutmut_11",
+      "generated_test_code": "from function_26 import prime_factors\nfrom function_26 import unique_prime_factors\n\n\ndef test_prime_factors_nominal():\n    assert prime_factors(12) == [2, 2, 3]\n    assert prime_factors(315) == [3, 3, 5, 7]\n    assert prime_factors(2) == [2]\n    assert prime_factors(1) == []\n\n\ndef test_prime_factors_boundaries():\n    assert prime_factors(4) == [2, 2]\n    assert prime_factors(9) == [3, 3]\n    assert prime_factors(13) == [13]\n\n\ndef test_unique_prime_factors_nominal():\n    assert unique_prime_factors(12) == [2, 3]\n    assert unique_prime_factors(315) == [3, 5, 7]\n    assert unique_prime_factors(2) == [2]\n    assert unique_prime_factors(1) == []\n\n\ndef test_unique_prime_factors_boundaries():\n    assert unique_prime_factors(4) == [2]\n    assert unique_prime_factors(9) == [3]\n    assert unique_prime_factors(16) == [2]\n    assert unique_prime_factors(17) == [17]\n\n\ndef test_prime_factors_division_type_divergence():\n    # Mutant replaces integer division n //= i with float division n /= i, making n a float which causes subsequent loop comparisons to behave as floats or produce float factors.\n    factors = prime_factors(12)\n    assert all(isinstance(f, int) for f in factors)\n    assert type(factors[0]) is int\n\n\ndef test_unique_prime_factors_division_type_divergence():\n    # Mutant replaces integer division n //= i with float division n /= i, making n a float which alters the internal state type.\n    factors = unique_prime_factors(12)\n    assert all(isinstance(f, int) for f in factors)\n    assert type(factors[0]) is int",
+      "mutant_killed": true,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_26.x_unique_prime_factors__mutmut_11",
+      "generated_test_code": "from function_26 import prime_factors\nfrom function_26 import unique_prime_factors\n\n\ndef test_prime_factors_nominal():\n    assert prime_factors(12) == [2, 2, 3]\n    assert prime_factors(315) == [3, 3, 5, 7]\n    assert prime_factors(2) == [2]\n    assert prime_factors(1) == []\n\n\ndef test_prime_factors_boundaries():\n    assert prime_factors(4) == [2, 2]\n    assert prime_factors(9) == [3, 3]\n    assert prime_factors(13) == [13]\n\n\ndef test_unique_prime_factors_nominal():\n    assert unique_prime_factors(12) == [2, 3]\n    assert unique_prime_factors(315) == [3, 5, 7]\n    assert unique_prime_factors(2) == [2]\n    assert unique_prime_factors(1) == []\n\n\ndef test_unique_prime_factors_boundaries():\n    assert unique_prime_factors(4) == [2]\n    assert unique_prime_factors(9) == [3]\n    assert unique_prime_factors(16) == [2]\n    assert unique_prime_factors(17) == [17]\n\n\ndef test_prime_factors_division_type_divergence():\n    # Mutant replaces integer division n //= i with float division n /= i, making n a float which causes subsequent loop comparisons to behave as floats or produce float factors.\n    factors = prime_factors(12)\n    assert all(isinstance(f, int) for f in factors)\n    assert type(factors[0]) is int\n\n\ndef test_unique_prime_factors_division_type_divergence():\n    # Mutant replaces integer division n //= i with float division n /= i, making n a float which alters the internal state type.\n    factors = unique_prime_factors(12)\n    assert all(isinstance(f, int) for f in factors)\n    assert type(factors[0]) is int",
+      "mutant_killed": true,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    }
+  ],
+  "num_llm_calls": 2,
+  "pass_rate_pct": 100.0,
+  "initial_mutation_score_pct": 93.94,
+  "stop_reason": "no_survivors",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite"
+}

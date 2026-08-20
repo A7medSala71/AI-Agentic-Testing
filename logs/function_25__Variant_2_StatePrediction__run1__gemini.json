@@ -1,0 +1,73 @@
+{
+  "function_id": "function_25",
+  "system_variant": "Variant_2_StatePrediction",
+  "iteration_count": 1,
+  "total_tokens_used": 3929,
+  "mutation_score_pct": 95.54,
+  "line_coverage_pct": 47.2,
+  "estimated_cost_usd": 0.004232,
+  "iterations_detail": [
+    {
+      "iteration": 1,
+      "mutant_id": "function_25.x_is_prime__mutmut_6",
+      "generated_test_code": "import pytest\nfrom function_25 import is_prime\n\n\ndef test_is_prime_invalid_inputs():\n    # Mutant mutmut_6/7/8: Checks exact exception message string value when ValueError is raised\n    with pytest.raises(ValueError, match='is_prime\\(\\) only accepts positive integers'):\n        is_prime(-1)\n\n\ndef test_is_prime_boundaries_small():\n    assert is_prime(0) is False\n    assert is_prime(1) is False\n    assert is_prime(2) is True\n    # Mutant mutmut_16/17: Number 2 is tested above (returns True), test 2 vs 2 boundary or 3\n    assert is_prime(3) is True\n\n\ndef test_is_prime_even_numbers():\n    assert is_prime(4) is False\n    assert is_prime(6) is False\n    assert is_prime(8) is False\n    assert is_prime(100) is False\n\n\ndef test_is_prime_divisible_by_three():\n    assert is_prime(9) is False\n    assert is_prime(15) is False\n    assert is_prime(21) is False\n\n\ndef test_is_prime_nominal_primes():\n    assert is_prime(5) is True\n    assert is_prime(7) is True\n    assert is_prime(11) is True\n    assert is_prime(13) is True\n    assert is_prime(17) is True\n    assert is_prime(19) is True\n    assert is_prime(23) is True\n    assert is_prime(97) is True\n\n\ndef test_is_prime_larger_composites_and_primes():\n    # Mutant mutmut_32/37: Test a composite number requiring the step-6 loop with sqrt boundary (e.g., 25, 121)\n    assert is_prime(25) is False\n    assert is_prime(121) is False\n    assert is_prime(119) is False\n    assert is_prime(101) is True\n    assert is_prime(103) is True\n    # Test larger numbers to fully exercise loop step and upper bound mutants\n    assert is_prime(143) is False\n    assert is_prime(169) is False",
+      "mutant_killed": true,
+      "mutant_operator": "ComparisonOperator",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_25.x_is_prime__mutmut_7",
+      "generated_test_code": "import pytest\nfrom function_25 import is_prime\n\n\ndef test_is_prime_invalid_inputs():\n    # Mutant mutmut_6/7/8: Checks exact exception message string value when ValueError is raised\n    with pytest.raises(ValueError, match='is_prime\\(\\) only accepts positive integers'):\n        is_prime(-1)\n\n\ndef test_is_prime_boundaries_small():\n    assert is_prime(0) is False\n    assert is_prime(1) is False\n    assert is_prime(2) is True\n    # Mutant mutmut_16/17: Number 2 is tested above (returns True), test 2 vs 2 boundary or 3\n    assert is_prime(3) is True\n\n\ndef test_is_prime_even_numbers():\n    assert is_prime(4) is False\n    assert is_prime(6) is False\n    assert is_prime(8) is False\n    assert is_prime(100) is False\n\n\ndef test_is_prime_divisible_by_three():\n    assert is_prime(9) is False\n    assert is_prime(15) is False\n    assert is_prime(21) is False\n\n\ndef test_is_prime_nominal_primes():\n    assert is_prime(5) is True\n    assert is_prime(7) is True\n    assert is_prime(11) is True\n    assert is_prime(13) is True\n    assert is_prime(17) is True\n    assert is_prime(19) is True\n    assert is_prime(23) is True\n    assert is_prime(97) is True\n\n\ndef test_is_prime_larger_composites_and_primes():\n    # Mutant mutmut_32/37: Test a composite number requiring the step-6 loop with sqrt boundary (e.g., 25, 121)\n    assert is_prime(25) is False\n    assert is_prime(121) is False\n    assert is_prime(119) is False\n    assert is_prime(101) is True\n    assert is_prime(103) is True\n    # Test larger numbers to fully exercise loop step and upper bound mutants\n    assert is_prime(143) is False\n    assert is_prime(169) is False",
+      "mutant_killed": false,
+      "mutant_operator": "ComparisonOperator",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_25.x_is_prime__mutmut_8",
+      "generated_test_code": "import pytest\nfrom function_25 import is_prime\n\n\ndef test_is_prime_invalid_inputs():\n    # Mutant mutmut_6/7/8: Checks exact exception message string value when ValueError is raised\n    with pytest.raises(ValueError, match='is_prime\\(\\) only accepts positive integers'):\n        is_prime(-1)\n\n\ndef test_is_prime_boundaries_small():\n    assert is_prime(0) is False\n    assert is_prime(1) is False\n    assert is_prime(2) is True\n    # Mutant mutmut_16/17: Number 2 is tested above (returns True), test 2 vs 2 boundary or 3\n    assert is_prime(3) is True\n\n\ndef test_is_prime_even_numbers():\n    assert is_prime(4) is False\n    assert is_prime(6) is False\n    assert is_prime(8) is False\n    assert is_prime(100) is False\n\n\ndef test_is_prime_divisible_by_three():\n    assert is_prime(9) is False\n    assert is_prime(15) is False\n    assert is_prime(21) is False\n\n\ndef test_is_prime_nominal_primes():\n    assert is_prime(5) is True\n    assert is_prime(7) is True\n    assert is_prime(11) is True\n    assert is_prime(13) is True\n    assert is_prime(17) is True\n    assert is_prime(19) is True\n    assert is_prime(23) is True\n    assert is_prime(97) is True\n\n\ndef test_is_prime_larger_composites_and_primes():\n    # Mutant mutmut_32/37: Test a composite number requiring the step-6 loop with sqrt boundary (e.g., 25, 121)\n    assert is_prime(25) is False\n    assert is_prime(121) is False\n    assert is_prime(119) is False\n    assert is_prime(101) is True\n    assert is_prime(103) is True\n    # Test larger numbers to fully exercise loop step and upper bound mutants\n    assert is_prime(143) is False\n    assert is_prime(169) is False",
+      "mutant_killed": true,
+      "mutant_operator": "ComparisonOperator",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_25.x_is_prime__mutmut_16",
+      "generated_test_code": "import pytest\nfrom function_25 import is_prime\n\n\ndef test_is_prime_invalid_inputs():\n    # Mutant mutmut_6/7/8: Checks exact exception message string value when ValueError is raised\n    with pytest.raises(ValueError, match='is_prime\\(\\) only accepts positive integers'):\n        is_prime(-1)\n\n\ndef test_is_prime_boundaries_small():\n    assert is_prime(0) is False\n    assert is_prime(1) is False\n    assert is_prime(2) is True\n    # Mutant mutmut_16/17: Number 2 is tested above (returns True), test 2 vs 2 boundary or 3\n    assert is_prime(3) is True\n\n\ndef test_is_prime_even_numbers():\n    assert is_prime(4) is False\n    assert is_prime(6) is False\n    assert is_prime(8) is False\n    assert is_prime(100) is False\n\n\ndef test_is_prime_divisible_by_three():\n    assert is_prime(9) is False\n    assert is_prime(15) is False\n    assert is_prime(21) is False\n\n\ndef test_is_prime_nominal_primes():\n    assert is_prime(5) is True\n    assert is_prime(7) is True\n    assert is_prime(11) is True\n    assert is_prime(13) is True\n    assert is_prime(17) is True\n    assert is_prime(19) is True\n    assert is_prime(23) is True\n    assert is_prime(97) is True\n\n\ndef test_is_prime_larger_composites_and_primes():\n    # Mutant mutmut_32/37: Test a composite number requiring the step-6 loop with sqrt boundary (e.g., 25, 121)\n    assert is_prime(25) is False\n    assert is_prime(121) is False\n    assert is_prime(119) is False\n    assert is_prime(101) is True\n    assert is_prime(103) is True\n    # Test larger numbers to fully exercise loop step and upper bound mutants\n    assert is_prime(143) is False\n    assert is_prime(169) is False",
+      "mutant_killed": false,
+      "mutant_operator": "ConditionalBoundary",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_25.x_is_prime__mutmut_17",
+      "generated_test_code": "import pytest\nfrom function_25 import is_prime\n\n\ndef test_is_prime_invalid_inputs():\n    # Mutant mutmut_6/7/8: Checks exact exception message string value when ValueError is raised\n    with pytest.raises(ValueError, match='is_prime\\(\\) only accepts positive integers'):\n        is_prime(-1)\n\n\ndef test_is_prime_boundaries_small():\n    assert is_prime(0) is False\n    assert is_prime(1) is False\n    assert is_prime(2) is True\n    # Mutant mutmut_16/17: Number 2 is tested above (returns True), test 2 vs 2 boundary or 3\n    assert is_prime(3) is True\n\n\ndef test_is_prime_even_numbers():\n    assert is_prime(4) is False\n    assert is_prime(6) is False\n    assert is_prime(8) is False\n    assert is_prime(100) is False\n\n\ndef test_is_prime_divisible_by_three():\n    assert is_prime(9) is False\n    assert is_prime(15) is False\n    assert is_prime(21) is False\n\n\ndef test_is_prime_nominal_primes():\n    assert is_prime(5) is True\n    assert is_prime(7) is True\n    assert is_prime(11) is True\n    assert is_prime(13) is True\n    assert is_prime(17) is True\n    assert is_prime(19) is True\n    assert is_prime(23) is True\n    assert is_prime(97) is True\n\n\ndef test_is_prime_larger_composites_and_primes():\n    # Mutant mutmut_32/37: Test a composite number requiring the step-6 loop with sqrt boundary (e.g., 25, 121)\n    assert is_prime(25) is False\n    assert is_prime(121) is False\n    assert is_prime(119) is False\n    assert is_prime(101) is True\n    assert is_prime(103) is True\n    # Test larger numbers to fully exercise loop step and upper bound mutants\n    assert is_prime(143) is False\n    assert is_prime(169) is False",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_25.x_is_prime__mutmut_32",
+      "generated_test_code": "import pytest\nfrom function_25 import is_prime\n\n\ndef test_is_prime_invalid_inputs():\n    # Mutant mutmut_6/7/8: Checks exact exception message string value when ValueError is raised\n    with pytest.raises(ValueError, match='is_prime\\(\\) only accepts positive integers'):\n        is_prime(-1)\n\n\ndef test_is_prime_boundaries_small():\n    assert is_prime(0) is False\n    assert is_prime(1) is False\n    assert is_prime(2) is True\n    # Mutant mutmut_16/17: Number 2 is tested above (returns True), test 2 vs 2 boundary or 3\n    assert is_prime(3) is True\n\n\ndef test_is_prime_even_numbers():\n    assert is_prime(4) is False\n    assert is_prime(6) is False\n    assert is_prime(8) is False\n    assert is_prime(100) is False\n\n\ndef test_is_prime_divisible_by_three():\n    assert is_prime(9) is False\n    assert is_prime(15) is False\n    assert is_prime(21) is False\n\n\ndef test_is_prime_nominal_primes():\n    assert is_prime(5) is True\n    assert is_prime(7) is True\n    assert is_prime(11) is True\n    assert is_prime(13) is True\n    assert is_prime(17) is True\n    assert is_prime(19) is True\n    assert is_prime(23) is True\n    assert is_prime(97) is True\n\n\ndef test_is_prime_larger_composites_and_primes():\n    # Mutant mutmut_32/37: Test a composite number requiring the step-6 loop with sqrt boundary (e.g., 25, 121)\n    assert is_prime(25) is False\n    assert is_prime(121) is False\n    assert is_prime(119) is False\n    assert is_prime(101) is True\n    assert is_prime(103) is True\n    # Test larger numbers to fully exercise loop step and upper bound mutants\n    assert is_prime(143) is False\n    assert is_prime(169) is False",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_25.x_is_prime__mutmut_37",
+      "generated_test_code": "import pytest\nfrom function_25 import is_prime\n\n\ndef test_is_prime_invalid_inputs():\n    # Mutant mutmut_6/7/8: Checks exact exception message string value when ValueError is raised\n    with pytest.raises(ValueError, match='is_prime\\(\\) only accepts positive integers'):\n        is_prime(-1)\n\n\ndef test_is_prime_boundaries_small():\n    assert is_prime(0) is False\n    assert is_prime(1) is False\n    assert is_prime(2) is True\n    # Mutant mutmut_16/17: Number 2 is tested above (returns True), test 2 vs 2 boundary or 3\n    assert is_prime(3) is True\n\n\ndef test_is_prime_even_numbers():\n    assert is_prime(4) is False\n    assert is_prime(6) is False\n    assert is_prime(8) is False\n    assert is_prime(100) is False\n\n\ndef test_is_prime_divisible_by_three():\n    assert is_prime(9) is False\n    assert is_prime(15) is False\n    assert is_prime(21) is False\n\n\ndef test_is_prime_nominal_primes():\n    assert is_prime(5) is True\n    assert is_prime(7) is True\n    assert is_prime(11) is True\n    assert is_prime(13) is True\n    assert is_prime(17) is True\n    assert is_prime(19) is True\n    assert is_prime(23) is True\n    assert is_prime(97) is True\n\n\ndef test_is_prime_larger_composites_and_primes():\n    # Mutant mutmut_32/37: Test a composite number requiring the step-6 loop with sqrt boundary (e.g., 25, 121)\n    assert is_prime(25) is False\n    assert is_prime(121) is False\n    assert is_prime(119) is False\n    assert is_prime(101) is True\n    assert is_prime(103) is True\n    # Test larger numbers to fully exercise loop step and upper bound mutants\n    assert is_prime(143) is False\n    assert is_prime(169) is False",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    }
+  ],
+  "num_llm_calls": 2,
+  "pass_rate_pct": 100.0,
+  "initial_mutation_score_pct": 93.75,
+  "stop_reason": "plateau",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite"
+}

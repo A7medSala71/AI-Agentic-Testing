@@ -1,0 +1,121 @@
+{
+  "function_id": "function_16",
+  "system_variant": "Variant_1_ErrorTrace",
+  "iteration_count": 2,
+  "total_tokens_used": 5316,
+  "mutation_score_pct": 86.96,
+  "line_coverage_pct": 100.0,
+  "estimated_cost_usd": 0.005414,
+  "iterations_detail": [
+    {
+      "iteration": 1,
+      "mutant_id": "function_16.x_odd_even_sort__mutmut_5",
+      "generated_test_code": "from function_16 import odd_even_sort\n\n\ndef test_odd_even_sort_nominal():\n    arr = [4, 3, 2, 1, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n    assert arr == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_already_sorted():\n    arr = [1, 2, 3, 4, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_reverse_sorted():\n    arr = [5, 4, 3, 2, 1]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_empty_and_single():\n    assert odd_even_sort([]) == []\n    assert odd_even_sort([42]) == [42]\n\n\ndef test_odd_even_sort_duplicates_and_negatives():\n    arr = [-1, 3, -1, 0, 5, 3, 2]\n    res = odd_even_sort(arr)\n    assert res == [-1, -1, 0, 2, 3, 3, 5]\n\n\ndef test_odd_even_sort_needs_multiple_passes_and_exact_indices():\n    # Specific arrays to test odd-even phase bounds, steps, sorting stability, and swapping behavior\n    # Array requiring swaps in both even and odd phase loops to trigger is_sorted = False and range limits\n    arr = [2, 1, 4, 3]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4]\n\n    # Array with duplicate elements to kill conditional boundary mutants (> vs >=)\n    arr_dup = [2, 2, 1, 1]\n    res_dup = odd_even_sort(arr_dup)\n    assert res_dup == [1, 1, 2, 2]",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_16.x_odd_even_sort__mutmut_12",
+      "generated_test_code": "from function_16 import odd_even_sort\n\n\ndef test_odd_even_sort_nominal():\n    arr = [4, 3, 2, 1, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n    assert arr == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_already_sorted():\n    arr = [1, 2, 3, 4, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_reverse_sorted():\n    arr = [5, 4, 3, 2, 1]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_empty_and_single():\n    assert odd_even_sort([]) == []\n    assert odd_even_sort([42]) == [42]\n\n\ndef test_odd_even_sort_duplicates_and_negatives():\n    arr = [-1, 3, -1, 0, 5, 3, 2]\n    res = odd_even_sort(arr)\n    assert res == [-1, -1, 0, 2, 3, 3, 5]\n\n\ndef test_odd_even_sort_needs_multiple_passes_and_exact_indices():\n    # Specific arrays to test odd-even phase bounds, steps, sorting stability, and swapping behavior\n    # Array requiring swaps in both even and odd phase loops to trigger is_sorted = False and range limits\n    arr = [2, 1, 4, 3]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4]\n\n    # Array with duplicate elements to kill conditional boundary mutants (> vs >=)\n    arr_dup = [2, 2, 1, 1]\n    res_dup = odd_even_sort(arr_dup)\n    assert res_dup == [1, 1, 2, 2]",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_16.x_odd_even_sort__mutmut_15",
+      "generated_test_code": "from function_16 import odd_even_sort\n\n\ndef test_odd_even_sort_nominal():\n    arr = [4, 3, 2, 1, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n    assert arr == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_already_sorted():\n    arr = [1, 2, 3, 4, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_reverse_sorted():\n    arr = [5, 4, 3, 2, 1]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_empty_and_single():\n    assert odd_even_sort([]) == []\n    assert odd_even_sort([42]) == [42]\n\n\ndef test_odd_even_sort_duplicates_and_negatives():\n    arr = [-1, 3, -1, 0, 5, 3, 2]\n    res = odd_even_sort(arr)\n    assert res == [-1, -1, 0, 2, 3, 3, 5]\n\n\ndef test_odd_even_sort_needs_multiple_passes_and_exact_indices():\n    # Specific arrays to test odd-even phase bounds, steps, sorting stability, and swapping behavior\n    # Array requiring swaps in both even and odd phase loops to trigger is_sorted = False and range limits\n    arr = [2, 1, 4, 3]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4]\n\n    # Array with duplicate elements to kill conditional boundary mutants (> vs >=)\n    arr_dup = [2, 2, 1, 1]\n    res_dup = odd_even_sort(arr_dup)\n    assert res_dup == [1, 1, 2, 2]",
+      "mutant_killed": true,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_16.x_odd_even_sort__mutmut_25",
+      "generated_test_code": "from function_16 import odd_even_sort\n\n\ndef test_odd_even_sort_nominal():\n    arr = [4, 3, 2, 1, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n    assert arr == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_already_sorted():\n    arr = [1, 2, 3, 4, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_reverse_sorted():\n    arr = [5, 4, 3, 2, 1]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_empty_and_single():\n    assert odd_even_sort([]) == []\n    assert odd_even_sort([42]) == [42]\n\n\ndef test_odd_even_sort_duplicates_and_negatives():\n    arr = [-1, 3, -1, 0, 5, 3, 2]\n    res = odd_even_sort(arr)\n    assert res == [-1, -1, 0, 2, 3, 3, 5]\n\n\ndef test_odd_even_sort_needs_multiple_passes_and_exact_indices():\n    # Specific arrays to test odd-even phase bounds, steps, sorting stability, and swapping behavior\n    # Array requiring swaps in both even and odd phase loops to trigger is_sorted = False and range limits\n    arr = [2, 1, 4, 3]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4]\n\n    # Array with duplicate elements to kill conditional boundary mutants (> vs >=)\n    arr_dup = [2, 2, 1, 1]\n    res_dup = odd_even_sort(arr_dup)\n    assert res_dup == [1, 1, 2, 2]",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_16.x_odd_even_sort__mutmut_26",
+      "generated_test_code": "from function_16 import odd_even_sort\n\n\ndef test_odd_even_sort_nominal():\n    arr = [4, 3, 2, 1, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n    assert arr == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_already_sorted():\n    arr = [1, 2, 3, 4, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_reverse_sorted():\n    arr = [5, 4, 3, 2, 1]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_empty_and_single():\n    assert odd_even_sort([]) == []\n    assert odd_even_sort([42]) == [42]\n\n\ndef test_odd_even_sort_duplicates_and_negatives():\n    arr = [-1, 3, -1, 0, 5, 3, 2]\n    res = odd_even_sort(arr)\n    assert res == [-1, -1, 0, 2, 3, 3, 5]\n\n\ndef test_odd_even_sort_needs_multiple_passes_and_exact_indices():\n    # Specific arrays to test odd-even phase bounds, steps, sorting stability, and swapping behavior\n    # Array requiring swaps in both even and odd phase loops to trigger is_sorted = False and range limits\n    arr = [2, 1, 4, 3]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4]\n\n    # Array with duplicate elements to kill conditional boundary mutants (> vs >=)\n    arr_dup = [2, 2, 1, 1]\n    res_dup = odd_even_sort(arr_dup)\n    assert res_dup == [1, 1, 2, 2]",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_16.x_odd_even_sort__mutmut_32",
+      "generated_test_code": "from function_16 import odd_even_sort\n\n\ndef test_odd_even_sort_nominal():\n    arr = [4, 3, 2, 1, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n    assert arr == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_already_sorted():\n    arr = [1, 2, 3, 4, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_reverse_sorted():\n    arr = [5, 4, 3, 2, 1]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_empty_and_single():\n    assert odd_even_sort([]) == []\n    assert odd_even_sort([42]) == [42]\n\n\ndef test_odd_even_sort_duplicates_and_negatives():\n    arr = [-1, 3, -1, 0, 5, 3, 2]\n    res = odd_even_sort(arr)\n    assert res == [-1, -1, 0, 2, 3, 3, 5]\n\n\ndef test_odd_even_sort_needs_multiple_passes_and_exact_indices():\n    # Specific arrays to test odd-even phase bounds, steps, sorting stability, and swapping behavior\n    # Array requiring swaps in both even and odd phase loops to trigger is_sorted = False and range limits\n    arr = [2, 1, 4, 3]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4]\n\n    # Array with duplicate elements to kill conditional boundary mutants (> vs >=)\n    arr_dup = [2, 2, 1, 1]\n    res_dup = odd_even_sort(arr_dup)\n    assert res_dup == [1, 1, 2, 2]",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_16.x_odd_even_sort__mutmut_37",
+      "generated_test_code": "from function_16 import odd_even_sort\n\n\ndef test_odd_even_sort_nominal():\n    arr = [4, 3, 2, 1, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n    assert arr == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_already_sorted():\n    arr = [1, 2, 3, 4, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_reverse_sorted():\n    arr = [5, 4, 3, 2, 1]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_empty_and_single():\n    assert odd_even_sort([]) == []\n    assert odd_even_sort([42]) == [42]\n\n\ndef test_odd_even_sort_duplicates_and_negatives():\n    arr = [-1, 3, -1, 0, 5, 3, 2]\n    res = odd_even_sort(arr)\n    assert res == [-1, -1, 0, 2, 3, 3, 5]\n\n\ndef test_odd_even_sort_needs_multiple_passes_and_exact_indices():\n    # Specific arrays to test odd-even phase bounds, steps, sorting stability, and swapping behavior\n    # Array requiring swaps in both even and odd phase loops to trigger is_sorted = False and range limits\n    arr = [2, 1, 4, 3]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4]\n\n    # Array with duplicate elements to kill conditional boundary mutants (> vs >=)\n    arr_dup = [2, 2, 1, 1]\n    res_dup = odd_even_sort(arr_dup)\n    assert res_dup == [1, 1, 2, 2]",
+      "mutant_killed": false,
+      "mutant_operator": "ConditionalBoundary",
+      "predicted_state": null
+    },
+    {
+      "iteration": 2,
+      "mutant_id": "function_16.x_odd_even_sort__mutmut_5",
+      "generated_test_code": "from function_16 import odd_even_sort\n\n\ndef test_odd_even_sort_nominal():\n    arr = [4, 3, 2, 1, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n    assert arr == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_already_sorted():\n    arr = [1, 2, 3, 4, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_reverse_sorted():\n    arr = [5, 4, 3, 2, 1]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_empty_and_single():\n    assert odd_even_sort([]) == []\n    assert odd_even_sort([42]) == [42]\n\n\ndef test_odd_even_sort_duplicates_and_negatives():\n    arr = [-1, 3, -1, 0, 5, 3, 2]\n    res = odd_even_sort(arr)\n    assert res == [-1, -1, 0, 2, 3, 3, 5]\n\n\ndef test_odd_even_sort_needs_multiple_passes_and_exact_indices():\n    # Specific arrays to test odd-even phase bounds, steps, sorting stability, and swapping behavior\n    # Array requiring swaps in both even and odd phase loops to trigger is_sorted = False and range limits\n    arr = [2, 1, 4, 3]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4]\n\n    # Array with duplicate elements to kill conditional boundary mutants (> vs >=)\n    # Also ensures stable sorting doesn't change order of equal elements\n    arr_dup = [2, 2, 1, 1]\n    res_dup = odd_even_sort(arr_dup)\n    assert res_dup == [1, 1, 2, 2]",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 2,
+      "mutant_id": "function_16.x_odd_even_sort__mutmut_12",
+      "generated_test_code": "from function_16 import odd_even_sort\n\n\ndef test_odd_even_sort_nominal():\n    arr = [4, 3, 2, 1, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n    assert arr == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_already_sorted():\n    arr = [1, 2, 3, 4, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_reverse_sorted():\n    arr = [5, 4, 3, 2, 1]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_empty_and_single():\n    assert odd_even_sort([]) == []\n    assert odd_even_sort([42]) == [42]\n\n\ndef test_odd_even_sort_duplicates_and_negatives():\n    arr = [-1, 3, -1, 0, 5, 3, 2]\n    res = odd_even_sort(arr)\n    assert res == [-1, -1, 0, 2, 3, 3, 5]\n\n\ndef test_odd_even_sort_needs_multiple_passes_and_exact_indices():\n    # Specific arrays to test odd-even phase bounds, steps, sorting stability, and swapping behavior\n    # Array requiring swaps in both even and odd phase loops to trigger is_sorted = False and range limits\n    arr = [2, 1, 4, 3]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4]\n\n    # Array with duplicate elements to kill conditional boundary mutants (> vs >=)\n    # Also ensures stable sorting doesn't change order of equal elements\n    arr_dup = [2, 2, 1, 1]\n    res_dup = odd_even_sort(arr_dup)\n    assert res_dup == [1, 1, 2, 2]",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 2,
+      "mutant_id": "function_16.x_odd_even_sort__mutmut_25",
+      "generated_test_code": "from function_16 import odd_even_sort\n\n\ndef test_odd_even_sort_nominal():\n    arr = [4, 3, 2, 1, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n    assert arr == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_already_sorted():\n    arr = [1, 2, 3, 4, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_reverse_sorted():\n    arr = [5, 4, 3, 2, 1]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_empty_and_single():\n    assert odd_even_sort([]) == []\n    assert odd_even_sort([42]) == [42]\n\n\ndef test_odd_even_sort_duplicates_and_negatives():\n    arr = [-1, 3, -1, 0, 5, 3, 2]\n    res = odd_even_sort(arr)\n    assert res == [-1, -1, 0, 2, 3, 3, 5]\n\n\ndef test_odd_even_sort_needs_multiple_passes_and_exact_indices():\n    # Specific arrays to test odd-even phase bounds, steps, sorting stability, and swapping behavior\n    # Array requiring swaps in both even and odd phase loops to trigger is_sorted = False and range limits\n    arr = [2, 1, 4, 3]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4]\n\n    # Array with duplicate elements to kill conditional boundary mutants (> vs >=)\n    # Also ensures stable sorting doesn't change order of equal elements\n    arr_dup = [2, 2, 1, 1]\n    res_dup = odd_even_sort(arr_dup)\n    assert res_dup == [1, 1, 2, 2]",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 2,
+      "mutant_id": "function_16.x_odd_even_sort__mutmut_26",
+      "generated_test_code": "from function_16 import odd_even_sort\n\n\ndef test_odd_even_sort_nominal():\n    arr = [4, 3, 2, 1, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n    assert arr == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_already_sorted():\n    arr = [1, 2, 3, 4, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_reverse_sorted():\n    arr = [5, 4, 3, 2, 1]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_empty_and_single():\n    assert odd_even_sort([]) == []\n    assert odd_even_sort([42]) == [42]\n\n\ndef test_odd_even_sort_duplicates_and_negatives():\n    arr = [-1, 3, -1, 0, 5, 3, 2]\n    res = odd_even_sort(arr)\n    assert res == [-1, -1, 0, 2, 3, 3, 5]\n\n\ndef test_odd_even_sort_needs_multiple_passes_and_exact_indices():\n    # Specific arrays to test odd-even phase bounds, steps, sorting stability, and swapping behavior\n    # Array requiring swaps in both even and odd phase loops to trigger is_sorted = False and range limits\n    arr = [2, 1, 4, 3]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4]\n\n    # Array with duplicate elements to kill conditional boundary mutants (> vs >=)\n    # Also ensures stable sorting doesn't change order of equal elements\n    arr_dup = [2, 2, 1, 1]\n    res_dup = odd_even_sort(arr_dup)\n    assert res_dup == [1, 1, 2, 2]",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 2,
+      "mutant_id": "function_16.x_odd_even_sort__mutmut_32",
+      "generated_test_code": "from function_16 import odd_even_sort\n\n\ndef test_odd_even_sort_nominal():\n    arr = [4, 3, 2, 1, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n    assert arr == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_already_sorted():\n    arr = [1, 2, 3, 4, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_reverse_sorted():\n    arr = [5, 4, 3, 2, 1]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_empty_and_single():\n    assert odd_even_sort([]) == []\n    assert odd_even_sort([42]) == [42]\n\n\ndef test_odd_even_sort_duplicates_and_negatives():\n    arr = [-1, 3, -1, 0, 5, 3, 2]\n    res = odd_even_sort(arr)\n    assert res == [-1, -1, 0, 2, 3, 3, 5]\n\n\ndef test_odd_even_sort_needs_multiple_passes_and_exact_indices():\n    # Specific arrays to test odd-even phase bounds, steps, sorting stability, and swapping behavior\n    # Array requiring swaps in both even and odd phase loops to trigger is_sorted = False and range limits\n    arr = [2, 1, 4, 3]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4]\n\n    # Array with duplicate elements to kill conditional boundary mutants (> vs >=)\n    # Also ensures stable sorting doesn't change order of equal elements\n    arr_dup = [2, 2, 1, 1]\n    res_dup = odd_even_sort(arr_dup)\n    assert res_dup == [1, 1, 2, 2]",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 2,
+      "mutant_id": "function_16.x_odd_even_sort__mutmut_37",
+      "generated_test_code": "from function_16 import odd_even_sort\n\n\ndef test_odd_even_sort_nominal():\n    arr = [4, 3, 2, 1, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n    assert arr == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_already_sorted():\n    arr = [1, 2, 3, 4, 5]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_reverse_sorted():\n    arr = [5, 4, 3, 2, 1]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4, 5]\n\n\ndef test_odd_even_sort_empty_and_single():\n    assert odd_even_sort([]) == []\n    assert odd_even_sort([42]) == [42]\n\n\ndef test_odd_even_sort_duplicates_and_negatives():\n    arr = [-1, 3, -1, 0, 5, 3, 2]\n    res = odd_even_sort(arr)\n    assert res == [-1, -1, 0, 2, 3, 3, 5]\n\n\ndef test_odd_even_sort_needs_multiple_passes_and_exact_indices():\n    # Specific arrays to test odd-even phase bounds, steps, sorting stability, and swapping behavior\n    # Array requiring swaps in both even and odd phase loops to trigger is_sorted = False and range limits\n    arr = [2, 1, 4, 3]\n    res = odd_even_sort(arr)\n    assert res == [1, 2, 3, 4]\n\n    # Array with duplicate elements to kill conditional boundary mutants (> vs >=)\n    # Also ensures stable sorting doesn't change order of equal elements\n    arr_dup = [2, 2, 1, 1]\n    res_dup = odd_even_sort(arr_dup)\n    assert res_dup == [1, 1, 2, 2]",
+      "mutant_killed": false,
+      "mutant_operator": "ConditionalBoundary",
+      "predicted_state": null
+    }
+  ],
+  "num_llm_calls": 3,
+  "pass_rate_pct": 100.0,
+  "initial_mutation_score_pct": 84.78,
+  "stop_reason": "plateau",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite"
+}

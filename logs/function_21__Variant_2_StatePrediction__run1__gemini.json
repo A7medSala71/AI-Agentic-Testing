@@ -1,0 +1,33 @@
+{
+  "function_id": "function_21",
+  "system_variant": "Variant_2_StatePrediction",
+  "iteration_count": 1,
+  "total_tokens_used": 2774,
+  "mutation_score_pct": 89.47,
+  "line_coverage_pct": 100.0,
+  "estimated_cost_usd": 0.003912,
+  "iterations_detail": [
+    {
+      "iteration": 1,
+      "mutant_id": "function_21.x_binary_search__mutmut_6",
+      "generated_test_code": "from function_21 import binary_search\n\n\ndef test_binary_search_empty_list():\n    assert binary_search([], 1) is False\n\n\ndef test_binary_search_single_element_found():\n    assert binary_search([5], 5) is True\n\n\ndef test_binary_search_single_element_not_found():\n    assert binary_search([5], 3) is False\n\n\ndef test_binary_search_multiple_elements_middle():\n    assert binary_search([1, 3, 5, 7, 9], 5) is True\n\n\ndef test_binary_search_multiple_elements_left():\n    assert binary_search([1, 3, 5, 7, 9], 3) is True\n\n\ndef test_binary_search_multiple_elements_right():\n    assert binary_search([1, 3, 5, 7, 9], 7) is True\n\n\ndef test_binary_search_multiple_elements_not_found_smaller():\n    assert binary_search([1, 3, 5, 7, 9], 0) is False\n\n\ndef test_binary_search_multiple_elements_not_found_larger():\n    assert binary_search([1, 3, 5, 7, 9], 10) is False\n\n\ndef test_binary_search_multiple_elements_not_found_between():\n    assert binary_search([1, 3, 5, 7, 9], 4) is False\n\n\ndef test_binary_search_midpoint_division_by_three():\n    # Mutant mutmut_6 changes midpoint divisor from 2 to 3, checking length 6 list where index 2 vs 3 diverges.\n    assert binary_search([10, 20, 30, 40, 50, 60], 30) is True\n\n\ndef test_binary_search_conditional_boundary_less_than_or_equal():\n    # Mutant mutmut_9 changes item < a_list[midpoint] to item <= a_list[midpoint], causing search to go left incorrectly when item equals midpoint.\n    assert binary_search([10, 20, 30], 20) is True",
+      "mutant_killed": false,
+      "mutant_operator": "Unknown",
+      "predicted_state": null
+    },
+    {
+      "iteration": 1,
+      "mutant_id": "function_21.x_binary_search__mutmut_9",
+      "generated_test_code": "from function_21 import binary_search\n\n\ndef test_binary_search_empty_list():\n    assert binary_search([], 1) is False\n\n\ndef test_binary_search_single_element_found():\n    assert binary_search([5], 5) is True\n\n\ndef test_binary_search_single_element_not_found():\n    assert binary_search([5], 3) is False\n\n\ndef test_binary_search_multiple_elements_middle():\n    assert binary_search([1, 3, 5, 7, 9], 5) is True\n\n\ndef test_binary_search_multiple_elements_left():\n    assert binary_search([1, 3, 5, 7, 9], 3) is True\n\n\ndef test_binary_search_multiple_elements_right():\n    assert binary_search([1, 3, 5, 7, 9], 7) is True\n\n\ndef test_binary_search_multiple_elements_not_found_smaller():\n    assert binary_search([1, 3, 5, 7, 9], 0) is False\n\n\ndef test_binary_search_multiple_elements_not_found_larger():\n    assert binary_search([1, 3, 5, 7, 9], 10) is False\n\n\ndef test_binary_search_multiple_elements_not_found_between():\n    assert binary_search([1, 3, 5, 7, 9], 4) is False\n\n\ndef test_binary_search_midpoint_division_by_three():\n    # Mutant mutmut_6 changes midpoint divisor from 2 to 3, checking length 6 list where index 2 vs 3 diverges.\n    assert binary_search([10, 20, 30, 40, 50, 60], 30) is True\n\n\ndef test_binary_search_conditional_boundary_less_than_or_equal():\n    # Mutant mutmut_9 changes item < a_list[midpoint] to item <= a_list[midpoint], causing search to go left incorrectly when item equals midpoint.\n    assert binary_search([10, 20, 30], 20) is True",
+      "mutant_killed": false,
+      "mutant_operator": "ConditionalBoundary",
+      "predicted_state": null
+    }
+  ],
+  "num_llm_calls": 2,
+  "pass_rate_pct": 100.0,
+  "initial_mutation_score_pct": 89.47,
+  "stop_reason": "plateau",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite"
+}
