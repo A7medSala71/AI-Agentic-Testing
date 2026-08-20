@@ -587,20 +587,20 @@ GROQ_BASE_URL = (
 
 GROQ_MODEL_ID = os.getenv(
     "GROQ_MODEL_ID",
-    "llama-3.1-8b-instant",
+    "openai/gpt-oss-20b",
 )
 
 GROQ_PRICE_PER_1M_INPUT_USD = float(
     os.getenv(
         "GROQ_PRICE_IN",
-        "0.05",
+        "0.075",
     )
 )
 
 GROQ_PRICE_PER_1M_OUTPUT_USD = float(
     os.getenv(
         "GROQ_PRICE_OUT",
-        "0.08",
+        "0.30",
     )
 )
 
